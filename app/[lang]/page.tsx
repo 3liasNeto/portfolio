@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { Clock } from "../components/clock";
+import { InteractiveHero } from "../components/interactive-hero";
 import { LanguageSwitcher } from "../components/language-switcher";
 import { ThemeToggle } from "../components/theme-toggle";
 import { WorkList } from "../components/work-list";
@@ -16,6 +17,14 @@ function Monogram({ className = "" }: { className?: string }) {
       <span className="text-signal">.</span>
     </span>
   );
+}
+
+function Letters({ text, className }: { text: string; className: string }) {
+  return [...text].map((char, i) => (
+    <span key={i} className={`hero-letter ${className}`}>
+      {char}
+    </span>
+  ));
 }
 
 function RotatingBadge({ text }: { text: string }) {
@@ -92,7 +101,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       </header>
 
       {/* ---------- Hero ---------- */}
-      <section
+      <InteractiveHero
         id="top"
         className="relative mx-auto flex min-h-svh max-w-[1600px] flex-col justify-between px-4 pt-28 pb-8 md:px-8"
       >
@@ -116,21 +125,26 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             <span className="animate-blink ml-1 inline-block h-4 w-2 translate-y-0.5 bg-ink" />
           </p>
           <h1 className="leading-[0.82] uppercase">
-            <span className="rise block overflow-hidden">
+            <span className="sr-only">Elias Neto</span>
+            <span aria-hidden className="rise hero-depth-1 block overflow-hidden">
               <span className="text-[24vw] font-black tracking-[-0.06em] md:text-[19vw]">
-                Elias
+                <Letters text="Elias" className="hero-letter-sans" />
               </span>
             </span>
-            <span className="rise flex items-end justify-end gap-6 overflow-hidden md:-mt-[3vw]">
+            <span
+              aria-hidden
+              className="rise hero-depth-2 flex items-end justify-end gap-6 overflow-hidden md:-mt-[3vw]"
+            >
               <span
                 className="font-serif text-[26vw] tracking-[-0.03em] normal-case italic md:text-[21vw]"
                 style={{ animationDelay: "120ms" }}
               >
-                Neto<span className="text-signal">.</span>
+                <Letters text="Neto" className="hero-letter-serif" />
+                <span className="text-signal">.</span>
               </span>
             </span>
           </h1>
-          <div className="absolute top-1/2 left-[52%] hidden -translate-y-1/3 md:block">
+          <div className="hero-depth-3 absolute top-1/2 left-[52%] hidden -translate-y-1/3 md:block">
             <RotatingBadge text={t.hero.badge} />
           </div>
         </div>
@@ -152,7 +166,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             </span>
           </a>
         </div>
-      </section>
+      </InteractiveHero>
 
       {/* ---------- Marquee ---------- */}
       <div className="-rotate-1 overflow-hidden border-y border-ink bg-night py-4 text-chalk">
