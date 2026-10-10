@@ -66,7 +66,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
     description: t.meta.description,
     url: `${siteUrl}/${lang}`,
     email: `mailto:${profile.email}`,
-    address: { "@type": "PostalAddress", addressLocality: "São Paulo", addressCountry: "BR" },
+    address: { "@type": "PostalAddress", addressLocality: profile.city, addressCountry: profile.country },
     knowsAbout: stack,
     sameAs: profile.socials.map((social) => social.href),
   };
@@ -129,7 +129,8 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             {t.hero.availability}
           </p>
           <p className="text-right">
-            {profile.location} — <Clock timeZone={profile.timeZone} locale={htmlLang[lang]} /> BRT
+            {profile.location} — <Clock timeZone={profile.timeZone} locale={htmlLang[lang]} />{" "}
+            {profile.timeZoneLabel}
           </p>
         </div>
 

@@ -5,8 +5,12 @@ export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://eliasneto.de
 
 export const profile = {
   name: "Elias Neto",
+  city: "São Paulo",
+  country: "BR",
   location: "São Paulo, BR",
+  // IANA zone for the live clock, plus the short label shown next to it
   timeZone: "America/Sao_Paulo",
+  timeZoneLabel: "BRT",
   email: "ola@eliasneto.dev",
   // Full-art image on the front of the holographic card (63:88, in public/)
   cardArt: "/elias-card.webp",

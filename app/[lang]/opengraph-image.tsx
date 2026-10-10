@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { brand, loadBrandFonts } from "../brand";
+import { siteUrl } from "../data";
 import { hasLocale, locales } from "../i18n";
 import { getDictionary } from "./dictionaries";
 
@@ -66,7 +67,7 @@ export default async function OpenGraphImage({ params }: { params: Promise<{ lan
             <span style={{ width: 14, height: 14, borderRadius: 999, background: brand.signal }} />
             {t.hero.availability}
           </span>
-          <span>eliasneto.dev</span>
+          <span>{new URL(siteUrl).host}</span>
         </div>
       </div>
     ),
