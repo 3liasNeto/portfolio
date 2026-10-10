@@ -8,6 +8,8 @@ export const profile = {
   location: "São Paulo, BR",
   timeZone: "America/Sao_Paulo",
   email: "ola@eliasneto.dev",
+  // Photo shown on the trading card, e.g. "/elias.jpg" in public/ (null = placeholder art)
+  photo: null as string | null,
   cv: "/cv-elias-neto.pdf",
   calendar: "https://cal.com/",
   socials: [

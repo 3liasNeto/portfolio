@@ -296,3 +296,142 @@ body::after {
     animation: none;
   }
 }
+
+/* ---------- Holographic trading card ---------- */
+
+@property --flip {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
+
+.holo-card {
+  --mx: 50%;
+  --my: 50%;
+  --rx: 0deg;
+  --ry: 0deg;
+  --hyp: 0;
+  --o: 0;
+  container-type: inline-size;
+  perspective: 900px;
+  /* Horizontal finger drags tilt the card; vertical ones still scroll the page */
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.holo-card-rotator {
+  position: relative;
+  aspect-ratio: 63 / 88;
+  transform-style: preserve-3d;
+  transform: rotateY(calc(var(--rx) + var(--flip))) rotateX(var(--ry));
+  scale: calc(1 + var(--o) * 0.04);
+  transition: --flip 0.9s cubic-bezier(0.5, 0, 0.2, 1);
+}
+
+.holo-card[data-flipped] .holo-card-rotator {
+  --flip: 180deg;
+}
+
+.holo-card:focus-visible .holo-card-rotator {
+  outline: 2px solid var(--signal);
+  outline-offset: 8px;
+  border-radius: 4.5cqw;
+}
+
+.holo-card-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  padding: 3.4cqw;
+  border-radius: 4.5cqw;
+  backface-visibility: hidden;
+  background: linear-gradient(135deg, #f9e27a, #e8b931 40%, #fff1a8 55%, #d9a520);
+  box-shadow:
+    0 3cqw 8cqw rgba(0, 0, 0, 0.5),
+    0 0 0 0.3cqw rgba(0, 0, 0, 0.25);
+}
+
+.holo-card-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(135deg, #2a2622, #121110 50%, #2a2622);
+}
+
+/* Rainbow holo on the art window, strongest where the light hits */
+.holo-card-holo {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: color-dodge;
+  opacity: calc(0.3 + var(--o) * 0.5);
+  filter: brightness(0.75) contrast(1.5) saturate(1.3);
+  background-image:
+    repeating-linear-gradient(
+      110deg,
+      hsl(2 100% 73%) 0%,
+      hsl(53 100% 69%) 6%,
+      hsl(93 100% 69%) 12%,
+      hsl(176 100% 76%) 18%,
+      hsl(228 100% 74%) 24%,
+      hsl(283 100% 73%) 30%,
+      hsl(2 100% 73%) 36%
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      #0e152e 0%,
+      hsl(180 10% 60%) 3.8%,
+      hsl(180 29% 66%) 4.5%,
+      hsl(180 10% 60%) 5.2%,
+      #0e152e 10%,
+      #0e152e 12%
+    );
+  background-size: 300% 300%, 200% 200%;
+  background-position:
+    var(--mx) var(--my),
+    calc(100% - var(--mx)) calc(100% - var(--my));
+  background-blend-mode: overlay;
+}
+
+/* Glitter + faint rainbow across the whole card, revealed around the pointer */
+.holo-card-foil {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  mix-blend-mode: color-dodge;
+  opacity: calc(var(--o) * 0.32);
+  background-image:
+    radial-gradient(rgb(255 255 255 / 0.9) 0.5px, transparent 1.4px),
+    repeating-linear-gradient(
+      115deg,
+      hsl(2 100% 70%) 0%,
+      hsl(53 100% 65%) 8%,
+      hsl(176 100% 70%) 16%,
+      hsl(283 100% 70%) 24%,
+      hsl(2 100% 70%) 32%
+    );
+  background-size: 7px 7px, 400% 400%;
+  background-position: 0 0, var(--mx) var(--my);
+  mask-image: radial-gradient(circle at var(--mx) var(--my), #000 0%, transparent 70%);
+}
+
+/* Light reflection that follows the pointer */
+.holo-card-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  mix-blend-mode: overlay;
+  opacity: calc(var(--o) * 0.9);
+  background: radial-gradient(
+    farthest-corner circle at var(--mx) var(--my),
+    rgb(255 255 255 / 0.85) 8%,
+    rgb(255 255 255 / 0.45) 22%,
+    rgb(0 0 0 / 0.45) 90%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .holo-card-rotator {
+    transition: none;
+  }
+}

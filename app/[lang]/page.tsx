@@ -3,6 +3,7 @@ import { Clock } from "../components/clock";
 import { CommandPalette } from "../components/command-palette";
 import { ContactActions } from "../components/contact-actions";
 import { CountUp } from "../components/count-up";
+import { HoloCard } from "../components/holo-card";
 import { InteractiveHero } from "../components/interactive-hero";
 import { LanguageSwitcher } from "../components/language-switcher";
 import { RevealWords } from "../components/reveal";
@@ -253,16 +254,13 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
               )}
             </p>
             <div className="flex flex-col justify-between gap-12">
-              <div
-                data-reveal="clip"
-                className="relative aspect-[4/5] w-full max-w-sm overflow-hidden rounded-2xl bg-[radial-gradient(circle_at_30%_20%,#ff8a66,var(--signal)_45%,#7a1c05)] md:ml-auto"
-              >
-                <span className="absolute inset-0 grid place-items-center text-[10rem] text-chalk/90">
-                  <Monogram />
-                </span>
-                <span className="absolute bottom-4 left-4 font-mono text-[11px] tracking-wider uppercase">
-                  {t.about.photo}
-                </span>
+              <div data-reveal="up" className="md:ml-auto md:w-[340px]">
+                <HoloCard
+                  name={profile.name}
+                  photo={profile.photo}
+                  placeholder={t.about.photo}
+                  t={t.about.card}
+                />
               </div>
               <dl className="grid grid-cols-3 gap-4 border-t border-chalk/20 pt-6">
                 {statValues.map((value, i) => (
