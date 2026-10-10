@@ -1,11 +1,15 @@
 // Placeholder content — swap for Elias's real data later.
 // Language-independent data lives here; translated copy lives in app/[lang]/dictionaries.ts.
 
+export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://eliasneto.dev";
+
 export const profile = {
   name: "Elias Neto",
   location: "São Paulo, BR",
   timeZone: "America/Sao_Paulo",
   email: "ola@eliasneto.dev",
+  cv: "/cv-elias-neto.pdf",
+  calendar: "https://cal.com/",
   socials: [
     { label: "GitHub", href: "https://github.com/" },
     { label: "LinkedIn", href: "https://www.linkedin.com/" },

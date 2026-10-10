@@ -1,10 +1,17 @@
 import { notFound } from "next/navigation";
 import { Clock } from "../components/clock";
+import { CommandPalette } from "../components/command-palette";
+import { ContactActions } from "../components/contact-actions";
+import { CountUp } from "../components/count-up";
 import { InteractiveHero } from "../components/interactive-hero";
 import { LanguageSwitcher } from "../components/language-switcher";
+import { RevealWords } from "../components/reveal";
+import { RevealObserver } from "../components/reveal-observer";
+import { SmoothScroll } from "../components/smooth-scroll";
 import { ThemeToggle } from "../components/theme-toggle";
+import { Toaster } from "../components/toast";
 import { WorkList } from "../components/work-list";
-import { commits, profile, projects, stack, statValues } from "../data";
+import { commits, profile, projects, siteUrl, stack, statValues } from "../data";
 import { hasLocale, htmlLang } from "../i18n";
 import { getDictionary } from "./dictionaries";
 
@@ -58,7 +65,10 @@ function RotatingBadge({ text }: { text: string }) {
 
 function SectionLabel({ index, children }: { index: string; children: React.ReactNode }) {
   return (
-    <div className="mb-10 flex items-center gap-3 font-mono text-xs tracking-widest uppercase">
+    <div
+      data-reveal="fade"
+      className="mb-10 flex items-center gap-3 font-mono text-xs tracking-widest uppercase"
+    >
       <span className="text-signal">({index})</span>
       <span>{children}</span>
       <span className="h-px flex-1 bg-ink/20" />
@@ -75,8 +85,29 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
     description: t.projects[project.id],
   }));
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: profile.name,
+    jobTitle: t.hero.role,
+    description: t.meta.description,
+    url: `${siteUrl}/${lang}`,
+    email: `mailto:${profile.email}`,
+    address: { "@type": "PostalAddress", addressLocality: "São Paulo", addressCountry: "BR" },
+    knowsAbout: stack,
+    sameAs: profile.socials.map((social) => social.href),
+  };
+
   return (
     <main className="flex-1">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+      />
+      <SmoothScroll />
+      <RevealObserver />
+      <Toaster />
+
       {/* ---------- Nav ---------- */}
       <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-8">
         <nav className="mx-auto flex max-w-[1600px] items-center justify-between gap-3 rounded-full border border-ink/10 bg-paper/80 py-2 pr-2 pl-5 backdrop-blur-md">
@@ -89,6 +120,17 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             <li><a className="hover:text-signal" href="#experiencia">{t.nav.experience}</a></li>
           </ul>
           <div className="flex items-center gap-2 sm:gap-3">
+            <CommandPalette
+              lang={lang}
+              t={t.palette}
+              contact={t.contact}
+              profile={{
+                email: profile.email,
+                cv: profile.cv,
+                calendar: profile.calendar,
+                socials: profile.socials,
+              }}
+            />
             <LanguageSwitcher current={lang} label={t.nav.language} />
             <a
               href="#contato"
@@ -191,12 +233,21 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       <section id="trabalhos" className="mx-auto max-w-[1600px] px-4 pt-32 pb-24 md:px-8">
         <SectionLabel index="01">{t.work.label}</SectionLabel>
         <div className="mb-16 flex flex-wrap items-end justify-between gap-6">
-          <h2 className="max-w-3xl text-5xl leading-[0.95] font-extrabold tracking-[-0.04em] md:text-7xl">
-            {t.work.titleA}{" "}
-            <span className="font-serif font-normal italic">{t.work.titleEm}</span>{" "}
-            {t.work.titleB}
+          <h2
+            data-reveal="words"
+            className="max-w-3xl text-5xl leading-[0.95] font-extrabold tracking-[-0.04em] md:text-7xl"
+          >
+            <RevealWords
+              segments={[
+                { text: t.work.titleA },
+                { text: t.work.titleEm, className: "font-serif font-normal italic" },
+                { text: t.work.titleB },
+              ]}
+            />
           </h2>
-          <p className="max-w-xs font-mono text-xs text-muted uppercase">{t.work.hint}</p>
+          <p data-reveal="fade" className="max-w-xs font-mono text-xs text-muted uppercase">
+            {t.work.hint}
+          </p>
         </div>
         <WorkList projects={localizedProjects} />
       </section>
@@ -204,13 +255,16 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       {/* ---------- About ---------- */}
       <section id="sobre" className="bg-night text-chalk">
         <div className="mx-auto max-w-[1600px] px-4 py-32 md:px-8">
-          <div className="mb-10 flex items-center gap-3 font-mono text-xs tracking-widest uppercase">
+          <div
+            data-reveal="fade"
+            className="mb-10 flex items-center gap-3 font-mono text-xs tracking-widest uppercase"
+          >
             <span className="text-signal">(02)</span>
             <span>{t.about.label}</span>
             <span className="h-px flex-1 bg-chalk/20" />
           </div>
           <div className="grid gap-16 md:grid-cols-[1.4fr_1fr]">
-            <p className="text-3xl leading-[1.15] tracking-tight md:text-5xl">
+            <p data-reveal="up" className="text-3xl leading-[1.15] tracking-tight md:text-5xl">
               {t.about.statement.map((part, i) =>
                 i % 2 === 0 ? (
                   part
@@ -222,7 +276,10 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
               )}
             </p>
             <div className="flex flex-col justify-between gap-12">
-              <div className="relative aspect-[4/5] w-full max-w-sm overflow-hidden rounded-2xl bg-[radial-gradient(circle_at_30%_20%,#ff8a66,var(--signal)_45%,#7a1c05)] md:ml-auto">
+              <div
+                data-reveal="clip"
+                className="relative aspect-[4/5] w-full max-w-sm overflow-hidden rounded-2xl bg-[radial-gradient(circle_at_30%_20%,#ff8a66,var(--signal)_45%,#7a1c05)] md:ml-auto"
+              >
                 <span className="absolute inset-0 grid place-items-center text-[10rem] text-chalk/90">
                   <Monogram />
                 </span>
@@ -233,8 +290,8 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
               <dl className="grid grid-cols-3 gap-4 border-t border-chalk/20 pt-6">
                 {statValues.map((value, i) => (
                   <div key={value}>
-                    <dt className="text-4xl font-extrabold tracking-tight md:text-5xl">
-                      {value}
+                    <dt className="text-4xl font-extrabold tracking-tight tabular-nums md:text-5xl">
+                      <CountUp value={value} />
                     </dt>
                     <dd className="mt-1 font-mono text-[11px] text-chalk/60 uppercase">
                       {t.about.stats[i]}
@@ -249,6 +306,8 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             {t.services.map((service, i) => (
               <div
                 key={service.title}
+                data-reveal="up"
+                style={{ "--i": i } as React.CSSProperties}
                 className="group bg-night p-8 transition-colors hover:bg-signal"
               >
                 <span className="font-mono text-xs text-signal group-hover:text-on-signal">
@@ -268,12 +327,22 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       <section id="experiencia" className="mx-auto max-w-[1600px] px-4 py-32 md:px-8">
         <SectionLabel index="03">{t.experience.label}</SectionLabel>
         <div className="grid gap-12 md:grid-cols-[1fr_1.6fr]">
-          <h2 className="text-5xl leading-[0.95] font-extrabold tracking-[-0.04em] md:text-7xl">
-            {t.experience.titleA}{" "}
-            <span className="font-serif font-normal italic">{t.experience.titleEm}</span>{" "}
-            {t.experience.titleB}
+          <h2
+            data-reveal="words"
+            className="text-5xl leading-[0.95] font-extrabold tracking-[-0.04em] md:text-7xl"
+          >
+            <RevealWords
+              segments={[
+                { text: t.experience.titleA },
+                { text: t.experience.titleEm, className: "font-serif font-normal italic" },
+                { text: t.experience.titleB },
+              ]}
+            />
           </h2>
-          <div className="overflow-hidden rounded-2xl border border-ink bg-[#181715] font-mono text-sm text-chalk shadow-[8px_8px_0_var(--signal)]">
+          <div
+            data-reveal="up"
+            className="overflow-hidden rounded-2xl border border-ink bg-[#181715] font-mono text-sm text-chalk shadow-[8px_8px_0_var(--signal)]"
+          >
             <div className="flex items-center gap-2 border-b border-chalk/10 px-4 py-3">
               <span className="size-3 rounded-full bg-signal" />
               <span className="size-3 rounded-full bg-chalk/30" />
@@ -282,7 +351,12 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             </div>
             <ol className="p-5 md:p-8">
               {t.experience.items.map((item, i) => (
-                <li key={commits[i]} className="group relative flex gap-4 pb-8 last:pb-0">
+                <li
+                  key={commits[i]}
+                  data-reveal="up"
+                  style={{ "--i": i + 2 } as React.CSSProperties}
+                  className="group relative flex gap-4 pb-8 last:pb-0"
+                >
                   <span className="relative flex flex-col items-center">
                     <span
                       className={`z-10 mt-1 size-3 rounded-full border-2 ${
@@ -317,17 +391,26 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       {/* ---------- Contact / Footer ---------- */}
       <footer id="contato" className="bg-signal text-on-signal">
         <div className="mx-auto max-w-[1600px] px-4 pt-32 pb-6 md:px-8">
-          <div className="mb-10 flex items-center gap-3 font-mono text-xs tracking-widest uppercase">
+          <div
+            data-reveal="fade"
+            className="mb-10 flex items-center gap-3 font-mono text-xs tracking-widest uppercase"
+          >
             <span>(04)</span>
             <span>{t.contact.label}</span>
             <span className="h-px flex-1 bg-on-signal/30" />
           </div>
-          <p className="text-4xl leading-[0.95] font-extrabold tracking-[-0.04em] md:text-7xl">
-            {t.contact.title}
+          <p
+            data-reveal="words"
+            className="text-4xl leading-[0.95] font-extrabold tracking-[-0.04em] md:text-7xl"
+          >
+            <RevealWords segments={[{ text: t.contact.title }]} />
             <br />
-            <span className="font-serif font-normal italic">{t.contact.titleEm}</span>
+            <RevealWords
+              segments={[{ text: t.contact.titleEm, className: "font-serif font-normal italic" }]}
+            />
           </p>
           <a
+            data-reveal="up"
             href={`mailto:${profile.email}`}
             className="group mt-12 inline-flex items-center gap-4 border-b-2 border-on-signal pb-2 text-2xl font-semibold tracking-tight sm:text-4xl md:text-6xl"
           >
@@ -336,6 +419,12 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
               ↗
             </span>
           </a>
+          <ContactActions
+            email={profile.email}
+            cv={profile.cv}
+            calendar={profile.calendar}
+            labels={t.contact}
+          />
 
           <div className="mt-24 grid items-center gap-8 border-t border-on-signal/30 pt-8 font-mono text-xs uppercase md:grid-cols-3">
             <ul className="flex flex-wrap gap-x-6 gap-y-2">

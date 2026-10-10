@@ -215,3 +215,95 @@ body::after {
     transition: none;
   }
 }
+
+/* ---------- Scroll reveals ---------- */
+/* Only hide content when JS is running (html.js is set by the theme script) */
+
+.js [data-reveal] {
+  transition:
+    opacity 0.9s cubic-bezier(0.2, 0.8, 0.2, 1),
+    translate 0.9s cubic-bezier(0.2, 0.8, 0.2, 1),
+    clip-path 1.2s cubic-bezier(0.7, 0, 0.2, 1),
+    background-color 0.3s,
+    color 0.3s;
+  transition-delay: calc(var(--i, 0) * 90ms), calc(var(--i, 0) * 90ms), 0s, 0s, 0s;
+}
+
+.js [data-reveal="up"]:not([data-inview]) {
+  opacity: 0;
+  translate: 0 48px;
+}
+
+.js [data-reveal="fade"]:not([data-inview]) {
+  opacity: 0;
+}
+
+.js [data-reveal="clip"]:not([data-inview]) {
+  clip-path: inset(100% 0 0 0 round 1rem);
+}
+
+.js [data-reveal="clip"][data-inview] {
+  clip-path: inset(0 0 0 0 round 1rem);
+}
+
+.reveal-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  /* room for descenders and italic overhang */
+  padding: 0 0.08em 0.1em;
+  margin: 0 -0.08em -0.1em;
+}
+
+.reveal-word {
+  display: inline-block;
+  transition: translate 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition-delay: calc(var(--i, 0) * 45ms);
+}
+
+.js [data-reveal="words"]:not([data-inview]) .reveal-word {
+  translate: 0 110%;
+}
+
+/* ---------- Toast & command palette ---------- */
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    translate: 0 16px;
+    scale: 0.96;
+  }
+}
+
+.toast-in {
+  animation: toast-in 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes palette-in {
+  from {
+    opacity: 0;
+    translate: 0 -12px;
+    scale: 0.98;
+  }
+}
+
+.palette[open] {
+  animation: palette-in 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal]:not([data-inview]) {
+    opacity: 1;
+    translate: none;
+    clip-path: none;
+  }
+
+  .js [data-reveal="words"]:not([data-inview]) .reveal-word {
+    translate: none;
+  }
+
+  .toast-in,
+  .palette[open] {
+    animation: none;
+  }
+}

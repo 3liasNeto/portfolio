@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { localeCookie, locales, type Locale } from "../i18n";
+import { locales, rememberLocale, type Locale } from "../i18n";
 
 export function LanguageSwitcher({ current, label }: { current: Locale; label: string }) {
   return (
@@ -15,10 +15,7 @@ export function LanguageSwitcher({ current, label }: { current: Locale; label: s
             href={`/${locale}`}
             hrefLang={locale}
             aria-current={locale === current ? "true" : undefined}
-            onClick={() => {
-              // Remember the manual choice so the proxy stops following the browser
-              document.cookie = `${localeCookie}=${locale}; path=/; max-age=31536000; samesite=lax`;
-            }}
+            onClick={() => rememberLocale(locale)}
             className={`block rounded-full px-2 py-1.5 transition-colors sm:px-2.5 ${
               locale === current ? "bg-ink text-paper" : "hover:text-signal"
             }`}

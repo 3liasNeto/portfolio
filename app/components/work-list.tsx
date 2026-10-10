@@ -39,7 +39,12 @@ export function WorkList({ projects }: { projects: LocalizedProject[] }) {
     <div onMouseMove={handleMove} onMouseLeave={() => setActive(null)}>
       <ul className="border-t border-ink">
         {projects.map((project, i) => (
-          <li key={project.title} className="border-b border-ink">
+          <li
+            key={project.title}
+            data-reveal="up"
+            style={{ "--i": i } as React.CSSProperties}
+            className="border-b border-ink"
+          >
             <a
               href={project.href}
               onMouseEnter={() => setActive(i)}

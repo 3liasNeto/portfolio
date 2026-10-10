@@ -14,3 +14,14 @@ export const htmlLang: Record<Locale, string> = {
 
 export const hasLocale = (value: string): value is Locale =>
   (locales as readonly string[]).includes(value);
+
+export const localeNames: Record<Locale, string> = {
+  pt: "Português",
+  en: "English",
+  es: "Español",
+};
+
+// Remember a manual choice so the proxy stops following the browser language
+export function rememberLocale(locale: Locale) {
+  document.cookie = `${localeCookie}=${locale}; path=/; max-age=31536000; samesite=lax`;
+}

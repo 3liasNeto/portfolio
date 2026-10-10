@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter_Tight, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import { themeScript } from "../theme";
+import { siteUrl } from "../data";
 import { hasLocale, htmlLang, locales } from "../i18n";
 import { getDictionary } from "./dictionaries";
 import "../globals.css";
@@ -34,11 +35,22 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
   if (!hasLocale(lang)) return {};
   const dict = getDictionary(lang);
   return {
+    metadataBase: new URL(siteUrl),
     title: dict.meta.title,
     description: dict.meta.description,
     alternates: {
+      canonical: `/${lang}`,
       languages: Object.fromEntries(locales.map((l) => [htmlLang[l], `/${l}`])),
     },
+    openGraph: {
+      type: "website",
+      url: `/${lang}`,
+      siteName: "Elias Neto",
+      title: dict.meta.title,
+      description: dict.meta.description,
+      locale: htmlLang[lang].replace("-", "_"),
+    },
+    twitter: { card: "summary_large_image" },
   };
 }
 

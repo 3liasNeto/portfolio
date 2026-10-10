@@ -1,7 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { themeStorageKey, type Theme } from "../theme";
+import { applyTheme, type Theme } from "../theme";
 
 function subscribe(onChange: () => void) {
   const observer = new MutationObserver(onChange);
@@ -10,13 +10,6 @@ function subscribe(onChange: () => void) {
 }
 
 const getTheme = () => (document.documentElement.dataset.theme as Theme) ?? "light";
-
-function choose(next: Theme) {
-  document.documentElement.dataset.theme = next;
-  try {
-    localStorage.setItem(themeStorageKey, next);
-  } catch {}
-}
 
 export function ThemeToggle({
   labels,
@@ -35,7 +28,7 @@ export function ThemeToggle({
             type="button"
             role="radio"
             aria-checked={theme === option}
-            onClick={() => choose(option)}
+            onClick={() => applyTheme(option)}
             className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 uppercase transition-colors ${
               theme === option ? "bg-on-signal text-signal" : ""
             }`}
