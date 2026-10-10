@@ -1,0 +1,37 @@
+export const meta = {
+  title: "CSS that feels like magic: mix-blend-mode in practice",
+  excerpt:
+    "One property, sixteen modes and a bunch of effects that seemed to need canvas. A quick guide to what's actually worth it.",
+};
+
+`mix-blend-mode` defines how an element blends with whatever is **behind** it — just like Photoshop layers. It's one line of CSS that unlocks effects many people would build with canvas.
+
+## The three modes I use the most
+
+- **`difference`**: inverts the background colors. Perfect for cursors and text that must stay readable over anything.
+- **`color-dodge`**: brightens and saturates. It's the foundation of holographic effects.
+- **`multiply`**: darkens, like ink on paper. Great for textures.
+
+## A cursor that always shows up
+
+```css
+.cursor {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: white;
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+```
+
+With a white background and `difference`, the circle turns black over light areas and white over dark ones. No logic required.
+
+<Callout type="warning">
+  Blending only sees what's in the same **stacking context**. An `isolation: isolate` (or a `transform`) on the parent can make the effect "disappear".
+</Callout>
+
+## Performance
+
+Blend modes are computed on the GPU and are usually cheap. What hurts is animating `width`, `top` or `left`: prefer `transform` and `translate`, which don't trigger layout.

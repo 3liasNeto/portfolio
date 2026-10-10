@@ -132,6 +132,47 @@ Os demais textos (`nav`, `palette`, `theme`, rótulos de seção) são da interf
 
 ---
 
+## Blog (em teste)
+
+Fica em **`/pt/blog`**, **`/en/blog`** e **`/es/blog`** (acessar `/blog` redireciona pelo idioma do navegador). Por enquanto é independente: o portfólio não tem link para ele, o blog não tem link para o portfólio, ele não entra no `sitemap.xml` e as páginas pedem para não ser indexadas (`noindex`).
+
+Os **4 posts atuais são exemplos** e podem ser apagados.
+
+### Escrever um post
+
+1. Crie uma pasta em `content/blog/<slug>/` (o slug vira a URL: `/pt/blog/<slug>`).
+2. Dentro dela, um arquivo por idioma: `pt.mdx`, `en.mdx`, `es.mdx`. Cada um começa com:
+
+   ```mdx
+   export const meta = {
+     title: "Título do post",
+     excerpt: "Resumo de uma ou duas frases, usado na listagem e no compartilhamento.",
+   };
+
+   Primeiro parágrafo (ganha a letra capitular laranja)…
+
+   ## Seção (entra automaticamente no índice "Neste post")
+   ```
+
+3. Registre o post em [`content/blog/posts.ts`](content/blog/posts.ts), **do mais novo para o mais antigo** (o primeiro da lista é o destaque):
+
+   ```ts
+   {
+     slug: "meu-post",
+     date: "2026-10-10",
+     tags: ["nextjs", "css"],
+     cover: { palette: ["#ff4d1c", "#ffb199"], glyph: "✳" },
+   },
+   ```
+
+Dentro do MDX dá para usar Markdown normal (com tabelas e listas de tarefas), blocos de código com destaque de sintaxe (` ```ts `, ` ```css `, ` ```bash `…) e o componente `<Callout type="tip">` ou `<Callout type="warning">`.
+
+Tags novas: adicione o nome ao tipo `PostTag` em `content/blog/posts.ts` e o rótulo traduzido em `tags` no [`app/[lang]/blog/dictionary.ts`](app/[lang]/blog/dictionary.ts), que também guarda todos os textos da interface do blog.
+
+O tempo de leitura, a numeração (Nº), o índice, o agrupamento por mês e o feed RSS (`/<idioma>/blog/rss.xml`) são gerados sozinhos.
+
+---
+
 ## Como as coisas funcionam
 
 - **Idiomas:** rotas `/pt`, `/en`, `/es`. Ao acessar `/`, o [`proxy.ts`](proxy.ts) redireciona pelo idioma do navegador (`Accept-Language`). Se a pessoa escolher outro idioma no menu, a escolha fica salva em cookie.

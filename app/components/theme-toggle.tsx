@@ -11,12 +11,17 @@ function subscribe(onChange: () => void) {
 
 const getTheme = () => (document.documentElement.dataset.theme as Theme) ?? "light";
 
+// Current theme, or null during server render / before hydration
+export function useTheme() {
+  return useSyncExternalStore(subscribe, getTheme, () => null);
+}
+
 export function ThemeToggle({
   labels,
 }: {
   labels: { label: string; light: string; dark: string };
 }) {
-  const theme = useSyncExternalStore(subscribe, getTheme, () => null);
+  const theme = useTheme();
 
   return (
     <div role="radiogroup" aria-label={labels.label} className="flex items-center gap-3">

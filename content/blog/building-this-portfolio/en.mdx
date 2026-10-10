@@ -1,0 +1,63 @@
+export const meta = {
+  title: "How I built this portfolio with Next.js 16",
+  excerpt:
+    "Browser-detected languages, a theme that never flashes, a color-inverting blob and a holographic card — the behind the scenes, with code.",
+};
+
+Every developer portfolio risks becoming a résumé with a dark background. I wanted the opposite: a page with **identity**, one that makes you want to play with it. This post covers the technical decisions behind it.
+
+## Three languages, no library
+
+The site exists in Portuguese, English and Spanish. Instead of installing an i18n library, I used what Next already offers: routes prefixed with the language (`/pt`, `/en`, `/es`) and a `proxy.ts` that decides where to send whoever lands on `/`.
+
+```ts
+function negotiate(header: string | null): Locale {
+  if (!header) return defaultLocale;
+  const ranked = header
+    .split(",")
+    .map((part) => {
+      const [tag, ...params] = part.trim().split(";");
+      const q = params.find((p) => p.trim().startsWith("q="));
+      return { lang: tag.toLowerCase().split("-")[0], q: q ? Number(q.split("=")[1]) : 1 };
+    })
+    .sort((a, b) => b.q - a.q);
+  const match = ranked.find((entry) => hasLocale(entry.lang));
+  return match ? (match.lang as Locale) : defaultLocale;
+}
+```
+
+If someone picks another language in the menu, a cookie remembers it and wins over the browser preference.
+
+<Callout type="tip">
+  Copy lives in a typed dictionary: if a translation is missing, TypeScript complains before the deploy.
+</Callout>
+
+## Dark mode without the flash
+
+The classic mistake is reading the theme in a `useEffect`: the page shows up light for a moment, then turns dark. The fix is a tiny script in the `<head>` that runs **before first paint** and sets `data-theme` on `<html>`. CSS only reacts to the attribute.
+
+## The blob that inverts colors
+
+The hero effect is an orange circle with `mix-blend-mode: difference`. Over the light background it turns blue; over dark text, orange. Its position comes from the pointer through CSS variables, updated in a `requestAnimationFrame` — React never re-renders while it moves.
+
+```css
+.hero-blob {
+  background: var(--signal);
+  mix-blend-mode: difference;
+  translate: var(--x) var(--y);
+}
+```
+
+## The holographic card
+
+The card in the "About" section uses the same idea: the pointer becomes `--mx`, `--my` and rotation angles. Three layers do the magic:
+
+1. a `color-dodge` rainbow that shifts with the angle;
+2. a `radial-gradient` glitter, revealed only near the cursor;
+3. a light glare with `overlay`.
+
+## What I'd take to the next project
+
+- CSS variables are the perfect bridge between JavaScript and animation.
+- Detect preferences (language, theme, reduced motion) and **respect** all of them.
+- One playful detail is worth more than ten generic sections.

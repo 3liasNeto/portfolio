@@ -1,9 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { locales, rememberLocale, type Locale } from "../i18n";
 
 export function LanguageSwitcher({ current, label }: { current: Locale; label: string }) {
+  // Keep the visitor on the same page, just in another language
+  const rest = usePathname().replace(/^\/[a-z]{2}(?=\/|$)/, "");
   return (
     <ul
       aria-label={label}
@@ -12,7 +15,7 @@ export function LanguageSwitcher({ current, label }: { current: Locale; label: s
       {locales.map((locale) => (
         <li key={locale}>
           <Link
-            href={`/${locale}`}
+            href={`/${locale}${rest}`}
             hrefLang={locale}
             aria-current={locale === current ? "true" : undefined}
             onClick={() => rememberLocale(locale)}
