@@ -1,6 +1,11 @@
-import { Clock } from "./components/clock";
-import { WorkList } from "./components/work-list";
-import { experience, profile, projects, services, stack, stats } from "./data";
+import { notFound } from "next/navigation";
+import { Clock } from "../components/clock";
+import { LanguageSwitcher } from "../components/language-switcher";
+import { ThemeToggle } from "../components/theme-toggle";
+import { WorkList } from "../components/work-list";
+import { commits, profile, projects, stack, statValues } from "../data";
+import { hasLocale, htmlLang } from "../i18n";
+import { getDictionary } from "./dictionaries";
 
 function Monogram({ className = "" }: { className?: string }) {
   return (
@@ -13,7 +18,7 @@ function Monogram({ className = "" }: { className?: string }) {
   );
 }
 
-function RotatingBadge() {
+function RotatingBadge({ text }: { text: string }) {
   return (
     <div className="relative grid size-32 place-items-center md:size-44">
       <svg
@@ -27,10 +32,12 @@ function RotatingBadge() {
             d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"
           />
         </defs>
-        <text className="fill-ink font-mono text-[15px] tracking-[0.28em] uppercase">
-          <textPath href="#circle">
-            Código com assinatura ✳ Código com assinatura ✳
-          </textPath>
+        <text
+          textLength="482"
+          lengthAdjust="spacing"
+          className="fill-ink font-mono text-[15px] uppercase"
+        >
+          <textPath href="#circle">{text}</textPath>
         </text>
       </svg>
       <span className="grid size-14 place-items-center rounded-full bg-signal text-2xl text-paper md:size-20 md:text-3xl">
@@ -50,26 +57,37 @@ function SectionLabel({ index, children }: { index: string; children: React.Reac
   );
 }
 
-export default function Home() {
+export default async function Home({ params }: PageProps<"/[lang]">) {
+  const { lang } = await params;
+  if (!hasLocale(lang)) notFound();
+  const t = getDictionary(lang);
+  const localizedProjects = projects.map((project) => ({
+    ...project,
+    description: t.projects[project.id],
+  }));
+
   return (
     <main className="flex-1">
       {/* ---------- Nav ---------- */}
       <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-8">
-        <nav className="mx-auto flex max-w-[1600px] items-center justify-between rounded-full border border-ink/10 bg-paper/80 py-2 pr-2 pl-5 backdrop-blur-md">
-          <a href="#top" className="text-2xl" aria-label="Início">
+        <nav className="mx-auto flex max-w-[1600px] items-center justify-between gap-3 rounded-full border border-ink/10 bg-paper/80 py-2 pr-2 pl-5 backdrop-blur-md">
+          <a href="#top" className="text-2xl" aria-label={t.nav.home}>
             <Monogram />
           </a>
           <ul className="hidden gap-8 font-mono text-xs tracking-wider uppercase md:flex">
-            <li><a className="hover:text-signal" href="#trabalhos">Trabalhos</a></li>
-            <li><a className="hover:text-signal" href="#sobre">Sobre</a></li>
-            <li><a className="hover:text-signal" href="#experiencia">Experiência</a></li>
+            <li><a className="hover:text-signal" href="#trabalhos">{t.nav.work}</a></li>
+            <li><a className="hover:text-signal" href="#sobre">{t.nav.about}</a></li>
+            <li><a className="hover:text-signal" href="#experiencia">{t.nav.experience}</a></li>
           </ul>
-          <a
-            href="#contato"
-            className="rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-paper transition-colors hover:bg-signal"
-          >
-            Vamos conversar →
-          </a>
+          <div className="flex items-center gap-2 sm:gap-3">
+            <LanguageSwitcher current={lang} label={t.nav.language} />
+            <a
+              href="#contato"
+              className="rounded-full bg-ink px-4 py-2.5 text-sm font-semibold whitespace-nowrap text-paper transition-colors hover:bg-signal sm:px-5"
+            >
+              <span className="hidden sm:inline">{t.nav.cta} </span>→
+            </a>
+          </div>
         </nav>
       </header>
 
@@ -84,10 +102,10 @@ export default function Home() {
               <span className="absolute inline-flex size-full animate-ping rounded-full bg-signal opacity-75" />
               <span className="relative inline-flex size-2 rounded-full bg-signal" />
             </span>
-            {profile.availability}
+            {t.hero.availability}
           </p>
           <p className="text-right">
-            {profile.location} — <Clock timeZone={profile.timeZone} /> BRT
+            {profile.location} — <Clock timeZone={profile.timeZone} locale={htmlLang[lang]} /> BRT
           </p>
         </div>
 
@@ -113,22 +131,22 @@ export default function Home() {
             </span>
           </h1>
           <div className="absolute top-1/2 left-[52%] hidden -translate-y-1/3 md:block">
-            <RotatingBadge />
+            <RotatingBadge text={t.hero.badge} />
           </div>
         </div>
 
         <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
           <p className="max-w-xl text-xl leading-snug md:text-2xl">
-            {profile.role} que transforma ideias em{" "}
-            <em className="font-serif text-[1.15em]">produtos digitais</em> rápidos,
-            acessíveis e com{" "}
-            <span className="bg-signal px-1 text-paper">personalidade</span>.
+            {t.hero.role} {t.hero.before}{" "}
+            <em className="font-serif text-[1.15em]">{t.hero.em}</em> {t.hero.middle}{" "}
+            <span className="bg-signal px-1 text-on-signal">{t.hero.highlight}</span>
+            {t.hero.after}
           </p>
           <a
             href="#trabalhos"
             className="group flex items-center gap-3 font-mono text-xs tracking-wider uppercase"
           >
-            Role para ver trabalhos
+            {t.hero.scroll}
             <span className="grid size-10 place-items-center rounded-full border border-ink transition-transform group-hover:translate-y-1">
               ↓
             </span>
@@ -137,7 +155,7 @@ export default function Home() {
       </section>
 
       {/* ---------- Marquee ---------- */}
-      <div className="-rotate-1 overflow-hidden border-y border-ink bg-ink py-4 text-paper">
+      <div className="-rotate-1 overflow-hidden border-y border-ink bg-night py-4 text-chalk">
         <div className="animate-marquee flex w-max">
           {[0, 1].map((copy) => (
             <ul key={copy} aria-hidden={copy === 1} className="flex shrink-0">
@@ -157,54 +175,55 @@ export default function Home() {
 
       {/* ---------- Work ---------- */}
       <section id="trabalhos" className="mx-auto max-w-[1600px] px-4 pt-32 pb-24 md:px-8">
-        <SectionLabel index="01">Trabalhos selecionados</SectionLabel>
+        <SectionLabel index="01">{t.work.label}</SectionLabel>
         <div className="mb-16 flex flex-wrap items-end justify-between gap-6">
           <h2 className="max-w-3xl text-5xl leading-[0.95] font-extrabold tracking-[-0.04em] md:text-7xl">
-            Coisas que eu{" "}
-            <span className="font-serif font-normal italic">construí</span> e
-            gosto de mostrar.
+            {t.work.titleA}{" "}
+            <span className="font-serif font-normal italic">{t.work.titleEm}</span>{" "}
+            {t.work.titleB}
           </h2>
-          <p className="max-w-xs font-mono text-xs text-muted uppercase">
-            Passe o mouse para espiar · 2024 — 2026
-          </p>
+          <p className="max-w-xs font-mono text-xs text-muted uppercase">{t.work.hint}</p>
         </div>
-        <WorkList projects={projects} />
+        <WorkList projects={localizedProjects} />
       </section>
 
       {/* ---------- About ---------- */}
-      <section id="sobre" className="bg-ink text-paper">
+      <section id="sobre" className="bg-night text-chalk">
         <div className="mx-auto max-w-[1600px] px-4 py-32 md:px-8">
           <div className="mb-10 flex items-center gap-3 font-mono text-xs tracking-widest uppercase">
             <span className="text-signal">(02)</span>
-            <span>Sobre</span>
-            <span className="h-px flex-1 bg-paper/20" />
+            <span>{t.about.label}</span>
+            <span className="h-px flex-1 bg-chalk/20" />
           </div>
           <div className="grid gap-16 md:grid-cols-[1.4fr_1fr]">
             <p className="text-3xl leading-[1.15] tracking-tight md:text-5xl">
-              Oi, eu sou o Elias. Escrevo código como quem escreve um{" "}
-              <em className="font-serif text-signal">bom texto</em>: com clareza,
-              ritmo e sem palavras sobrando. Gosto do ponto onde{" "}
-              <em className="font-serif">design</em> e{" "}
-              <em className="font-serif">engenharia</em> se encontram — é ali que
-              os produtos ganham alma.
+              {t.about.statement.map((part, i) =>
+                i % 2 === 0 ? (
+                  part
+                ) : (
+                  <em key={i} className={`font-serif ${i === 1 ? "text-signal" : ""}`}>
+                    {part}
+                  </em>
+                ),
+              )}
             </p>
             <div className="flex flex-col justify-between gap-12">
               <div className="relative aspect-[4/5] w-full max-w-sm overflow-hidden rounded-2xl bg-[radial-gradient(circle_at_30%_20%,#ff8a66,var(--signal)_45%,#7a1c05)] md:ml-auto">
-                <span className="absolute inset-0 grid place-items-center text-[10rem] text-paper/90">
+                <span className="absolute inset-0 grid place-items-center text-[10rem] text-chalk/90">
                   <Monogram />
                 </span>
                 <span className="absolute bottom-4 left-4 font-mono text-[11px] tracking-wider uppercase">
-                  [ foto em breve ]
+                  {t.about.photo}
                 </span>
               </div>
-              <dl className="grid grid-cols-3 gap-4 border-t border-paper/20 pt-6">
-                {stats.map((stat) => (
-                  <div key={stat.label}>
+              <dl className="grid grid-cols-3 gap-4 border-t border-chalk/20 pt-6">
+                {statValues.map((value, i) => (
+                  <div key={value}>
                     <dt className="text-4xl font-extrabold tracking-tight md:text-5xl">
-                      {stat.value}
+                      {value}
                     </dt>
-                    <dd className="mt-1 font-mono text-[11px] text-paper/60 uppercase">
-                      {stat.label}
+                    <dd className="mt-1 font-mono text-[11px] text-chalk/60 uppercase">
+                      {t.about.stats[i]}
                     </dd>
                   </div>
                 ))}
@@ -212,19 +231,17 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-28 grid gap-px overflow-hidden rounded-2xl border border-paper/15 bg-paper/15 sm:grid-cols-2 lg:grid-cols-4">
-            {services.map((service, i) => (
+          <div className="mt-28 grid gap-px overflow-hidden rounded-2xl border border-chalk/15 bg-chalk/15 sm:grid-cols-2 lg:grid-cols-4">
+            {t.services.map((service, i) => (
               <div
                 key={service.title}
-                className="group bg-ink p-8 transition-colors hover:bg-signal"
+                className="group bg-night p-8 transition-colors hover:bg-signal"
               >
-                <span className="font-mono text-xs text-signal group-hover:text-ink">
+                <span className="font-mono text-xs text-signal group-hover:text-on-signal">
                   0{i + 1}
                 </span>
-                <h3 className="mt-12 text-2xl font-bold tracking-tight">
-                  {service.title}
-                </h3>
-                <p className="mt-3 text-sm text-paper/70 group-hover:text-paper">
+                <h3 className="mt-12 text-2xl font-bold tracking-tight">{service.title}</h3>
+                <p className="mt-3 text-sm text-chalk/70 group-hover:text-chalk">
                   {service.body}
                 </p>
               </div>
@@ -235,49 +252,46 @@ export default function Home() {
 
       {/* ---------- Experience ---------- */}
       <section id="experiencia" className="mx-auto max-w-[1600px] px-4 py-32 md:px-8">
-        <SectionLabel index="03">Experiência</SectionLabel>
+        <SectionLabel index="03">{t.experience.label}</SectionLabel>
         <div className="grid gap-12 md:grid-cols-[1fr_1.6fr]">
           <h2 className="text-5xl leading-[0.95] font-extrabold tracking-[-0.04em] md:text-7xl">
-            O histórico de <span className="font-serif font-normal italic">commits</span>{" "}
-            da minha carreira.
+            {t.experience.titleA}{" "}
+            <span className="font-serif font-normal italic">{t.experience.titleEm}</span>{" "}
+            {t.experience.titleB}
           </h2>
-          <div className="overflow-hidden rounded-2xl border border-ink bg-[#181715] font-mono text-sm text-paper shadow-[8px_8px_0_var(--signal)]">
-            <div className="flex items-center gap-2 border-b border-paper/10 px-4 py-3">
+          <div className="overflow-hidden rounded-2xl border border-ink bg-[#181715] font-mono text-sm text-chalk shadow-[8px_8px_0_var(--signal)]">
+            <div className="flex items-center gap-2 border-b border-chalk/10 px-4 py-3">
               <span className="size-3 rounded-full bg-signal" />
-              <span className="size-3 rounded-full bg-paper/30" />
-              <span className="size-3 rounded-full bg-paper/30" />
-              <span className="ml-3 text-xs text-paper/50">
-                elias@neto: ~/carreira — git log --graph
-              </span>
+              <span className="size-3 rounded-full bg-chalk/30" />
+              <span className="size-3 rounded-full bg-chalk/30" />
+              <span className="ml-3 text-xs text-chalk/50">{t.experience.terminal}</span>
             </div>
             <ol className="p-5 md:p-8">
-              {experience.map((item, i) => (
-                <li key={item.hash} className="group relative flex gap-4 pb-8 last:pb-0">
+              {t.experience.items.map((item, i) => (
+                <li key={commits[i]} className="group relative flex gap-4 pb-8 last:pb-0">
                   <span className="relative flex flex-col items-center">
                     <span
                       className={`z-10 mt-1 size-3 rounded-full border-2 ${
-                        i === 0 ? "border-signal bg-signal" : "border-paper/60 bg-[#181715]"
+                        i === 0 ? "border-signal bg-signal" : "border-chalk/60 bg-[#181715]"
                       }`}
                     />
-                    {i < experience.length - 1 && (
-                      <span className="absolute top-4 bottom-[-2rem] w-px bg-paper/20" />
+                    {i < t.experience.items.length - 1 && (
+                      <span className="absolute top-4 bottom-[-2rem] w-px bg-chalk/20" />
                     )}
                   </span>
                   <div className="flex-1">
                     <p className="flex flex-wrap gap-x-3 text-xs">
-                      <span className="text-signal">{item.hash}</span>
-                      {i === 0 && (
-                        <span className="text-[#b9d77a]">(HEAD -&gt; main)</span>
-                      )}
-                      <span className="text-paper/50">{item.period}</span>
+                      <span className="text-signal">{commits[i]}</span>
+                      {i === 0 && <span className="text-[#b9d77a]">(HEAD -&gt; main)</span>}
+                      <span className="text-chalk/50">{item.period}</span>
                     </p>
                     <p className="mt-1.5 font-sans text-xl font-semibold tracking-tight md:text-2xl">
                       {item.role}{" "}
-                      <span className="font-serif font-normal text-paper/60 italic">
+                      <span className="font-serif font-normal text-chalk/60 italic">
                         @ {item.company}
                       </span>
                     </p>
-                    <p className="mt-1 text-paper/60">{item.note}</p>
+                    <p className="mt-1 text-chalk/60">{item.note}</p>
                   </div>
                 </li>
               ))}
@@ -287,21 +301,21 @@ export default function Home() {
       </section>
 
       {/* ---------- Contact / Footer ---------- */}
-      <footer id="contato" className="bg-signal text-ink">
+      <footer id="contato" className="bg-signal text-on-signal">
         <div className="mx-auto max-w-[1600px] px-4 pt-32 pb-6 md:px-8">
           <div className="mb-10 flex items-center gap-3 font-mono text-xs tracking-widest uppercase">
             <span>(04)</span>
-            <span>Contato</span>
-            <span className="h-px flex-1 bg-ink/30" />
+            <span>{t.contact.label}</span>
+            <span className="h-px flex-1 bg-on-signal/30" />
           </div>
           <p className="text-4xl leading-[0.95] font-extrabold tracking-[-0.04em] md:text-7xl">
-            Tem uma ideia?
+            {t.contact.title}
             <br />
-            <span className="font-serif font-normal italic">Vamos construir juntos.</span>
+            <span className="font-serif font-normal italic">{t.contact.titleEm}</span>
           </p>
           <a
             href={`mailto:${profile.email}`}
-            className="group mt-12 inline-flex items-center gap-4 border-b-2 border-ink pb-2 text-2xl font-semibold tracking-tight sm:text-4xl md:text-6xl"
+            className="group mt-12 inline-flex items-center gap-4 border-b-2 border-on-signal pb-2 text-2xl font-semibold tracking-tight sm:text-4xl md:text-6xl"
           >
             {profile.email}
             <span className="transition-transform duration-300 group-hover:translate-x-2 group-hover:-translate-y-2">
@@ -309,7 +323,7 @@ export default function Home() {
             </span>
           </a>
 
-          <div className="mt-24 grid gap-8 border-t border-ink/30 pt-8 font-mono text-xs uppercase md:grid-cols-3">
+          <div className="mt-24 grid items-center gap-8 border-t border-on-signal/30 pt-8 font-mono text-xs uppercase md:grid-cols-3">
             <ul className="flex flex-wrap gap-x-6 gap-y-2">
               {profile.socials.map((social) => (
                 <li key={social.label}>
@@ -324,11 +338,11 @@ export default function Home() {
                 </li>
               ))}
             </ul>
-            <p className="md:text-center">
-              {profile.location} · <Clock timeZone={profile.timeZone} />
-            </p>
+            <div className="md:justify-self-center">
+              <ThemeToggle labels={t.theme} />
+            </div>
             <a href="#top" className="md:text-right">
-              Voltar ao topo ↑
+              {t.contact.back}
             </a>
           </div>
 
@@ -336,11 +350,17 @@ export default function Home() {
             aria-hidden
             className="mt-10 text-center text-[16vw] leading-[0.75] font-black tracking-[-0.07em] whitespace-nowrap uppercase select-none"
           >
-            Elias{" "}<span className="font-serif font-normal tracking-[-0.03em] normal-case italic">Neto</span>
+            Elias{" "}
+            <span className="font-serif font-normal tracking-[-0.03em] normal-case italic">
+              Neto
+            </span>
           </p>
-          <p className="mt-6 flex justify-between font-mono text-[11px] uppercase">
-            <span>© {new Date().getFullYear()} Elias Neto</span>
-            <span>Feito com Next.js & café</span>
+          <p className="mt-6 flex justify-between gap-4 font-mono text-[11px] uppercase">
+            <span>
+              © {new Date().getFullYear()} {profile.name} · {profile.location} ·{" "}
+              <Clock timeZone={profile.timeZone} locale={htmlLang[lang]} />
+            </span>
+            <span>{t.contact.madeWith}</span>
           </p>
         </div>
       </footer>

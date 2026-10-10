@@ -3,7 +3,9 @@
 import { useRef, useState } from "react";
 import type { Project } from "../data";
 
-function Preview({ project }: { project: Project }) {
+type LocalizedProject = Project & { description: string };
+
+function Preview({ project }: { project: LocalizedProject }) {
   const [a, b] = project.palette;
   return (
     <div
@@ -23,7 +25,7 @@ function Preview({ project }: { project: Project }) {
   );
 }
 
-export function WorkList({ projects }: { projects: Project[] }) {
+export function WorkList({ projects }: { projects: LocalizedProject[] }) {
   const [active, setActive] = useState<number | null>(null);
   const previewRef = useRef<HTMLDivElement>(null);
 

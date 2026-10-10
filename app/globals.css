@@ -6,6 +6,21 @@
   --signal: #ff4d1c;
   --muted: #7a746a;
   --line: #d6cfc2;
+  /* Always-dark panels (about, marquee, terminal) and their text */
+  --night: #121110;
+  --chalk: #f1ece2;
+  /* Text that sits on the signal color */
+  --on-signal: #121110;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --paper: #0f0e0d;
+  --ink: #ece6da;
+  --muted: #8f887c;
+  --line: #34312d;
+  --night: #1b1a18;
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -14,6 +29,9 @@
   --color-signal: var(--signal);
   --color-muted: var(--muted);
   --color-line: var(--line);
+  --color-night: var(--night);
+  --color-chalk: var(--chalk);
+  --color-on-signal: var(--on-signal);
   --font-sans: var(--font-sans-display);
   --font-serif: var(--font-serif-display);
   --font-mono: var(--font-mono-display);
@@ -24,6 +42,7 @@ html {
 }
 
 body {
+  transition: background-color 0.4s, color 0.4s;
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-sans-display), system-ui, sans-serif;

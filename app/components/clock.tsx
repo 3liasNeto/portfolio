@@ -7,11 +7,11 @@ function subscribe(onChange: () => void) {
   return () => clearInterval(id);
 }
 
-export function Clock({ timeZone }: { timeZone: string }) {
+export function Clock({ timeZone, locale }: { timeZone: string; locale: string }) {
   const time = useSyncExternalStore(
     subscribe,
     () =>
-      new Intl.DateTimeFormat("pt-BR", {
+      new Intl.DateTimeFormat(locale, {
         hour: "2-digit",
         minute: "2-digit",
         timeZone,
