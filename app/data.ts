@@ -8,8 +8,8 @@ export const profile = {
   location: "São Paulo, BR",
   timeZone: "America/Sao_Paulo",
   email: "ola@eliasneto.dev",
-  // Photo shown on the trading card, e.g. "/elias.jpg" in public/ (null = placeholder art)
-  photo: null as string | null,
+  // Full-art image on the front of the holographic card (63:88, in public/)
+  cardArt: "/elias-card.webp",
   cv: "/cv-elias-neto.pdf",
   calendar: "https://cal.com/",
   socials: [

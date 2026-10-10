@@ -435,3 +435,18 @@ body::after {
     transition: none;
   }
 }
+
+/* Full-art front: the image fills the card, holo washes over all of it */
+.holo-card-fullart {
+  padding: 0;
+  background: #121110;
+}
+
+.holo-card-fullart .holo-card-holo {
+  border-radius: inherit;
+  opacity: calc(0.12 + var(--o) * 0.4);
+}
+
+.holo-card-fullart .holo-card-glare {
+  opacity: calc(var(--o) * 0.65);
+}

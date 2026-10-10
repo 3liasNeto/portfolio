@@ -255,12 +255,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             </p>
             <div className="flex flex-col justify-between gap-12">
               <div data-reveal="up" className="md:ml-auto md:w-[340px]">
-                <HoloCard
-                  name={profile.name}
-                  photo={profile.photo}
-                  placeholder={t.about.photo}
-                  t={t.about.card}
-                />
+                <HoloCard name={profile.name} art={profile.cardArt} t={t.about.card} />
               </div>
               <dl className="grid grid-cols-3 gap-4 border-t border-chalk/20 pt-6">
                 {statValues.map((value, i) => (
