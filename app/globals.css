@@ -70,12 +70,6 @@ body::after {
   }
 }
 
-@keyframes spin-slow {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 @keyframes blink {
   50% {
     opacity: 0;
@@ -95,10 +89,6 @@ body::after {
   animation: marquee 32s linear infinite;
 }
 
-.animate-spin-slow {
-  animation: spin-slow 18s linear infinite;
-}
-
 .animate-blink {
   animation: blink 1s steps(1) infinite;
 }
@@ -110,7 +100,6 @@ body::after {
 
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee,
-  .animate-spin-slow,
   .animate-blink,
   .rise > span {
     animation: none;

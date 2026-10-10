@@ -25,7 +25,16 @@ const pt = {
     highlight: "personalidade",
     after: ".",
     scroll: "Role para ver trabalhos",
-    badge: "Código com assinatura ✳ Código com assinatura ✳",
+    terminal: {
+      command: "elias --fazendo",
+      phrases: [
+        "construindo interfaces",
+        "escrevendo APIs",
+        "refatorando sem medo",
+        "revisando um PR",
+        "passando um café",
+      ],
+    },
   },
   work: {
     label: "Trabalhos selecionados",
@@ -176,7 +185,16 @@ const en: Dictionary = {
     highlight: "personality",
     after: ".",
     scroll: "Scroll to see work",
-    badge: "Code with a signature ✳ Code with a signature ✳",
+    terminal: {
+      command: "elias --doing",
+      phrases: [
+        "building interfaces",
+        "writing APIs",
+        "refactoring fearlessly",
+        "reviewing a PR",
+        "brewing coffee",
+      ],
+    },
   },
   work: {
     label: "Selected work",
@@ -320,7 +338,16 @@ const es: Dictionary = {
     highlight: "personalidad",
     after: ".",
     scroll: "Desliza para ver proyectos",
-    badge: "Código con firma ✳ Código con firma ✳",
+    terminal: {
+      command: "elias --haciendo",
+      phrases: [
+        "construyendo interfaces",
+        "escribiendo APIs",
+        "refactorizando sin miedo",
+        "revisando un PR",
+        "preparando café",
+      ],
+    },
   },
   work: {
     label: "Proyectos seleccionados",

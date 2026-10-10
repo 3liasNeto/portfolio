@@ -10,6 +10,7 @@ import { RevealObserver } from "../components/reveal-observer";
 import { SmoothScroll } from "../components/smooth-scroll";
 import { ThemeToggle } from "../components/theme-toggle";
 import { Toaster } from "../components/toast";
+import { TypingTerminal } from "../components/typing-terminal";
 import { WorkList } from "../components/work-list";
 import { commits, profile, projects, siteUrl, stack, statValues } from "../data";
 import { hasLocale, htmlLang } from "../i18n";
@@ -32,35 +33,6 @@ function Letters({ text, className }: { text: string; className: string }) {
       {char}
     </span>
   ));
-}
-
-function RotatingBadge({ text }: { text: string }) {
-  return (
-    <div className="relative grid size-32 place-items-center md:size-44">
-      <svg
-        viewBox="0 0 200 200"
-        className="animate-spin-slow absolute inset-0 size-full"
-        aria-hidden
-      >
-        <defs>
-          <path
-            id="circle"
-            d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"
-          />
-        </defs>
-        <text
-          textLength="482"
-          lengthAdjust="spacing"
-          className="fill-ink font-mono text-[15px] uppercase"
-        >
-          <textPath href="#circle">{text}</textPath>
-        </text>
-      </svg>
-      <span className="grid size-14 place-items-center rounded-full bg-signal text-2xl text-paper md:size-20 md:text-3xl">
-        ✳
-      </span>
-    </div>
-  );
 }
 
 function SectionLabel({ index, children }: { index: string; children: React.ReactNode }) {
@@ -186,8 +158,13 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
               </span>
             </span>
           </h1>
-          <div className="hero-depth-3 absolute top-1/2 left-[52%] hidden -translate-y-1/3 md:block">
-            <RotatingBadge text={t.hero.badge} />
+          <div className="mt-8 md:absolute md:top-[62%] md:left-[30%] md:mt-0">
+            <div className="hero-depth-3 md:-rotate-3">
+              <TypingTerminal
+                command={t.hero.terminal.command}
+                phrases={t.hero.terminal.phrases}
+              />
+            </div>
           </div>
         </div>
 
