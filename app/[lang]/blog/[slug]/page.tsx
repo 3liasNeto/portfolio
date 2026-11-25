@@ -14,7 +14,8 @@ import { fill, getBlogDictionary } from "../dictionary";
 import { formatDate } from "../format";
 import { getPost, postSlugs, type PostSummary } from "../posts";
 
-export const dynamicParams = false;
+// Unknown slugs reach the page, which calls notFound() -> the localized 404
+export const dynamicParams = true;
 
 export function generateStaticParams() {
   return postSlugs().map((slug) => ({ slug }));
