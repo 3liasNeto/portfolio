@@ -57,6 +57,9 @@ export type Project = {
   origin: "bornan" | "senac" | "personal";
   // Public link; without one (client work, private repos) the project is shown as private
   href?: string;
+  // Live site shown inside the desktop hover preview (iframe). The site must allow being
+  // framed by this one (no X-Frame-Options DENY / frame-ancestors 'none').
+  site?: string;
   // Two colors used to paint the generative preview card
   palette: [string, string];
   glyph: string;
@@ -69,6 +72,7 @@ export const projects: Project[] = [
     tags: ["React 19", "Elysia", "Stripe"],
     origin: "personal",
     href: "https://cartanoel.com.br",
+    site: "https://cartanoel.com.br",
     palette: ["#b3121f", "#ffe9d6"],
     glyph: "✉",
   },
@@ -110,6 +114,7 @@ export const projects: Project[] = [
     tags: ["React", "Vite", "TypeScript"],
     origin: "personal",
     href: "https://batte.eliasneto.dev/",
+    site: "https://batte.eliasneto.dev/",
     palette: ["#c3201a", "#ffe27a"],
     glyph: "◓",
   },

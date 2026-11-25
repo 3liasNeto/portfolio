@@ -76,7 +76,9 @@ NEXT_PUBLIC_SITE_URL=https://seu-dominio.com
 | Copa do Mundo (`Fifa_Game-JS`) | SENAC | Privado: o repositório é privado. Para linkar, deixe-o público e adicione `href` |
 | Portfolio | Pessoal | [github.com/3liasNeto/portfolio](https://github.com/3liasNeto/portfolio) |
 
-Campos: `id` (liga à descrição em `dictionaries.ts`), `title`, `tags`, `origin` (`bornan`, `senac` ou `personal`, mostrado ao lado do título), `href` (opcional: sem ele o projeto aparece como privado), `palette` e `glyph` (card de prévia).
+Campos: `id` (liga à descrição em `dictionaries.ts`), `title`, `tags`, `origin` (`bornan`, `senac` ou `personal`, mostrado ao lado do título), `href` (opcional: sem ele o projeto aparece como privado), `site` (opcional: site no ar exibido ao vivo, num iframe, no card de prévia do desktop; hoje Carta Noel e Desafio Pokémon), `palette` e `glyph` (card de prévia).
+
+> **Para o `site` aparecer na prévia**, ele precisa aceitar ser exibido dentro de outro site: sem `X-Frame-Options: DENY`/`SAMEORIGIN` e, se tiver `Content-Security-Policy`, com `frame-ancestors` incluindo `https://eliasneto.dev`. Se o site bloquear, a prévia mostra a página de erro do navegador no lugar do card colorido; nesse caso, remova o `site` do projeto.
 
 > **Para adicionar/remover um projeto, experiência ou número:** edite o array em `data.ts` (`projects`, `experience` ou `stats`), atualize o tipo do id logo acima dele (`ProjectId`, `ExperienceId`, `StatId`) e adicione/remova o texto correspondente nos **3 idiomas** do `dictionaries.ts`. O TypeScript avisa se faltar algum.
 
