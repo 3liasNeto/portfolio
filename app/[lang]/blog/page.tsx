@@ -79,7 +79,7 @@ export default async function BlogIndex({ params }: PageProps<"/[lang]/blog">) {
                 </span>
               ))}
             </p>
-            <h2 className="mt-5 text-4xl leading-[0.95] font-extrabold tracking-[-0.04em] transition-colors group-hover:text-signal md:text-6xl">
+            <h2 className="mt-5 text-4xl leading-[0.95] font-extrabold tracking-[-0.04em] transition-colors group-hover:text-signal-text md:text-6xl">
               {featured.title}
             </h2>
             <p className="mt-5 font-serif text-2xl leading-snug text-muted italic">{featured.excerpt}</p>

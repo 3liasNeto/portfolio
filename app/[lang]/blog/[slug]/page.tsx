@@ -45,7 +45,7 @@ function PostCard({ post, lang, label }: { post: PostSummary; lang: string; labe
         className="aspect-[16/9] rounded-xl transition-transform duration-500 group-hover:-rotate-1"
       />
       <p className="mt-4 font-mono text-[11px] tracking-widest text-muted uppercase">{label}</p>
-      <p className="mt-1 text-2xl leading-tight font-extrabold tracking-tight transition-colors group-hover:text-signal">
+      <p className="mt-1 text-2xl leading-tight font-extrabold tracking-tight transition-colors group-hover:text-signal-text">
         {post.title}
       </p>
     </Link>
@@ -68,7 +68,7 @@ export default async function BlogPost({ params }: PageProps<"/[lang]/blog/[slug
       <header className="mx-auto max-w-[1400px] px-4 pt-10 md:px-8 md:pt-14">
         <Link
           href={`/${lang}/blog`}
-          className="group inline-flex items-center gap-2 font-mono text-[11px] tracking-widest uppercase hover:text-signal"
+          className="group inline-flex items-center gap-2 font-mono text-[11px] tracking-widest uppercase hover:text-signal-text"
         >
           <span className="transition-transform group-hover:-translate-x-1">←</span> {t.back}
         </Link>

@@ -27,14 +27,14 @@ export default async function BlogLayout({ children, params }: LayoutProps<"/[la
               <span className="text-signal">.</span>
             </span>
             <span className="font-serif text-2xl italic">blog</span>
-            <span className="rounded-full border border-signal px-2 py-0.5 font-mono text-[10px] tracking-widest text-signal uppercase">
+            <span className="rounded-full border border-signal px-2 py-0.5 font-mono text-[10px] tracking-widest text-signal-text uppercase">
               {t.testBadge}
             </span>
           </Link>
           <div className="flex items-center gap-2">
             <a
               href={`/${lang}/blog/rss.xml`}
-              className="hidden rounded-full border border-ink/15 px-3 py-1.5 font-mono text-[11px] tracking-wider uppercase transition-colors hover:border-signal hover:text-signal sm:block"
+              className="hidden rounded-full border border-ink/15 px-3 py-1.5 font-mono text-[11px] tracking-wider uppercase transition-colors hover:border-signal hover:text-signal-text sm:block"
             >
               RSS
             </a>
@@ -55,10 +55,10 @@ export default async function BlogLayout({ children, params }: LayoutProps<"/[la
             </span>
           </p>
           <div className="flex flex-col gap-2 font-mono text-[11px] tracking-wider uppercase md:items-end">
-            <a href={`/${lang}/blog/rss.xml`} className="hover:text-signal">
+            <a href={`/${lang}/blog/rss.xml`} className="hover:text-signal-text">
               {t.rss} ↗
             </a>
-            <a href="#top" className="hover:text-signal">
+            <a href="#top" className="hover:text-signal-text">
               {t.backToTop}
             </a>
             <span className="text-muted">© {new Date().getFullYear()} Elias Neto</span>

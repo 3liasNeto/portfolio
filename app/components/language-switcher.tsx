@@ -20,7 +20,7 @@ export function LanguageSwitcher({ current, label }: { current: Locale; label: s
             aria-current={locale === current ? "true" : undefined}
             onClick={() => rememberLocale(locale)}
             className={`block rounded-full px-2 py-1.5 transition-colors sm:px-2.5 ${
-              locale === current ? "bg-ink text-paper" : "hover:text-signal"
+              locale === current ? "bg-ink text-paper" : "hover:text-signal-text"
             }`}
           >
             {locale}

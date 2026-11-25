@@ -59,7 +59,7 @@ export function PostExplorer({
   );
   const chip = (selected: boolean) =>
     `rounded-full border px-3.5 py-1.5 font-mono text-[11px] tracking-wider uppercase transition-colors ${
-      selected ? "border-ink bg-ink text-paper" : "border-ink/20 hover:border-signal hover:text-signal"
+      selected ? "border-ink bg-ink text-paper" : "border-ink/20 hover:border-signal hover:text-signal-text"
     }`;
 
   return (
@@ -82,7 +82,7 @@ export function PostExplorer({
           ))}
         </div>
         <label className="flex items-center gap-2 rounded-full border border-ink/20 px-4 py-2 font-mono text-sm focus-within:border-signal md:w-72">
-          <span aria-hidden className="text-signal">⌕</span>
+          <span aria-hidden className="text-signal-text">⌕</span>
           <input
             type="search"
             value={query}
@@ -102,7 +102,7 @@ export function PostExplorer({
 
       {groups.map(([month, items]) => (
         <section key={month} className="mt-8">
-          <h3 className="mb-2 font-mono text-[11px] tracking-[0.2em] text-signal uppercase">{month}</h3>
+          <h3 className="mb-2 font-mono text-[11px] tracking-[0.2em] text-signal-text uppercase">{month}</h3>
           <ul className="border-t border-ink/15">
             {items.map((post) => (
               <li key={post.slug} className="border-b border-ink/15">
@@ -112,7 +112,7 @@ export function PostExplorer({
                 >
                   <span className="hidden font-mono text-xs text-muted md:block">{post.dateLabel}</span>
                   <span className="min-w-0">
-                    <span className="block text-2xl leading-tight font-extrabold tracking-tight transition-colors group-hover:text-signal md:text-3xl">
+                    <span className="block text-2xl leading-tight font-extrabold tracking-tight transition-colors group-hover:text-signal-text md:text-3xl">
                       {post.title}
                     </span>
                     <span className="mt-2 block max-w-2xl text-muted">{post.excerpt}</span>

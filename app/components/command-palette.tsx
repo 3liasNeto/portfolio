@@ -150,9 +150,9 @@ export function CommandPalette({
         onClick={open}
         aria-label={t.open}
         aria-keyshortcuts={mac ? "Meta+K" : "Control+K"}
-        className="flex items-center gap-1.5 rounded-full border border-ink/15 px-3 py-1.5 font-mono text-[11px] tracking-wider transition-colors hover:border-signal hover:text-signal"
+        className="flex items-center gap-1.5 rounded-full border border-ink/15 px-3 py-1.5 font-mono text-[11px] tracking-wider transition-colors hover:border-signal hover:text-signal-text"
       >
-        <span aria-hidden className="text-signal">&gt;_</span>
+        <span aria-hidden className="text-signal-text">&gt;_</span>
         <span className="hidden lg:inline">{mac ? "⌘K" : "Ctrl K"}</span>
       </button>
 
@@ -190,7 +190,7 @@ export function CommandPalette({
               aria-expanded="true"
               aria-controls="palette-list"
               aria-activedescendant={results[active] ? `cmd-${results[active].id}` : undefined}
-              className="w-full bg-transparent text-base text-chalk outline-none placeholder:text-chalk/35"
+              className="w-full bg-transparent text-base text-chalk outline-none placeholder:text-chalk/55"
             />
           </label>
 
@@ -202,7 +202,7 @@ export function CommandPalette({
               return (
                 <li key={command.id} role="presentation">
                   {header && (
-                    <p className="px-3 pt-3 pb-1.5 text-[10px] tracking-[0.2em] text-chalk/40 uppercase">
+                    <p className="px-3 pt-3 pb-1.5 text-[10px] tracking-[0.2em] text-chalk/60 uppercase">
                       {header}
                     </p>
                   )}
@@ -235,7 +235,7 @@ export function CommandPalette({
             })}
           </ul>
 
-          <div className="flex gap-5 border-t border-chalk/10 px-5 py-3 text-[11px] text-chalk/45">
+          <div className="flex gap-5 border-t border-chalk/10 px-5 py-3 text-[11px] text-chalk/60">
             <span><kbd className="text-chalk/80">↑↓</kbd> {t.hints.move}</span>
             <span><kbd className="text-chalk/80">↵</kbd> {t.hints.run}</span>
             <span><kbd className="text-chalk/80">esc</kbd> {t.hints.close}</span>

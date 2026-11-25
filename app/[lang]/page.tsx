@@ -42,7 +42,7 @@ function SectionLabel({ index, children }: { index: string; children: React.Reac
       data-reveal="fade"
       className="mb-10 flex items-center gap-3 font-mono text-xs tracking-widest uppercase"
     >
-      <span className="text-signal">({index})</span>
+      <span className="text-signal-text">({index})</span>
       <span>{children}</span>
       <span className="h-px flex-1 bg-ink/20" />
     </div>
@@ -88,9 +88,9 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             <Monogram />
           </a>
           <ul className="hidden gap-8 font-mono text-xs tracking-wider uppercase md:flex">
-            <li><a className="hover:text-signal" href="#trabalhos">{t.nav.work}</a></li>
-            <li><a className="hover:text-signal" href="#sobre">{t.nav.about}</a></li>
-            <li><a className="hover:text-signal" href="#experiencia">{t.nav.experience}</a></li>
+            <li><a className="hover:text-signal-text" href="#trabalhos">{t.nav.work}</a></li>
+            <li><a className="hover:text-signal-text" href="#sobre">{t.nav.about}</a></li>
+            <li><a className="hover:text-signal-text" href="#experiencia">{t.nav.experience}</a></li>
           </ul>
           <div className="flex items-center gap-2 sm:gap-3">
             <CommandPalette
@@ -107,7 +107,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             <LanguageSwitcher current={lang} label={t.nav.language} />
             <a
               href="#contato"
-              className="rounded-full bg-ink px-4 py-2.5 text-sm font-semibold whitespace-nowrap text-paper transition-colors hover:bg-signal sm:px-5"
+              className="rounded-full bg-ink px-4 py-2.5 text-sm font-semibold whitespace-nowrap text-paper transition-colors hover:bg-signal hover:text-on-signal sm:px-5"
             >
               <span className="hidden sm:inline">{t.nav.cta} </span>→
             </a>
@@ -136,7 +136,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
 
         <div className="relative py-12">
           <p className="mb-4 font-mono text-sm text-muted">
-            <span className="text-signal">~/</span>portfolio{" "}
+            <span className="text-signal-text">~/</span>portfolio{" "}
             <span className="text-ink">$ whoami</span>
             <span className="animate-blink ml-1 inline-block h-4 w-2 translate-y-0.5 bg-ink" />
           </p>
@@ -284,8 +284,10 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
                 <span className="font-mono text-xs text-signal group-hover:text-on-signal">
                   0{i + 1}
                 </span>
-                <h3 className="mt-12 text-2xl font-bold tracking-tight">{service.title}</h3>
-                <p className="mt-3 text-sm text-chalk/70 group-hover:text-chalk">
+                <h3 className="mt-12 text-2xl font-bold tracking-tight group-hover:text-on-signal">
+                  {service.title}
+                </h3>
+                <p className="mt-3 text-sm text-chalk/70 group-hover:text-on-signal">
                   {service.body}
                 </p>
               </div>

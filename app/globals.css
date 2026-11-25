@@ -4,7 +4,9 @@
   --paper: #f1ece2;
   --ink: #121110;
   --signal: #ff4d1c;
-  --muted: #7a746a;
+  /* Signal as text on paper: darker so small text passes WCAG AA (4.7:1) */
+  --signal-text: #c2330a;
+  --muted: #635e55;
   --line: #d6cfc2;
   /* Always-dark panels (about, marquee, terminal) and their text */
   --night: #121110;
@@ -19,6 +21,7 @@
   --ink: #ece6da;
   --muted: #8f887c;
   --line: #34312d;
+  --signal-text: var(--signal);
   --night: #1b1a18;
   color-scheme: dark;
 }
@@ -27,6 +30,7 @@
   --color-paper: var(--paper);
   --color-ink: var(--ink);
   --color-signal: var(--signal);
+  --color-signal-text: var(--signal-text);
   --color-muted: var(--muted);
   --color-line: var(--line);
   --color-night: var(--night);
@@ -50,7 +54,7 @@ body {
 
 ::selection {
   background: var(--signal);
-  color: var(--paper);
+  color: var(--on-signal);
 }
 
 /* Film grain over the paper texture */
@@ -472,7 +476,7 @@ body::after {
     font-size: 4.6em;
     font-style: italic;
     line-height: 0.78;
-    color: var(--signal);
+    color: var(--signal-text);
   }
 
   .prose > p:first-child {
@@ -507,7 +511,7 @@ body::after {
   }
 
   .prose a:hover {
-    color: var(--signal);
+    color: var(--signal-text);
   }
 
   .prose strong {
@@ -541,7 +545,7 @@ body::after {
   .prose ol > li::marker {
     font-family: var(--font-mono-display), monospace;
     font-size: 0.85em;
-    color: var(--signal);
+    color: var(--signal-text);
   }
 
   .prose blockquote {
@@ -577,7 +581,7 @@ body::after {
   --sh-jsxliterals: #c6c6ff;
   --sh-string: #b9d77a;
   --sh-keyword: #ff6a3d;
-  --sh-comment: #6f685e;
+  --sh-comment: #958d80;
   counter-reset: line;
 }
 

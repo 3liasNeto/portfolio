@@ -53,7 +53,7 @@ export function WorkList({ projects }: { projects: LocalizedProject[] }) {
               <span className="font-mono text-xs text-muted">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <span className="text-5xl font-extrabold tracking-[-0.04em] uppercase transition-[transform,color] duration-500 group-hover:translate-x-3 group-hover:text-signal md:text-7xl">
+              <span className="text-5xl font-extrabold tracking-[-0.04em] uppercase transition-[transform,color] duration-500 group-hover:translate-x-3 group-hover:text-signal-text md:text-7xl">
                 {project.title}
               </span>
               <span className="col-span-3 col-start-2 max-w-md text-sm text-muted md:col-span-1 md:col-start-3 md:text-base">
@@ -71,7 +71,7 @@ export function WorkList({ projects }: { projects: LocalizedProject[] }) {
               </span>
               <span className="col-start-3 row-start-1 flex items-center gap-3 font-mono text-xs md:col-start-4">
                 {project.year}
-                <span className="grid size-10 place-items-center rounded-full border border-ink transition-all duration-300 group-hover:rotate-45 group-hover:border-signal group-hover:bg-signal group-hover:text-paper">
+                <span className="grid size-10 place-items-center rounded-full border border-ink transition-all duration-300 group-hover:rotate-45 group-hover:border-signal group-hover:bg-signal group-hover:text-on-signal">
                   ↗
                 </span>
               </span>
