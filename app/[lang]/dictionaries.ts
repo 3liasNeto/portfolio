@@ -48,6 +48,8 @@ const pt = {
     personal: "Pessoal",
   },
   projects: {
+    cartanoel:
+      "Produto no ar: a pessoa conta o nome e alguns detalhes da criança e recebe uma carta do Papai Noel escrita por IA, com kit em PDF e certificado para compartilhar. React 19 e Vite no front; Bun, Elysia e PostgreSQL no back; better-auth, Stripe (cartão e Pix) e LLM via OpenRouter.",
     b2b: "Portal B2B construído de ponta a ponta com Next.js, NestJS, TypeORM e PostgreSQL, integrado ao ERP Senior.",
     banking:
       "Plataforma de VAN bancária multi-tenant com microsserviços, RabbitMQ e MongoDB. Fiz as telas de autenticação: 2FA, passkeys, magic link e login social.",
@@ -229,6 +231,8 @@ const en: Dictionary = {
     personal: "Personal",
   },
   projects: {
+    cartanoel:
+      "Live product: you share a child's name and a few details and get a letter from Santa written by AI, with a PDF kit and a certificate to share. React 19 and Vite on the front; Bun, Elysia and PostgreSQL on the back; better-auth, Stripe (card and Pix) and an LLM via OpenRouter.",
     b2b: "B2B portal built end to end with Next.js, NestJS, TypeORM and PostgreSQL, integrated with the Senior ERP.",
     banking:
       "Multi-tenant banking VAN platform with microservices, RabbitMQ and MongoDB. I built the sign-in screens: 2FA, passkeys, magic link and social login.",
@@ -407,6 +411,8 @@ const es: Dictionary = {
     personal: "Personal",
   },
   projects: {
+    cartanoel:
+      "Producto en línea: cuentas el nombre y algunos detalles del niño y recibes una carta de Papá Noel escrita por IA, con kit en PDF y certificado para compartir. React 19 y Vite en el front; Bun, Elysia y PostgreSQL en el back; better-auth, Stripe (tarjeta y Pix) y LLM vía OpenRouter.",
     b2b: "Portal B2B construido de punta a punta con Next.js, NestJS, TypeORM y PostgreSQL, integrado con el ERP Senior.",
     banking:
       "Plataforma de VAN bancaria multi-tenant con microservicios, RabbitMQ y MongoDB. Hice las pantallas de autenticación: 2FA, passkeys, magic link y login social.",

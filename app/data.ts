@@ -39,7 +39,15 @@ export const stack = [
   "Docker",
 ];
 
-export type ProjectId = "b2b" | "banking" | "vendora" | "niveela" | "pokemon" | "fifa" | "portfolio";
+export type ProjectId =
+  | "cartanoel"
+  | "b2b"
+  | "banking"
+  | "vendora"
+  | "niveela"
+  | "pokemon"
+  | "fifa"
+  | "portfolio";
 
 export type Project = {
   id: ProjectId;
@@ -55,6 +63,15 @@ export type Project = {
 };
 
 export const projects: Project[] = [
+  {
+    id: "cartanoel",
+    title: "Carta Noel",
+    tags: ["React 19", "Elysia", "Stripe"],
+    origin: "personal",
+    href: "https://cartanoel.com.br",
+    palette: ["#b3121f", "#ffe9d6"],
+    glyph: "✉",
+  },
   {
     id: "b2b",
     title: "Portal B2B",

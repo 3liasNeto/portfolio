@@ -70,6 +70,7 @@ NEXT_PUBLIC_SITE_URL=https://seu-dominio.com
 
 | Projeto | Origem | Link |
 |---|---|---|
+| Carta Noel | Pessoal (produto no ar) | [cartanoel.com.br](https://cartanoel.com.br) |
 | Portal B2B, Banking VAN, Vendora, Niveela | Bornan | Privado (sem link, selo "Projeto privado") |
 | Desafio Pokémon | Pessoal | [github.com/3liasNeto/desafio-pokemon](https://github.com/3liasNeto/desafio-pokemon) |
 | Copa do Mundo (`Fifa_Game-JS`) | SENAC | Privado: o repositório é privado. Para linkar, deixe-o público e adicione `href` |
