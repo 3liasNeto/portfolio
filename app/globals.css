@@ -140,19 +140,26 @@ body::after {
 }
 
 /* Soft signal-colored glow that trails the pointer */
-/* A fixed-size glow moved with translate (compositor only), clipped to the hero */
+/* A fixed-size glow moved with translate (compositor only). Its clip box spans the
+   full viewport width (the hero itself is max 1600px wide, which showed a hard edge
+   on wide screens) and fades out at the bottom instead of cutting off. */
 .hero-spotlight-clip {
   position: absolute;
-  inset: 0;
+  top: 0;
+  bottom: 0;
+  left: -50vw;
+  right: -50vw;
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
+  mask-image: linear-gradient(to bottom, #000 75%, transparent);
 }
 
 .hero-spotlight {
   position: absolute;
   top: 0;
-  left: 0;
+  /* the clip box starts 50vw left of the hero, so this puts x=0 back at the hero's edge */
+  left: 50vw;
   width: 1200px;
   height: 1200px;
   margin: -600px 0 0 -600px;

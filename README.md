@@ -72,7 +72,7 @@ NEXT_PUBLIC_SITE_URL=https://seu-dominio.com
 |---|---|---|
 | Carta Noel | Pessoal (produto no ar) | [cartanoel.com.br](https://cartanoel.com.br) |
 | Portal B2B, Banking VAN, Vendora, Niveela | Bornan | Privado (sem link, selo "Projeto privado") |
-| Desafio Pokémon | Pessoal | [github.com/3liasNeto/desafio-pokemon](https://github.com/3liasNeto/desafio-pokemon) |
+| Desafio Pokémon | Pessoal | [batte.eliasneto.dev](https://batte.eliasneto.dev/) (código em [github.com/3liasNeto/desafio-pokemon](https://github.com/3liasNeto/desafio-pokemon)) |
 | Copa do Mundo (`Fifa_Game-JS`) | SENAC | Privado: o repositório é privado. Para linkar, deixe-o público e adicione `href` |
 | Portfolio | Pessoal | [github.com/3liasNeto/portfolio](https://github.com/3liasNeto/portfolio) |
 
@@ -84,7 +84,7 @@ Campos: `id` (liga à descrição em `dictionaries.ts`), `title`, `tags`, `origi
 
 | Status | Campo | Valor | Observação |
 |---|---|---|---|
-| ✔️ | `experience` | Bornan (2023 — hoje), UNIUBE (2023 — 2028), SENAC (2021 — 2023), primeiro commit (2021) | Ordem da linha do tempo; textos em `experience.items[id]` |
+| ✔️ | `experience` | Bornan (2023 — hoje), Ciência da Computação na UNIUBE (2023 — 2028), SENAC (2021 — 2023), primeiro commit (2021) | Ordem da linha do tempo; textos em `experience.items[id]` |
 | ✔️ | `stats` | `3+` anos de experiência, `3` frentes (mobile, web e API), `2021` escrevendo código desde | Rótulos em `about.stats[id]` |
 | ✔️ | `sections` | `trabalhos`, `sobre`, `experiencia`, `contato` | Âncoras das seções, usadas pela página e pela paleta ⌘K |
 

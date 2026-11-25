@@ -109,7 +109,7 @@ export const projects: Project[] = [
     title: "Desafio Pokémon",
     tags: ["React", "Vite", "TypeScript"],
     origin: "personal",
-    href: "https://github.com/3liasNeto/desafio-pokemon",
+    href: "https://batte.eliasneto.dev/",
     palette: ["#c3201a", "#ffe27a"],
     glyph: "◓",
   },
