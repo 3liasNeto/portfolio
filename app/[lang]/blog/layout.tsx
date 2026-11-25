@@ -5,7 +5,6 @@ import { SmoothScroll } from "../../components/smooth-scroll";
 import { ThemeSwitch } from "../../components/blog/theme-switch";
 import { Toaster } from "../../components/toast";
 import { hasLocale } from "../../i18n";
-import { getDictionary } from "../dictionaries";
 import { getBlogDictionary } from "./dictionary";
 
 // The blog is a standalone test: it doesn't link to the portfolio (and vice versa)
@@ -13,7 +12,6 @@ export default async function BlogLayout({ children, params }: LayoutProps<"/[la
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
   const t = getBlogDictionary(lang);
-  const site = getDictionary(lang);
 
   return (
     <div id="top" className="flex min-h-svh flex-1 flex-col">
@@ -38,8 +36,8 @@ export default async function BlogLayout({ children, params }: LayoutProps<"/[la
             >
               RSS
             </a>
-            <LanguageSwitcher current={lang} label={site.nav.language} />
-            <ThemeSwitch labels={site.theme} />
+            <LanguageSwitcher current={lang} label={t.language} />
+            <ThemeSwitch labels={t.theme} />
           </div>
         </div>
       </header>

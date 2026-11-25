@@ -14,7 +14,7 @@ import { ThemeToggle } from "../components/theme-toggle";
 import { Toaster } from "../components/toast";
 import { TypingTerminal } from "../components/typing-terminal";
 import { WorkList } from "../components/work-list";
-import { commits, profile, projects, siteUrl, stack, statValues } from "../data";
+import { experience, profile, projects, sections, siteUrl, stack, stats } from "../data";
 import { hasLocale, htmlLang } from "../i18n";
 import { getDictionary } from "./dictionaries";
 
@@ -89,9 +89,9 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             <Monogram />
           </a>
           <ul className="hidden gap-8 font-mono text-xs tracking-wider uppercase md:flex">
-            <li><a className="hover:text-signal-text" href="#trabalhos">{t.nav.work}</a></li>
-            <li><a className="hover:text-signal-text" href="#sobre">{t.nav.about}</a></li>
-            <li><a className="hover:text-signal-text" href="#experiencia">{t.nav.experience}</a></li>
+            <li><a className="hover:text-signal-text" href={`#${sections.work}`}>{t.nav.work}</a></li>
+            <li><a className="hover:text-signal-text" href={`#${sections.about}`}>{t.nav.about}</a></li>
+            <li><a className="hover:text-signal-text" href={`#${sections.experience}`}>{t.nav.experience}</a></li>
           </ul>
           <div className="flex items-center gap-2 sm:gap-3">
             <CommandPalette
@@ -107,7 +107,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             />
             <LanguageSwitcher current={lang} label={t.nav.language} />
             <a
-              href="#contato"
+              href={`#${sections.contact}`}
               className="rounded-full bg-ink px-4 py-2.5 text-sm font-semibold whitespace-nowrap text-paper transition-colors hover:bg-signal hover:text-on-signal sm:px-5"
             >
               <span className="hidden sm:inline">{t.nav.cta} </span>→
@@ -179,7 +179,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             {t.hero.after}
           </p>
           <a
-            href="#trabalhos"
+            href={`#${sections.work}`}
             className="group flex items-center gap-3 font-mono text-xs tracking-wider uppercase"
           >
             {t.hero.scroll}
@@ -214,7 +214,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       </div>
 
       {/* ---------- Work ---------- */}
-      <section id="trabalhos" className="mx-auto max-w-[1600px] px-4 pt-32 pb-24 md:px-8">
+      <section id={sections.work} className="mx-auto max-w-[1600px] px-4 pt-32 pb-24 md:px-8">
         <SectionLabel index="01">{t.work.label}</SectionLabel>
         <div className="mb-16 flex flex-wrap items-end justify-between gap-6">
           <h2
@@ -238,7 +238,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       </section>
 
       {/* ---------- About ---------- */}
-      <section id="sobre" className="bg-night text-chalk">
+      <section id={sections.about} className="bg-night text-chalk">
         <div className="mx-auto max-w-[1600px] px-4 py-32 md:px-8">
           {/* The section label doubles as its heading (this section has no big title) */}
           <h2
@@ -266,11 +266,11 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
                 <HoloCard name={profile.name} art={profile.cardArt} t={t.about.card} />
               </div>
               <dl className="grid grid-cols-3 gap-4 border-t border-chalk/20 pt-6">
-                {statValues.map((value, i) => (
+                {stats.map(({ id, value }) => (
                   // Term (label) before value in the markup; flex-col-reverse shows the number on top
-                  <div key={value} className="flex flex-col-reverse">
+                  <div key={id} className="flex flex-col-reverse">
                     <dt className="mt-1 font-mono text-[11px] text-chalk/60 uppercase">
-                      {t.about.stats[i]}
+                      {t.about.stats[id]}
                     </dt>
                     <dd className="text-4xl font-extrabold tracking-tight tabular-nums md:text-5xl">
                       <CountUp value={value} />
@@ -290,7 +290,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
                 className="group bg-night p-8 transition-colors hover:bg-signal"
               >
                 <span className="font-mono text-xs text-signal group-hover:text-on-signal">
-                  0{i + 1}
+                  {String(i + 1).padStart(2, "0")}
                 </span>
                 <h3 className="mt-12 text-2xl font-bold tracking-tight group-hover:text-on-signal">
                   {service.title}
@@ -305,7 +305,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       </section>
 
       {/* ---------- Experience ---------- */}
-      <section id="experiencia" className="mx-auto max-w-[1600px] px-4 py-32 md:px-8">
+      <section id={sections.experience} className="mx-auto max-w-[1600px] px-4 py-32 md:px-8">
         <SectionLabel index="03">{t.experience.label}</SectionLabel>
         <div className="grid gap-12 md:grid-cols-[1fr_1.6fr]">
           <h2
@@ -331,46 +331,49 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
               <span className="ml-3 text-xs text-chalk/50">{t.experience.terminal}</span>
             </div>
             <ol className="p-5 md:p-8">
-              {t.experience.items.map((item, i) => (
-                <li
-                  key={commits[i]}
-                  data-reveal="up"
-                  style={{ "--i": i + 2 } as React.CSSProperties}
-                  className="group relative flex gap-4 pb-8 last:pb-0"
-                >
-                  <span className="relative flex flex-col items-center">
-                    <span
-                      className={`z-10 mt-1 size-3 rounded-full border-2 ${
-                        i === 0 ? "border-signal bg-signal" : "border-chalk/60 bg-[#181715]"
-                      }`}
-                    />
-                    {i < t.experience.items.length - 1 && (
-                      <span className="absolute top-4 bottom-[-2rem] w-px bg-chalk/20" />
-                    )}
-                  </span>
-                  <div className="flex-1">
-                    <p className="flex flex-wrap gap-x-3 text-xs">
-                      <span className="text-signal">{commits[i]}</span>
-                      {i === 0 && <span className="text-[#b9d77a]">(HEAD -&gt; main)</span>}
-                      <span className="text-chalk/50">{item.period}</span>
-                    </p>
-                    <p className="mt-1.5 font-sans text-xl font-semibold tracking-tight md:text-2xl">
-                      {item.role}{" "}
-                      <span className="font-serif font-normal text-chalk/60 italic">
-                        @ {item.company}
-                      </span>
-                    </p>
-                    <p className="mt-1 text-chalk/60">{item.note}</p>
-                  </div>
-                </li>
-              ))}
+              {experience.map(({ id, hash }, i) => {
+                const item = t.experience.items[id];
+                return (
+                  <li
+                    key={id}
+                    data-reveal="up"
+                    style={{ "--i": i + 2 } as React.CSSProperties}
+                    className="group relative flex gap-4 pb-8 last:pb-0"
+                  >
+                    <span className="relative flex flex-col items-center">
+                      <span
+                        className={`z-10 mt-1 size-3 rounded-full border-2 ${
+                          i === 0 ? "border-signal bg-signal" : "border-chalk/60 bg-[#181715]"
+                        }`}
+                      />
+                      {i < experience.length - 1 && (
+                        <span className="absolute top-4 bottom-[-2rem] w-px bg-chalk/20" />
+                      )}
+                    </span>
+                    <div className="flex-1">
+                      <p className="flex flex-wrap gap-x-3 text-xs">
+                        <span className="text-signal">{hash}</span>
+                        {i === 0 && <span className="text-[#b9d77a]">(HEAD -&gt; main)</span>}
+                        <span className="text-chalk/50">{item.period}</span>
+                      </p>
+                      <p className="mt-1.5 font-sans text-xl font-semibold tracking-tight md:text-2xl">
+                        {item.role}{" "}
+                        <span className="font-serif font-normal text-chalk/60 italic">
+                          @ {item.company}
+                        </span>
+                      </p>
+                      <p className="mt-1 text-chalk/60">{item.note}</p>
+                    </div>
+                  </li>
+                );
+              })}
             </ol>
           </div>
         </div>
       </section>
 
       {/* ---------- Contact / Footer ---------- */}
-      <footer id="contato" className="bg-signal text-on-signal">
+      <footer id={sections.contact} className="bg-signal text-on-signal">
         <div className="mx-auto max-w-[1600px] px-4 pt-32 pb-6 md:px-8">
           <div
             data-reveal="fade"

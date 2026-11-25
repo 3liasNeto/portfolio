@@ -1,7 +1,7 @@
 "use client";
 
 import { applyTheme } from "../../theme";
-import { useTheme } from "../theme-toggle";
+import { useTheme } from "../use-theme";
 
 // Compact sun/moon button for the blog header
 export function ThemeSwitch({ labels }: { labels: { light: string; dark: string } }) {

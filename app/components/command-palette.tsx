@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import type { Dictionary } from "../[lang]/dictionaries";
+import { sections } from "../data";
 import { localeNames, locales, rememberLocale, type Locale } from "../i18n";
 import { applyTheme } from "../theme";
 import { scrollToTarget, setScrollLocked } from "./smooth-scroll";
@@ -47,10 +48,10 @@ export function CommandPalette({
     const go = (selector: string) => () => scrollToTarget(selector);
     return [
       { id: "top", group: t.groups.navigate, label: t.commands.top, icon: "↑", run: go("#top") },
-      { id: "work", group: t.groups.navigate, label: t.commands.work, icon: "◆", run: go("#trabalhos") },
-      { id: "about", group: t.groups.navigate, label: t.commands.about, icon: "✳", run: go("#sobre") },
-      { id: "exp", group: t.groups.navigate, label: t.commands.experience, icon: "⎇", keywords: "git log", run: go("#experiencia") },
-      { id: "contact", group: t.groups.navigate, label: t.commands.contact, icon: "✉", run: go("#contato") },
+      { id: "work", group: t.groups.navigate, label: t.commands.work, icon: "◆", run: go(`#${sections.work}`) },
+      { id: "about", group: t.groups.navigate, label: t.commands.about, icon: "✳", run: go(`#${sections.about}`) },
+      { id: "exp", group: t.groups.navigate, label: t.commands.experience, icon: "⎇", keywords: "git log", run: go(`#${sections.experience}`) },
+      { id: "contact", group: t.groups.navigate, label: t.commands.contact, icon: "✉", run: go(`#${sections.contact}`) },
       { id: "light", group: t.groups.preferences, label: t.commands.light, icon: "☀", keywords: "theme", run: () => applyTheme("light") },
       { id: "dark", group: t.groups.preferences, label: t.commands.dark, icon: "☾", keywords: "theme", run: () => applyTheme("dark") },
       ...locales

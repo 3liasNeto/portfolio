@@ -77,14 +77,15 @@ Os 4 projetos são **fictícios**: Orbita, Feira Livre, Pulso, Nômade.
 | ⚠️ | `palette` | 2 cores do card de prévia que aparece ao passar o mouse |
 | ⚠️ | `glyph` | Símbolo grande do card de prévia |
 
-> **Para adicionar/remover um projeto:** edite o array `projects`, atualize o tipo `ProjectId` (logo acima dele) e adicione/remova a descrição correspondente em `projects` nos **3 idiomas** do `dictionaries.ts`. O TypeScript avisa se faltar alguma.
+> **Para adicionar/remover um projeto, experiência ou número:** edite o array em `data.ts` (`projects`, `experience` ou `stats`), atualize o tipo do id logo acima dele (`ProjectId`, `ExperienceId`, `StatId`) e adicione/remova o texto correspondente nos **3 idiomas** do `dictionaries.ts`. O TypeScript avisa se faltar algum.
 
 #### Experiência e números
 
 | Status | Campo | Valor atual | Observação |
 |---|---|---|---|
-| ⚠️ | `commits` | `a3f9c21`, `7be04d8`, `c51e9a0`, `0d2b7f3` | "Hashes" decorativos do `git log` — **um por item de experiência**, na mesma ordem |
-| ⚠️ | `statValues` | `7+`, `40+`, `12k` | Números da seção Sobre (contam de 0 ao valor). Os rótulos ficam em `about.stats` no dicionário, na mesma ordem |
+| ⚠️ | `experience` | 4 itens: `id` + `hash` (`a3f9c21`…) | Ordem da linha do tempo (mais recente primeiro) e o "hash" decorativo do `git log`. Os textos de cada item ficam em `experience.items[id]` no dicionário |
+| ⚠️ | `stats` | `years: 7+`, `projects: 40+`, `commits: 12k` | Números da seção Sobre (contam de 0 ao valor). Os rótulos ficam em `about.stats[id]` no dicionário |
+| ✔️ | `sections` | `trabalhos`, `sobre`, `experiencia`, `contato` | Âncoras das seções, usadas pela página e pela paleta ⌘K |
 
 ---
 
@@ -102,10 +103,10 @@ O arquivo tem 3 blocos: `pt`, `en` e `es`. **Cada item abaixo precisa ser atuali
 | ⚠️ | `work.hint` | Texto ao lado do título de trabalhos (inclui o **intervalo de anos**) | "Passe o mouse para espiar · 2024 — 2026" |
 | ⚠️ | `projects.*` | Descrição de cada projeto (uma por `id`) | Textos fictícios |
 | ⚠️ | `about.statement` | Parágrafo "Sobre" — alterna texto normal e trechos em itálico (posições ímpares = itálico) | "Oi, eu sou o Elias. Escrevo código como quem escreve um *bom texto*…" |
-| ⚠️ | `about.stats` | Rótulos dos números (`statValues`) | "anos escrevendo código", "projetos entregues", "commits no último ano" |
+| ⚠️ | `about.stats` | Rótulos dos números de `stats`, por `id` | "anos escrevendo código", "projetos entregues", "commits no último ano" |
 | ✔️ | `about.card.alt` | Descrição da arte da carta (leitores de tela) | Já descreve a arte atual — atualizar só se trocar a imagem |
 | ⚠️ | `services` | 4 serviços oferecidos (título + texto) | Produtos web, Interfaces, APIs & dados, Consultoria |
-| ⚠️ | `experience.items` | Experiências: `period`, `role`, `company`, `note` (a primeira recebe o selo `HEAD -> main`) | Empresa Alfa, Startup Beta, Agência Gama, "git init" 2018 |
+| ⚠️ | `experience.items` | Textos de cada experiência por `id` (o mesmo de `experience` em `data.ts`): `period`, `role`, `company`, `note`. A primeira da lista recebe o selo `HEAD -> main` | Empresa Alfa, Startup Beta, Agência Gama, "git init" 2018 |
 | ✔️ | `contact.*` | Títulos e botões de contato | Genéricos, servem como estão |
 
 Os demais textos (`nav`, `palette`, `theme`, rótulos de seção) são da interface e já estão prontos nos 3 idiomas.

@@ -8,6 +8,8 @@ const pt = {
       "Front-end, ferramentas e os bastidores de construir produtos digitais, por Elias Neto.",
   },
   testBadge: "beta",
+  language: "Idioma",
+  theme: { light: "Usar tema claro", dark: "Usar tema escuro" },
   masthead: {
     edition: "Edição",
     titleA: "Notas",
@@ -62,6 +64,8 @@ const en: BlogDictionary = {
     description: "Front-end, tooling and the behind the scenes of building digital products, by Elias Neto.",
   },
   testBadge: "beta",
+  language: "Language",
+  theme: { light: "Use light theme", dark: "Use dark theme" },
   masthead: {
     edition: "Issue",
     titleA: "Notes",
@@ -114,6 +118,8 @@ const es: BlogDictionary = {
       "Front-end, herramientas y los bastidores de construir productos digitales, por Elias Neto.",
   },
   testBadge: "beta",
+  language: "Idioma",
+  theme: { light: "Usar tema claro", dark: "Usar tema oscuro" },
   masthead: {
     edition: "Edición",
     titleA: "Notas",

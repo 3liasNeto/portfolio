@@ -1,5 +1,5 @@
 import type { Locale } from "../i18n";
-import type { ProjectId } from "../data";
+import type { ExperienceId, ProjectId, StatId } from "../data";
 
 const pt = {
   meta: {
@@ -74,7 +74,11 @@ const pt = {
       alt: "Carta holográfica full art: Elias como treinador em uma cidade futurista, com hologramas e um tablet.",
       back: "Carta de Dev",
     },
-    stats: ["anos escrevendo código", "projetos entregues", "commits no último ano"],
+    stats: {
+      years: "anos escrevendo código",
+      projects: "projetos entregues",
+      commits: "commits no último ano",
+    } satisfies Record<StatId, string>,
   },
   services: [
     {
@@ -100,32 +104,32 @@ const pt = {
     titleEm: "commits",
     titleB: "da minha carreira.",
     terminal: "elias@neto: ~/carreira — git log --graph",
-    items: [
-      {
+    items: {
+      alpha: {
         period: "2024 — hoje",
         role: "Senior Software Engineer",
         company: "Empresa Alfa",
         note: "Liderando a reconstrução do front-end do produto principal.",
       },
-      {
+      beta: {
         period: "2021 — 2024",
         role: "Full-Stack Developer",
         company: "Startup Beta",
         note: "Do MVP à Série A: arquitetura, pagamentos e infraestrutura.",
       },
-      {
+      gamma: {
         period: "2019 — 2021",
         role: "Front-End Developer",
         company: "Agência Gama",
         note: "Sites e campanhas para marcas nacionais.",
       },
-      {
+      start: {
         period: "2018",
         role: "git init",
         company: "Primeiro commit",
         note: "Onde tudo começou: um HTML, um CSS e muita curiosidade.",
       },
-    ],
+    } satisfies Record<ExperienceId, { period: string; role: string; company: string; note: string }>,
   },
   contact: {
     label: "Contato",
@@ -241,7 +245,7 @@ const en: Dictionary = {
       alt: "Full-art holographic card: Elias as a trainer in a futuristic city, with holograms and a tablet.",
       back: "Dev Card",
     },
-    stats: ["years writing code", "projects shipped", "commits last year"],
+    stats: { years: "years writing code", projects: "projects shipped", commits: "commits last year" },
   },
   services: [
     {
@@ -267,32 +271,32 @@ const en: Dictionary = {
     titleEm: "commit",
     titleB: "history of my career.",
     terminal: "elias@neto: ~/career — git log --graph",
-    items: [
-      {
+    items: {
+      alpha: {
         period: "2024 — now",
         role: "Senior Software Engineer",
         company: "Company Alpha",
         note: "Leading the front-end rebuild of the flagship product.",
       },
-      {
+      beta: {
         period: "2021 — 2024",
         role: "Full-Stack Developer",
         company: "Startup Beta",
         note: "From MVP to Series A: architecture, payments and infrastructure.",
       },
-      {
+      gamma: {
         period: "2019 — 2021",
         role: "Front-End Developer",
         company: "Gamma Agency",
         note: "Websites and campaigns for national brands.",
       },
-      {
+      start: {
         period: "2018",
         role: "git init",
         company: "First commit",
         note: "Where it all began: some HTML, some CSS and lots of curiosity.",
       },
-    ],
+    },
   },
   contact: {
     label: "Contact",
@@ -409,7 +413,7 @@ const es: Dictionary = {
       alt: "Carta holográfica full art: Elias como entrenador en una ciudad futurista, con hologramas y una tableta.",
       back: "Carta de Dev",
     },
-    stats: ["años escribiendo código", "proyectos entregados", "commits el último año"],
+    stats: { years: "años escribiendo código", projects: "proyectos entregados", commits: "commits el último año" },
   },
   services: [
     {
@@ -435,32 +439,32 @@ const es: Dictionary = {
     titleEm: "commits",
     titleB: "de mi carrera.",
     terminal: "elias@neto: ~/carrera — git log --graph",
-    items: [
-      {
+    items: {
+      alpha: {
         period: "2024 — hoy",
         role: "Senior Software Engineer",
         company: "Empresa Alfa",
         note: "Liderando la reconstrucción del front-end del producto principal.",
       },
-      {
+      beta: {
         period: "2021 — 2024",
         role: "Full-Stack Developer",
         company: "Startup Beta",
         note: "Del MVP a la Serie A: arquitectura, pagos e infraestructura.",
       },
-      {
+      gamma: {
         period: "2019 — 2021",
         role: "Front-End Developer",
         company: "Agencia Gama",
         note: "Sitios y campañas para marcas nacionales.",
       },
-      {
+      start: {
         period: "2018",
         role: "git init",
         company: "Primer commit",
         note: "Donde todo empezó: un HTML, un CSS y mucha curiosidad.",
       },
-    ],
+    },
   },
   contact: {
     label: "Contacto",

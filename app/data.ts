@@ -89,6 +89,30 @@ export const projects: Project[] = [
   },
 ];
 
-export const commits = ["a3f9c21", "7be04d8", "c51e9a0", "0d2b7f3"];
+// Experience timeline, newest first. Texts live in dictionaries.ts under the same id;
+// the hash is the decorative "commit" shown in the git-log window.
+export type ExperienceId = "alpha" | "beta" | "gamma" | "start";
 
-export const statValues = ["7+", "40+", "12k"];
+export const experience: { id: ExperienceId; hash: string }[] = [
+  { id: "alpha", hash: "a3f9c21" },
+  { id: "beta", hash: "7be04d8" },
+  { id: "gamma", hash: "c51e9a0" },
+  { id: "start", hash: "0d2b7f3" },
+];
+
+// Numbers in the About section; labels live in dictionaries.ts under the same id
+export type StatId = "years" | "projects" | "commits";
+
+export const stats: { id: StatId; value: string }[] = [
+  { id: "years", value: "7+" },
+  { id: "projects", value: "40+" },
+  { id: "commits", value: "12k" },
+];
+
+// Section anchors, shared by the page and the command palette
+export const sections = {
+  work: "trabalhos",
+  about: "sobre",
+  experience: "experiencia",
+  contact: "contato",
+} as const;
