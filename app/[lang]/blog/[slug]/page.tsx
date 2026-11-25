@@ -8,8 +8,9 @@ import { PostCover } from "@/components/blog/post-cover";
 import { ReadingProgress } from "@/components/blog/reading-progress";
 import { ShareButtons } from "@/components/blog/share-buttons";
 import { TableOfContents } from "@/components/blog/table-of-contents";
-import { profile } from "@/lib/data";
-import { hasLocale, htmlLang, locales } from "@/dictionaries/config";
+import { profile, siteUrl } from "@/lib/data";
+import { blogIndexed, indexable, languageAlternates, notIndexable } from "@/lib/seo";
+import { hasLocale, htmlLang } from "@/dictionaries/config";
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import { fill, formatDate } from "@/lib/blog/format";
 import { getPost, postSlugs, type PostSummary } from "@/lib/blog/posts";
@@ -31,7 +32,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/blog/[slug
   return {
     title: `${post.title} — ${profile.name}`,
     description: post.excerpt,
-    robots: { index: false, follow: false },
+    robots: blogIndexed ? indexable : notIndexable,
     // Replaces the portfolio's openGraph inherited from the root layout
     openGraph: {
       type: "article",
@@ -46,7 +47,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/blog/[slug
     },
     alternates: {
       canonical: `/${lang}/blog/${slug}`,
-      languages: Object.fromEntries(locales.map((l) => [htmlLang[l], `/${l}/blog/${slug}`])),
+      languages: languageAlternates(`/blog/${slug}`),
     },
   };
 }
@@ -83,6 +84,23 @@ export default async function BlogPost({ params }: PageProps<"/[lang]/blog/[slug
 
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            headline: post.title,
+            description: post.excerpt,
+            datePublished: post.date,
+            inLanguage: htmlLang[lang],
+            url: `${siteUrl}/${lang}/blog/${post.slug}`,
+            image: `${siteUrl}/${lang}/blog/${post.slug}/opengraph-image`,
+            keywords: post.tags.map((tag) => t.tags[tag]),
+            author: { "@type": "Person", name: profile.name, url: siteUrl },
+          }).replace(/</g, "\\u003c"),
+        }}
+      />
       <ReadingProgress target="#article" />
 
       <header className="mx-auto max-w-[1400px] px-4 pt-10 md:px-8 md:pt-14">

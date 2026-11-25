@@ -10,7 +10,7 @@ export const profile = {
   // IANA zone for the live clock, plus the short label shown next to it
   timeZone: "America/Sao_Paulo",
   timeZoneLabel: "BRT",
-  email: "3lias.neto@gmail.com",
+  email: "contato@eliasneto.dev",
   // Full-art image on the front of the holographic card (63:88, in public/)
   cardArt: "/elias-card.webp",
   cv: "/cv-elias-neto.pdf",

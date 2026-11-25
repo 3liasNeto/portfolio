@@ -22,8 +22,8 @@ O conteúdo vem dos currículos (Full Stack e Frontend) e do GitHub [`3liasNeto`
 | # | Onde | O quê |
 |---|------|-------|
 | 1 | Variável de ambiente `NEXT_PUBLIC_SITE_URL` | Domínio real do site |
-| 2 | [`app/data.ts`](app/data.ts) | Dados que não mudam com o idioma (contato, links, projetos, números…) |
-| 3 | [`app/[lang]/dictionaries.ts`](app/[lang]/dictionaries.ts) | Todos os textos, **em 3 idiomas** (pt, en, es) |
+| 2 | [`lib/data.ts`](lib/data.ts) | Dados que não mudam com o idioma (contato, links, projetos, números…) |
+| 3 | [`dictionaries/data/`](dictionaries/data) | Todos os textos, **em 3 idiomas**: `pt.json`, `en.json`, `es.json` (formato em `dictionaries/types.ts`) |
 | 4 | [`public/`](public) | Arquivos: CV em PDF e arte da carta |
 
 Legenda: ✔️ = real · ⚠️ = falta definir
@@ -44,7 +44,7 @@ NEXT_PUBLIC_SITE_URL=https://seu-dominio.com
 
 ---
 
-### 2. `app/data.ts`
+### 2. `lib/data.ts`
 
 #### Perfil (`profile`)
 
@@ -54,7 +54,7 @@ NEXT_PUBLIC_SITE_URL=https://seu-dominio.com
 | ✔️ | `city` / `region` / `country` | `Uberlândia` / `MG` / `BR` | Dados estruturados do Google |
 | ✔️ | `location` | `Uberlândia, MG` | Topo, rodapé e blog |
 | ✔️ | `timeZone` / `timeZoneLabel` | `America/Sao_Paulo` / `BRT` | Relógio ao vivo |
-| ✔️ | `email` | `3lias.neto@gmail.com` | Contato, botão "Copiar e-mail", paleta ⌘K |
+| ✔️ | `email` | `contato@eliasneto.dev` | Contato, botão "Copiar e-mail", paleta ⌘K |
 | ✔️ | `cardArt` | `/elias-card.webp` | Arte full art da carta holográfica (proporção 63:88) |
 | ✔️ | `cv` | `/cv-elias-neto.pdf` | Currículo Full Stack (inclui telefone) |
 | ⚠️ | `calendar` | `null` | Link de agenda (Cal.com, Calendly…). Com `null`, o botão "Agendar conversa" e o comando da paleta ficam ocultos |
@@ -76,11 +76,11 @@ NEXT_PUBLIC_SITE_URL=https://seu-dominio.com
 | Copa do Mundo (`Fifa_Game-JS`) | SENAC | Privado: o repositório é privado. Para linkar, deixe-o público e adicione `href` |
 | Portfolio | Pessoal | [github.com/3liasNeto/portfolio](https://github.com/3liasNeto/portfolio) |
 
-Campos: `id` (liga à descrição em `dictionaries.ts`), `title`, `tags`, `origin` (`bornan`, `senac` ou `personal`, mostrado ao lado do título), `href` (opcional: sem ele o projeto aparece como privado), `site` (opcional: site no ar exibido ao vivo, num iframe, no card de prévia do desktop; hoje Carta Noel e Desafio Pokémon), `palette` e `glyph` (card de prévia).
+Campos: `id` (liga à descrição em `projects` nos JSON de `dictionaries/data/`), `title`, `tags`, `origin` (`bornan`, `senac` ou `personal`, mostrado ao lado do título), `href` (opcional: sem ele o projeto aparece como privado), `site` (opcional: site no ar exibido ao vivo, num iframe, no card de prévia do desktop; hoje Carta Noel e Desafio Pokémon), `palette` e `glyph` (card de prévia).
 
 > **Para o `site` aparecer na prévia**, ele precisa aceitar ser exibido dentro de outro site: sem `X-Frame-Options: DENY`/`SAMEORIGIN` e, se tiver `Content-Security-Policy`, com `frame-ancestors` incluindo `https://eliasneto.dev`. Se o site bloquear, a prévia mostra a página de erro do navegador no lugar do card colorido; nesse caso, remova o `site` do projeto.
 
-> **Para adicionar/remover um projeto, experiência ou número:** edite o array em `data.ts` (`projects`, `experience` ou `stats`), atualize o tipo do id logo acima dele (`ProjectId`, `ExperienceId`, `StatId`) e adicione/remova o texto correspondente nos **3 idiomas** do `dictionaries.ts`. O TypeScript avisa se faltar algum.
+> **Para adicionar/remover um projeto, experiência ou número:** edite o array em `data.ts` (`projects`, `experience` ou `stats`), atualize o tipo do id logo acima dele (`ProjectId`, `ExperienceId`, `StatId`) e adicione/remova o texto correspondente nos **3 idiomas** (`dictionaries/data/*.json`). O TypeScript avisa se faltar algum, porque `dictionaries/types.ts` tipa esses textos por id.
 
 #### Experiência e números
 
@@ -92,7 +92,7 @@ Campos: `id` (liga à descrição em `dictionaries.ts`), `title`, `tags`, `origi
 
 ---
 
-### 3. `app/[lang]/dictionaries.ts`: textos (pt, en, es)
+### 3. `dictionaries/data/*.json`: textos (pt, en, es)
 
 O arquivo tem 3 blocos: `pt`, `en` e `es`. **Ao mudar um texto, mude nos 3.** O TypeScript acusa erro se algum idioma ficar com campo faltando.
 
@@ -123,10 +123,35 @@ Os demais textos (`nav`, `contact`, `palette`, `theme`, `motion`) são da interf
 
 | Onde | O quê |
 |---|---|
-| `app/i18n.ts` → `defaultLocale` | Idioma usado quando o navegador está em uma língua não suportada (hoje: **inglês**) |
+| `dictionaries/config.ts` → `defaultLocale` | Idioma usado quando o navegador está em uma língua não suportada (hoje: **inglês**) |
 | `app/globals.css` → `:root` | Cores da marca: `--paper` (fundo), `--ink` (texto), `--signal` (laranja de destaque) e as versões do tema escuro |
-| `app/brand.tsx` + `assets/fonts/` | Cores e fontes usadas para gerar o favicon e a imagem de compartilhamento |
+| `lib/brand.tsx` + `public/fonts/` | Cores e fontes usadas para gerar o favicon e a imagem de compartilhamento |
 | `app/globals.css` → `.hero-blob`, `.hero-depth-*` | Tamanho da bola que inverte cores e força do parallax no topo |
+
+---
+
+## SEO
+
+Tudo é gerado pelo Next a partir dos dados do site. Não há arquivos manuais em `public/`.
+
+| Arquivo / recurso | O que faz |
+|---|---|
+| `/sitemap.xml` ([`app/sitemap.ts`](app/sitemap.ts)) | Página inicial nos 3 idiomas, cada uma com `hreflang` para as outras e `x-default` (a raiz `/`, que redireciona pelo idioma do navegador), imagem de compartilhamento e data de atualização |
+| `/robots.txt` ([`app/robots.ts`](app/robots.ts)) | Libera tudo e aponta o sitemap |
+| `/manifest.webmanifest` ([`app/manifest.ts`](app/manifest.ts)) | Nome, cores e ícones do site |
+| Metadados ([`app/[lang]/layout.tsx`](app/[lang]/layout.tsx)) | Título, descrição, autor, palavras-chave, canonical, `hreflang`, Open Graph (`profile`), Twitter card, `max-image-preview:large`, cor do navegador clara/escura |
+| Dados estruturados | Portfólio: `ProfilePage` + `WebSite` + `Person` (empresa, formação, redes). Posts: `BlogPosting` |
+| Headers ([`next.config.ts`](next.config.ts)) | `nosniff`, `Referrer-Policy`, `frame-ancestors 'self'`, `Permissions-Policy`, sem `X-Powered-By` |
+
+**Para manter:**
+- **`siteUpdatedAt`** em [`lib/seo.ts`](lib/seo.ts): data da última mudança de conteúdo, que vai como `<lastmod>` no sitemap. Atualize quando mudar o conteúdo do portfólio.
+- **`blogIndexed`** em [`lib/seo.ts`](lib/seo.ts): `false` enquanto o blog for teste. Com `true`, o blog e os posts entram no sitemap e deixam de ter `noindex`.
+
+**Depois do deploy:**
+1. **Verificação:** cadastre o site no [Google Search Console](https://search.google.com/search-console) e, se quiser, no [Bing Webmaster Tools](https://www.bing.com/webmasters). Para verificar pela meta tag, defina no deploy `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` e/ou `NEXT_PUBLIC_BING_SITE_VERIFICATION` com o código que eles fornecem.
+2. **Sitemap:** envie `https://eliasneto.dev/sitemap.xml` em "Sitemaps".
+3. **Dados estruturados:** valide em [Rich Results Test](https://search.google.com/test/rich-results).
+4. **Compartilhamento:** valide no [Post Inspector do LinkedIn](https://www.linkedin.com/post-inspector/).
 
 ---
 
@@ -165,7 +190,7 @@ Os **4 posts atuais são exemplos** e podem ser apagados.
 
 Dentro do MDX dá para usar Markdown normal (com tabelas e listas de tarefas), blocos de código com destaque de sintaxe (` ```ts `, ` ```css `, ` ```bash `…) e o componente `<Callout type="tip">` ou `<Callout type="warning">`.
 
-Tags novas: adicione o nome ao tipo `PostTag` em `content/blog/posts.ts` e o rótulo traduzido em `tags` no [`app/[lang]/blog/dictionary.ts`](app/[lang]/blog/dictionary.ts), que também guarda todos os textos da interface do blog.
+Tags novas: adicione o nome ao tipo `PostTag` em `content/blog/posts.ts` e o rótulo traduzido em `tags` na chave `blog.tags` dos três arquivos em [`dictionaries/data/`](dictionaries/data), onde também ficam os textos da interface do blog (chave `blog`).
 
 O tempo de leitura, a numeração (Nº), o índice, o agrupamento por mês e o feed RSS (`/<idioma>/blog/rss.xml`) são gerados sozinhos.
 

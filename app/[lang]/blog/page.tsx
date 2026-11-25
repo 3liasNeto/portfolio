@@ -5,7 +5,8 @@ import { AuthorAvatar } from "@/components/blog/author-avatar";
 import { PostCover } from "@/components/blog/post-cover";
 import { PostExplorer } from "@/components/blog/post-explorer";
 import { profile } from "@/lib/data";
-import { hasLocale, htmlLang, locales } from "@/dictionaries/config";
+import { hasLocale, htmlLang } from "@/dictionaries/config";
+import { blogIndexed, indexable, languageAlternates, notIndexable } from "@/lib/seo";
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import { countPosts, fill, formatDate, formatMonth } from "@/lib/blog/format";
 import { getAllPosts } from "@/lib/blog/posts";
@@ -17,8 +18,8 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/blog">): P
   return {
     title: t.meta.title,
     description: t.meta.description,
-    // Test area for now: keep it out of search engines
-    robots: { index: false, follow: false },
+    // Test area for now: out of search engines until blogIndexed (lib/seo.ts) is on
+    robots: blogIndexed ? indexable : notIndexable,
     // Replaces the portfolio's openGraph inherited from the root layout
     openGraph: {
       type: "website",
@@ -30,7 +31,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/blog">): P
     },
     alternates: {
       canonical: `/${lang}/blog`,
-      languages: Object.fromEntries(locales.map((l) => [htmlLang[l], `/${l}/blog`])),
+      languages: languageAlternates("/blog"),
       types: { "application/rss+xml": `/${lang}/blog/rss.xml` },
     },
   };
