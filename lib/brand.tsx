@@ -10,7 +10,7 @@ export const brand = {
 };
 
 export async function loadBrandFonts() {
-  const dir = join(process.cwd(), "assets/fonts");
+  const dir = join(process.cwd(), "public/fonts");
   const [sans, serif, mono] = await Promise.all([
     readFile(join(dir, "InterTight-Black.ttf")),
     readFile(join(dir, "InstrumentSerif-Italic.ttf")),

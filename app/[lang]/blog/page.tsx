@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { AuthorAvatar } from "../../components/blog/author-avatar";
-import { PostCover } from "../../components/blog/post-cover";
-import { PostExplorer } from "../../components/blog/post-explorer";
-import { profile } from "../../data";
-import { hasLocale, htmlLang, locales } from "../../i18n";
-import { countPosts, fill, getBlogDictionary } from "./dictionary";
-import { formatDate, formatMonth } from "./format";
-import { getAllPosts } from "./posts";
+import { AuthorAvatar } from "@/components/blog/author-avatar";
+import { PostCover } from "@/components/blog/post-cover";
+import { PostExplorer } from "@/components/blog/post-explorer";
+import { profile } from "@/lib/data";
+import { hasLocale, htmlLang, locales } from "@/dictionaries/config";
+import { getDictionary } from "@/dictionaries/get-dictionary";
+import { countPosts, fill, formatDate, formatMonth } from "@/lib/blog/format";
+import { getAllPosts } from "@/lib/blog/posts";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/blog">): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
-  const t = getBlogDictionary(lang);
+  const t = (await getDictionary(lang)).blog;
   return {
     title: t.meta.title,
     description: t.meta.description,
@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/blog">): P
 export default async function BlogIndex({ params }: PageProps<"/[lang]/blog">) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
-  const t = getBlogDictionary(lang);
+  const t = (await getDictionary(lang)).blog;
   const posts = await getAllPosts(lang);
   const [featured] = posts;
 

@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import type { MDXContent } from "mdx/types";
 import { posts, type PostEntry } from "@/content/blog/posts";
-import type { Locale } from "../../i18n";
+import type { Locale } from "@/dictionaries/config";
 import { extractHeadings, readingMinutes } from "./parse";
 
 export type PostMeta = { title: string; excerpt: string };

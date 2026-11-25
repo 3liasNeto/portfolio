@@ -1,22 +1,22 @@
 import { notFound } from "next/navigation";
-import { Clock } from "../components/clock";
-import { CommandPalette } from "../components/command-palette";
-import { ContactActions } from "../components/contact-actions";
-import { CountUp } from "../components/count-up";
-import { HoloCard } from "../components/holo-card";
-import { InteractiveHero } from "../components/interactive-hero";
-import { LanguageSwitcher } from "../components/language-switcher";
-import { MotionToggle } from "../components/motion-toggle";
-import { RevealWords } from "../components/reveal";
-import { RevealObserver } from "../components/reveal-observer";
-import { SmoothScroll } from "../components/smooth-scroll";
-import { ThemeToggle } from "../components/theme-toggle";
-import { Toaster } from "../components/toast";
-import { TypingTerminal } from "../components/typing-terminal";
-import { WorkList } from "../components/work-list";
-import { experience, profile, projects, sections, siteUrl, stack, stats } from "../data";
-import { hasLocale, htmlLang } from "../i18n";
-import { getDictionary } from "./dictionaries";
+import { Clock } from "@/components/clock";
+import { CommandPalette } from "@/components/command-palette";
+import { ContactActions } from "@/components/contact-actions";
+import { CountUp } from "@/components/count-up";
+import { HoloCard } from "@/components/holo-card";
+import { InteractiveHero } from "@/components/interactive-hero";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import { MotionToggle } from "@/components/motion-toggle";
+import { RevealWords } from "@/components/reveal";
+import { RevealObserver } from "@/components/reveal-observer";
+import { SmoothScroll } from "@/components/smooth-scroll";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { Toaster } from "@/components/toast";
+import { TypingTerminal } from "@/components/typing-terminal";
+import { WorkList } from "@/components/work-list";
+import { experience, profile, projects, sections, siteUrl, stack, stats } from "@/lib/data";
+import { hasLocale, htmlLang } from "@/dictionaries/config";
+import { getDictionary } from "@/dictionaries/get-dictionary";
 
 function Monogram({ className = "" }: { className?: string }) {
   return (
@@ -53,7 +53,7 @@ function SectionLabel({ index, children }: { index: string; children: React.Reac
 export default async function Home({ params }: PageProps<"/[lang]">) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
-  const t = getDictionary(lang);
+  const t = await getDictionary(lang);
   const localizedProjects = projects.map((project) => ({
     ...project,
     description: t.projects[project.id],
@@ -131,7 +131,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       {/* ---------- Hero ---------- */}
       <InteractiveHero
         id="top"
-        className="relative mx-auto flex min-h-svh max-w-[1600px] flex-col justify-between px-4 pt-28 pb-8 md:px-8"
+        className="relative mx-auto flex min-h-svh max-w-[1600px] flex-col justify-between px-4 pt-28 pb-8 md:px-8 cursor-none"
       >
         <div className="flex flex-wrap items-start justify-between gap-4 font-mono text-xs tracking-wider uppercase">
           <p className="flex items-center gap-2">

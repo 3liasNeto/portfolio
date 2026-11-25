@@ -1,9 +1,15 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { getBlogDictionary } from "@/app/[lang]/blog/dictionary";
-import { locales } from "@/app/i18n";
+import en from "@/dictionaries/data/en.json";
+import es from "@/dictionaries/data/es.json";
+import pt from "@/dictionaries/data/pt.json";
+import { locales } from "@/dictionaries/config";
+import type { Dictionary } from "@/dictionaries/types";
 import { posts } from "@/content/blog/posts";
+
+// Read straight from the JSON: get-dictionary is server-only
+const dictionaries: Record<(typeof locales)[number], Dictionary> = { pt, en, es };
 
 const source = (slug: string, lang: string) =>
   join(process.cwd(), "content/blog", slug, `${lang}.mdx`);
@@ -37,7 +43,7 @@ describe("blog content", () => {
 
   it("has a translated label for every tag", () => {
     for (const lang of locales) {
-      const { tags } = getBlogDictionary(lang);
+      const { tags } = dictionaries[lang].blog;
       for (const post of posts) for (const tag of post.tags) expect(tags[tag]).toBeTruthy();
     }
   });

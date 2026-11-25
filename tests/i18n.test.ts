@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { defaultLocale, negotiateLocale } from "@/app/i18n";
+import { defaultLocale, negotiateLocale } from "@/dictionaries/config";
 
 describe("negotiateLocale", () => {
   it("falls back to the default locale without a header", () => {

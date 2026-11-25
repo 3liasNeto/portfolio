@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import type { Dictionary } from "../[lang]/dictionaries";
+import type { Dictionary } from "@/dictionaries/types";
 
 type CardText = Dictionary["about"]["card"];
 

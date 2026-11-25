@@ -1,15 +1,13 @@
 "use client";
 
-import { applyTheme } from "../theme";
-import { useTheme } from "./use-theme";
+import { useTheme } from "@/hooks/use-theme";
 
 export function ThemeToggle({
   labels,
 }: {
   labels: { label: string; light: string; dark: string };
 }) {
-  const theme = useTheme();
-
+  const { resolvedTheme: theme, setTheme } = useTheme();
   return (
     <div role="radiogroup" aria-label={labels.label} className="flex items-center gap-3">
       <span>{labels.label}</span>
@@ -20,7 +18,7 @@ export function ThemeToggle({
             type="button"
             role="radio"
             aria-checked={theme === option}
-            onClick={() => applyTheme(option)}
+            onClick={() => setTheme(option)}
             className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 uppercase transition-colors ${
               theme === option ? "bg-on-signal text-signal" : ""
             }`}

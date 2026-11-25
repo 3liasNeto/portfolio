@@ -1,0 +1,245 @@
+{
+  "meta": {
+    "title": "Elias Neto — Desenvolvedor Full Stack",
+    "description": "Portfólio de Elias Neto, desenvolvedor full stack em Uberlândia (MG) que constrói apps mobile, painéis web e APIs com TypeScript, React Native, Next.js e NestJS."
+  },
+  "nav": {
+    "home": "Início",
+    "work": "Trabalhos",
+    "about": "Sobre",
+    "experience": "Experiência",
+    "cta": "Vamos conversar",
+    "language": "Idioma"
+  },
+  "hero": {
+    "availability": "Disponível para novos projetos",
+    "role": "Desenvolvedor Full Stack",
+    "before": "que constrói",
+    "em": "apps, painéis e APIs",
+    "middle": "de ponta a ponta — rápidos, acessíveis e com",
+    "highlight": "personalidade",
+    "after": ".",
+    "scroll": "Role para ver trabalhos",
+    "terminal": {
+      "command": "elias --fazendo",
+      "phrases": [
+        "construindo apps em Expo",
+        "escrevendo APIs em NestJS",
+        "desenhando design systems",
+        "revisando um PR",
+        "passando um café"
+      ]
+    }
+  },
+  "work": {
+    "label": "Trabalhos selecionados",
+    "titleA": "Coisas que eu",
+    "titleEm": "construí",
+    "titleB": "e gosto de mostrar.",
+    "hint": "Passe o mouse para espiar",
+    "years": "2023 — hoje",
+    "private": "Projeto privado",
+    "personal": "Pessoal"
+  },
+  "projects": {
+    "cartanoel": "Produto no ar: a pessoa conta o nome e alguns detalhes da criança e recebe uma carta do Papai Noel escrita por IA, com kit em PDF e certificado para compartilhar. React 19 e Vite no front; Bun, Elysia e PostgreSQL no back; better-auth, Stripe (cartão e Pix) e LLM via OpenRouter.",
+    "b2b": "Portal B2B construído de ponta a ponta com Next.js, NestJS, TypeORM e PostgreSQL, integrado ao ERP Senior.",
+    "banking": "Plataforma de VAN bancária multi-tenant com microsserviços, RabbitMQ e MongoDB. Fiz as telas de autenticação: 2FA, passkeys, magic link e login social.",
+    "vendora": "App mobile em React Native com Expo e Expo Router, com API própria, autenticação e credenciais guardadas no SecureStore.",
+    "niveela": "Design System de uma plataforma de agendamento: tokens em CSS, tema responsivo e WCAG AA (contraste validado, alvos de 44px, foco visível, movimento reduzido).",
+    "pokemon": "Jogo de desafio Pokémon: sorteie o time, monte golpes, itens e EVs e vença uma sequência de treinadores. Batalhas no simulador do Showdown e IA que calcula o dano real com a calculadora do Smogon.",
+    "fifa": "Monte a escalação do Brasil com os melhores jogadores de cada Copa do Mundo: arrastar e soltar, formações e filtros por posição. Projeto do curso técnico no SENAC.",
+    "portfolio": "Este site: Next.js 16 em três idiomas, tema sem piscar, carta holográfica e blog em MDX, com testes e auditoria de acessibilidade."
+  },
+  "about": {
+    "label": "Sobre",
+    "statement": [
+      "Oi, eu sou o Elias, desenvolvedor full stack em Uberlândia. Desde 2023, na Bornan, levo produtos do ",
+      "app mobile",
+      " à ",
+      "API",
+      " em TypeScript — e gosto do ponto onde ",
+      "design e engenharia",
+      " se encontram: é ali que os produtos ganham alma."
+    ],
+    "card": {
+      "hint": "Passe o mouse ou arraste · clique para virar",
+      "flip": "Virar carta",
+      "alt": "Carta holográfica full art: Elias como treinador em uma cidade futurista, com hologramas e um tablet.",
+      "back": "Carta de Dev"
+    },
+    "stats": {
+      "years": "anos de experiência",
+      "fronts": "frentes: mobile, web e API",
+      "since": "escrevendo código desde"
+    }
+  },
+  "services": [
+    {
+      "title": "Apps mobile",
+      "body": "React Native com Expo: navegação com Expo Router, autenticação, notificações e armazenamento seguro."
+    },
+    {
+      "title": "Web e Design Systems",
+      "body": "Next.js e React com componentes acessíveis, design tokens e interfaces responsivas."
+    },
+    {
+      "title": "APIs e back-end",
+      "body": "NestJS e Node.js com PostgreSQL, Prisma ou TypeORM, JWT com refresh token, 2FA e RBAC."
+    },
+    {
+      "title": "Arquitetura e DevOps",
+      "body": "Monólito modular, multi-tenant e microsserviços, com Docker e CI/CD no GitHub Actions."
+    }
+  ],
+  "experience": {
+    "label": "Experiência",
+    "titleA": "O histórico de",
+    "titleEm": "commits",
+    "titleB": "da minha carreira.",
+    "terminal": "elias@neto: ~/carreira — git log --graph",
+    "items": {
+      "bornan": {
+        "period": "2023 — hoje",
+        "role": "Desenvolvedor Full Stack",
+        "company": "Bornan",
+        "note": "Apps integrados em TypeScript num monorepo Nx: React Native (Expo), Next.js e NestJS, auth com 2FA e passkeys, Docker e CI/CD."
+      },
+      "uniube": {
+        "period": "2023 — 2028",
+        "role": "Ciência da Computação",
+        "company": "UNIUBE",
+        "note": "Bacharelado em andamento."
+      },
+      "senac": {
+        "period": "2021 — 2023",
+        "role": "Técnico em Desenvolvimento de Sistemas",
+        "company": "SENAC",
+        "note": "A base: lógica, banco de dados e desenvolvimento web."
+      },
+      "start": {
+        "period": "2021",
+        "role": "git init",
+        "company": "Primeiro commit",
+        "note": "Onde tudo começou: muita curiosidade e um terminal aberto."
+      }
+    }
+  },
+  "contact": {
+    "label": "Contato",
+    "title": "Tem uma ideia?",
+    "titleEm": "Vamos construir juntos.",
+    "back": "Voltar ao topo ↑",
+    "madeWith": "Feito com Next.js & café",
+    "copy": "Copiar e-mail",
+    "copied": "E-mail copiado!",
+    "copyFailed": "Não foi possível copiar",
+    "cv": "Baixar CV",
+    "schedule": "Agendar conversa"
+  },
+  "palette": {
+    "open": "Abrir comandos",
+    "title": "comandos",
+    "placeholder": "Digite um comando ou busque…",
+    "empty": "Nenhum comando encontrado.",
+    "hints": {
+      "move": "navegar",
+      "run": "executar",
+      "close": "fechar"
+    },
+    "groups": {
+      "navigate": "Navegar",
+      "preferences": "Preferências",
+      "contact": "Contato",
+      "social": "Redes"
+    },
+    "commands": {
+      "top": "Ir para o início",
+      "work": "Ver trabalhos",
+      "about": "Sobre o Elias",
+      "experience": "Ver experiência",
+      "contact": "Ir para o contato",
+      "light": "Usar tema claro",
+      "dark": "Usar tema escuro",
+      "language": "Mudar idioma para"
+    }
+  },
+  "theme": {
+    "label": "Tema",
+    "light": "Claro",
+    "dark": "Escuro"
+  },
+  "motion": {
+    "pause": "Pausar animações",
+    "play": "Retomar animações"
+  },
+  "status": {
+    "notFoundTitle": "Página não encontrada",
+    "notFoundBody": "O endereço não existe ou mudou de lugar. Volte para um caminho conhecido:",
+    "errorTitle": "Algo deu errado",
+    "errorBody": "Um erro inesperado aconteceu ao carregar esta página.",
+    "retry": "Tentar de novo",
+    "home": "Ir para o início",
+    "blog": "Ir para o blog"
+  },
+  "blog": {
+    "meta": {
+      "title": "Notas de código — Blog do Elias Neto",
+      "description": "Front-end, ferramentas e os bastidores de construir produtos digitais, por Elias Neto."
+    },
+    "testBadge": "beta",
+    "language": "Idioma",
+    "theme": {
+      "light": "Usar tema claro",
+      "dark": "Usar tema escuro"
+    },
+    "masthead": {
+      "edition": "Edição",
+      "titleA": "Notas",
+      "titleB": "de código.",
+      "intro": "Escrevo sobre front-end, ferramentas e os bastidores de construir produtos — com código de verdade e alguns deploys de sexta."
+    },
+    "featured": "Em destaque",
+    "readPost": "Ler post",
+    "allPosts": "Todos os posts",
+    "postsCount": {
+      "one": "{n} post",
+      "other": "{n} posts"
+    },
+    "readingTime": "{n} min de leitura",
+    "search": "Buscar posts…",
+    "allTags": "Tudo",
+    "empty": "Nenhum post encontrado.",
+    "topics": "Tópicos",
+    "about": {
+      "title": "Sobre o autor",
+      "body": "Elias Neto é desenvolvedor full stack em Uberlândia (MG). Aqui ele anota o que aprende pelo caminho."
+    },
+    "rss": "Assinar via RSS",
+    "back": "Todos os posts",
+    "published": "Publicado em",
+    "toc": "Neste post",
+    "share": "Compartilhar",
+    "copyLink": "Copiar link",
+    "linkCopied": "Link copiado!",
+    "newer": "Mais recente",
+    "older": "Mais antigo",
+    "related": "Leia também",
+    "copyCode": "Copiar",
+    "codeCopied": "Código copiado!",
+    "copyFailed": "Não foi possível copiar",
+    "callout": {
+      "tip": "Dica",
+      "warning": "Atenção"
+    },
+    "backToTop": "Voltar ao topo ↑",
+    "tags": {
+      "nextjs": "Next.js",
+      "react": "React",
+      "css": "CSS",
+      "i18n": "i18n",
+      "career": "Carreira",
+      "tooling": "Ferramentas"
+    }
+  }
+}

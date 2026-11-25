@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { profile } from "../../data";
+import { profile } from "@/lib/data";
 
 // Face crop of the full-art card, used as the author avatar
 export function AuthorAvatar({ className = "size-11" }: { className?: string }) {

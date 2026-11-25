@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { AuthorAvatar } from "../../../components/blog/author-avatar";
-import { Callout } from "../../../components/blog/callout";
-import { CodeBlock } from "../../../components/blog/code-block";
-import { PostCover } from "../../../components/blog/post-cover";
-import { ReadingProgress } from "../../../components/blog/reading-progress";
-import { ShareButtons } from "../../../components/blog/share-buttons";
-import { TableOfContents } from "../../../components/blog/table-of-contents";
-import { profile } from "../../../data";
-import { hasLocale, htmlLang, locales } from "../../../i18n";
-import { fill, getBlogDictionary } from "../dictionary";
-import { formatDate } from "../format";
-import { getPost, postSlugs, type PostSummary } from "../posts";
+import { AuthorAvatar } from "@/components/blog/author-avatar";
+import { Callout } from "@/components/blog/callout";
+import { CodeBlock } from "@/components/blog/code-block";
+import { PostCover } from "@/components/blog/post-cover";
+import { ReadingProgress } from "@/components/blog/reading-progress";
+import { ShareButtons } from "@/components/blog/share-buttons";
+import { TableOfContents } from "@/components/blog/table-of-contents";
+import { profile } from "@/lib/data";
+import { hasLocale, htmlLang, locales } from "@/dictionaries/config";
+import { getDictionary } from "@/dictionaries/get-dictionary";
+import { fill, formatDate } from "@/lib/blog/format";
+import { getPost, postSlugs, type PostSummary } from "@/lib/blog/posts";
 
 // Unknown slugs reach the page, which calls notFound() -> the localized 404
 export const dynamicParams = true;
@@ -27,6 +27,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/blog/[slug
   const data = await getPost(slug, lang);
   if (!data) return {};
   const { post } = data;
+  const { tags } = (await getDictionary(lang)).blog;
   return {
     title: `${post.title} — ${profile.name}`,
     description: post.excerpt,
@@ -41,7 +42,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/blog/[slug
       locale: htmlLang[lang].replace("-", "_"),
       publishedTime: post.date,
       authors: [profile.name],
-      tags: post.tags.map((tag) => getBlogDictionary(lang).tags[tag]),
+      tags: post.tags.map((tag) => tags[tag]),
     },
     alternates: {
       canonical: `/${lang}/blog/${slug}`,
@@ -72,7 +73,7 @@ export default async function BlogPost({ params }: PageProps<"/[lang]/blog/[slug
   const data = await getPost(slug, lang);
   if (!data) notFound();
   const { post, Content, headings, newer, older, related } = data;
-  const t = getBlogDictionary(lang);
+  const t = (await getDictionary(lang)).blog;
   const shareLabels = {
     share: t.share,
     copyLink: t.copyLink,

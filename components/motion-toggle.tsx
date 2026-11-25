@@ -1,7 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { setMotionPaused } from "../theme";
+import { setMotionPaused } from "@/lib/motion";
 
 function subscribe(onChange: () => void) {
   const observer = new MutationObserver(onChange);

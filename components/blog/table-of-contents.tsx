@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { Heading } from "@/app/[lang]/blog/parse";
+import type { Heading } from "@/lib/blog/parse";
 
 // Sticky "in this post" list; highlights the section currently being read
 export function TableOfContents({ headings, title }: { headings: Heading[]; title: string }) {

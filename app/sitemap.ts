@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
-import { siteUrl } from "./data";
-import { htmlLang, locales } from "./i18n";
+import { siteUrl } from "@/lib/data";
+import { htmlLang, locales } from "@/dictionaries/config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const languages = Object.fromEntries(locales.map((l) => [htmlLang[l], `${siteUrl}/${l}`]));

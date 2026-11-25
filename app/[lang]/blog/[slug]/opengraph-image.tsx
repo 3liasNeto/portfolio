@@ -1,9 +1,9 @@
-import { profile } from "../../../data";
-import { defaultLocale, hasLocale } from "../../../i18n";
-import { fill, getBlogDictionary } from "../dictionary";
-import { formatDate } from "../format";
-import { blogOgImage, ogSize } from "../og-card";
-import { getPost, postSlugs } from "../posts";
+import { profile } from "@/lib/data";
+import { defaultLocale, hasLocale } from "@/dictionaries/config";
+import { getDictionary } from "@/dictionaries/get-dictionary";
+import { fill, formatDate } from "@/lib/blog/format";
+import { blogOgImage, ogSize } from "@/lib/blog/og-card";
+import { getPost, postSlugs } from "@/lib/blog/posts";
 
 export const alt = "Blog post";
 export const size = ogSize;
@@ -20,7 +20,7 @@ export default async function PostOpenGraphImage({
 }) {
   const { lang: raw, slug } = await params;
   const lang = hasLocale(raw) ? raw : defaultLocale;
-  const t = getBlogDictionary(lang);
+  const t = (await getDictionary(lang)).blog;
   const data = await getPost(slug, lang);
   if (!data) throw new Error(`Unknown post: ${slug}`);
   const { post } = data;

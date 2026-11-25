@@ -1,16 +1,16 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { LanguageSwitcher } from "../../components/language-switcher";
-import { ThemeSwitch } from "../../components/blog/theme-switch";
-import { Toaster } from "../../components/toast";
-import { hasLocale } from "../../i18n";
-import { getBlogDictionary } from "./dictionary";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import { ThemeSwitch } from "@/components/blog/theme-switch";
+import { Toaster } from "@/components/toast";
+import { hasLocale } from "@/dictionaries/config";
+import { getDictionary } from "@/dictionaries/get-dictionary";
 
 // The blog is a standalone test: it doesn't link to the portfolio (and vice versa)
 export default async function BlogLayout({ children, params }: LayoutProps<"/[lang]/blog">) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
-  const t = getBlogDictionary(lang);
+  const t = (await getDictionary(lang)).blog;
 
   return (
     <div id="top" className="flex min-h-svh flex-1 flex-col">

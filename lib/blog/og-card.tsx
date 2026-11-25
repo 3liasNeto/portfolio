@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
-import { brand, loadBrandFonts } from "../../brand";
-import { siteUrl } from "../../data";
+import { brand, loadBrandFonts } from "@/lib/brand";
+import { siteUrl } from "@/lib/data";
 
 export const ogSize = { width: 1200, height: 630 };
 

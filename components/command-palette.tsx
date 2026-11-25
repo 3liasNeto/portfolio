@@ -2,10 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
-import type { Dictionary } from "../[lang]/dictionaries";
-import { sections } from "../data";
-import { localeNames, locales, rememberLocale, type Locale } from "../i18n";
-import { applyTheme } from "../theme";
+import type { Dictionary } from "@/dictionaries/types";
+import { sections } from "@/lib/data";
+import { localeNames, locales, rememberLocale, type Locale } from "@/dictionaries/config";
+import { useTheme } from "@/hooks/use-theme";
 import { scrollToTarget, setScrollLocked } from "./smooth-scroll";
 import { copyText } from "./toast";
 
@@ -38,6 +38,7 @@ export function CommandPalette({
   };
 }) {
   const router = useRouter();
+  const { setTheme } = useTheme();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const [query, setQuery] = useState("");
@@ -53,8 +54,8 @@ export function CommandPalette({
       { id: "about", group: t.groups.navigate, label: t.commands.about, icon: "✳", run: go(`#${sections.about}`) },
       { id: "exp", group: t.groups.navigate, label: t.commands.experience, icon: "⎇", keywords: "git log", run: go(`#${sections.experience}`) },
       { id: "contact", group: t.groups.navigate, label: t.commands.contact, icon: "✉", run: go(`#${sections.contact}`) },
-      { id: "light", group: t.groups.preferences, label: t.commands.light, icon: "☀", keywords: "theme", run: () => applyTheme("light") },
-      { id: "dark", group: t.groups.preferences, label: t.commands.dark, icon: "☾", keywords: "theme", run: () => applyTheme("dark") },
+      { id: "light", group: t.groups.preferences, label: t.commands.light, icon: "☀", keywords: "theme", run: () => setTheme("light") },
+      { id: "dark", group: t.groups.preferences, label: t.commands.dark, icon: "☾", keywords: "theme", run: () => setTheme("dark") },
       ...locales
         .filter((locale) => locale !== lang)
         .map((locale) => ({
@@ -82,7 +83,7 @@ export function CommandPalette({
         run: () => window.open(social.href, "_blank", "noreferrer"),
       })),
     ];
-  }, [t, contact, profile, lang, router]);
+  }, [t, contact, profile, lang, router, setTheme]);
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
