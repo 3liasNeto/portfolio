@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { siteUrl } from "../../../data";
 import { hasLocale, htmlLang, locales } from "../../../i18n";
 import { getBlogDictionary } from "../dictionary";
+import { escapeXml as escape } from "../parse";
 import { getAllPosts } from "../posts";
 
 export const dynamic = "force-static";
@@ -10,8 +11,6 @@ export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
 }
 
-const escape = (value: string) =>
-  value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 export async function GET(_: Request, { params }: RouteContext<"/[lang]/blog/rss.xml">) {
   const { lang } = await params;

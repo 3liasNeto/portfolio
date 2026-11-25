@@ -1,20 +1,18 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import GithubSlugger from "github-slugger";
 import type { MDXContent } from "mdx/types";
 import { posts, type PostEntry } from "@/content/blog/posts";
 import type { Locale } from "../../i18n";
+import { extractHeadings, readingMinutes } from "./parse";
 
 export type PostMeta = { title: string; excerpt: string };
-export type Heading = { id: string; text: string; level: 2 | 3 };
+export type { Heading } from "./parse";
 
 export type PostSummary = PostEntry &
   PostMeta & {
     number: number; // 1 = oldest, used as "Nº" on covers
     readingMinutes: number;
   };
-
-const wordsPerMinute = 200;
 
 async function readSource(slug: string, lang: Locale) {
   return readFile(join(process.cwd(), "content/blog", slug, `${lang}.mdx`), "utf8");
@@ -26,27 +24,6 @@ async function loadModule(slug: string, lang: Locale) {
     meta: PostMeta;
   };
   return mod;
-}
-
-function readingMinutes(source: string) {
-  const words = source.replace(/export const meta[\s\S]*?};/, "").split(/\s+/).filter(Boolean);
-  return Math.max(1, Math.round(words.length / wordsPerMinute));
-}
-
-// ## and ### headings, with the same ids rehype-slug gives them
-function extractHeadings(source: string): Heading[] {
-  const slugger = new GithubSlugger();
-  const headings: Heading[] = [];
-  let inFence = false;
-  for (const line of source.split("\n")) {
-    if (line.trim().startsWith("```")) inFence = !inFence;
-    if (inFence) continue;
-    const match = line.match(/^(##|###)\s+(.+)$/);
-    if (!match) continue;
-    const text = match[2].replace(/`/g, "").trim();
-    headings.push({ id: slugger.slug(text), text, level: match[1].length as 2 | 3 });
-  }
-  return headings;
 }
 
 export async function getAllPosts(lang: Locale): Promise<PostSummary[]> {
