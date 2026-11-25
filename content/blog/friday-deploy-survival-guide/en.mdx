@@ -1,0 +1,32 @@
+export const meta = {
+  title: "Friday deploys: a survival guide",
+  excerpt:
+    "It's not forbidden — it's just expensive when it goes wrong. An honest checklist for whoever is about to press the button at 5:59pm.",
+};
+
+Every team has the unwritten rule: **no deploys on Friday**. It exists because when something breaks, nobody wants to spend the weekend reading logs. But sometimes the deploy has to go out. So let's do it right.
+
+## Before you press the button
+
+1. CI is green **on the commit you're shipping**, not the one before it.
+2. There's a tested rollback path — ideally one click.
+3. Database changes are compatible with the old version of the code.
+4. Someone besides you knows the deploy is happening.
+
+> The best Friday deploy is one so small nobody notices.
+
+## Feature flags are your friends
+
+Ship the code **turned off** and turn it on later, for a small percentage of users. If something goes wrong, flipping the flag is faster than any rollback.
+
+```bash
+# ship the code with the flag off
+git push origin main
+
+# turn it on for 5% of users and watch
+flags set new-checkout --rollout 5
+```
+
+## After the deploy
+
+Watch the metrics for **30 minutes** — errors, latency and conversion. If everything is stable, then yes: have a great weekend. ☕

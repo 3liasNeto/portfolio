@@ -1,0 +1,63 @@
+export const meta = {
+  title: "Como construí este portfólio com Next.js 16",
+  excerpt:
+    "Idiomas detectados pelo navegador, tema sem piscar, uma bola que inverte cores e uma carta holográfica — os bastidores, com código.",
+};
+
+Todo portfólio de dev corre o risco de virar um currículo com fundo escuro. Eu queria o contrário: uma página com **identidade**, que desse vontade de mexer. Este post conta as decisões técnicas por trás dela.
+
+## Três idiomas sem biblioteca
+
+O site existe em português, inglês e espanhol. Em vez de instalar uma lib de i18n, usei o que o próprio Next oferece: rotas com o idioma no começo (`/pt`, `/en`, `/es`) e um `proxy.ts` que decide para onde mandar quem chega em `/`.
+
+```ts
+function negotiate(header: string | null): Locale {
+  if (!header) return defaultLocale;
+  const ranked = header
+    .split(",")
+    .map((part) => {
+      const [tag, ...params] = part.trim().split(";");
+      const q = params.find((p) => p.trim().startsWith("q="));
+      return { lang: tag.toLowerCase().split("-")[0], q: q ? Number(q.split("=")[1]) : 1 };
+    })
+    .sort((a, b) => b.q - a.q);
+  const match = ranked.find((entry) => hasLocale(entry.lang));
+  return match ? (match.lang as Locale) : defaultLocale;
+}
+```
+
+Se a pessoa escolhe outro idioma no menu, um cookie guarda a escolha e passa a valer mais que o navegador.
+
+<Callout type="tip">
+  Os textos ficam em um dicionário tipado: se faltar uma tradução, o TypeScript reclama antes do deploy.
+</Callout>
+
+## Tema escuro sem piscar
+
+O erro clássico é ler o tema no `useEffect`: a página aparece clara por um instante e depois escurece. A solução é um script minúsculo no `<head>` que roda **antes da primeira pintura** e marca o `data-theme` no `<html>`. O CSS só reage ao atributo.
+
+## A bola que inverte as cores
+
+O efeito do topo é um círculo laranja com `mix-blend-mode: difference`. Sobre o fundo claro ele vira azul; sobre o texto escuro, laranja. A posição vem do mouse em variáveis CSS, atualizadas num `requestAnimationFrame` — o React nunca re-renderiza durante o movimento.
+
+```css
+.hero-blob {
+  background: var(--signal);
+  mix-blend-mode: difference;
+  translate: var(--x) var(--y);
+}
+```
+
+## A carta holográfica
+
+A carta da seção "Sobre" usa a mesma ideia: o ponteiro vira `--mx`, `--my` e ângulos de rotação. Três camadas fazem a mágica:
+
+1. um arco-íris com `color-dodge` que muda de posição com o ângulo;
+2. uma purpurina em `radial-gradient`, revelada só perto do cursor;
+3. um reflexo de luz com `overlay`.
+
+## O que eu levaria para o próximo projeto
+
+- Variáveis CSS são a ponte perfeita entre JavaScript e animação.
+- Detecte preferências (idioma, tema, movimento reduzido) e **respeite** todas.
+- Um detalhe divertido vale mais que dez seções genéricas.

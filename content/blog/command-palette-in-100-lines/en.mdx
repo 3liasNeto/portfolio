@@ -1,0 +1,37 @@
+export const meta = {
+  title: "A command palette in ~100 lines of React",
+  excerpt:
+    "This site's ⌘K uses no library. A native dialog, a filtered list and three keyboard shortcuts cover almost everything.",
+};
+
+Command palettes became a standard in developer tools. The good news: the browser already ships the hard part.
+
+## The secret is `<dialog>`
+
+A `<dialog>` opened with `showModal()` already handles focus, the dimmed backdrop and the `Esc` key. All that's left for us is the list.
+
+```tsx
+const results = commands.filter((command) =>
+  command.label.toLowerCase().includes(query.toLowerCase()),
+);
+
+function onKeyDown(e: React.KeyboardEvent) {
+  if (e.key === "ArrowDown") setActive((i) => (i + 1) % results.length);
+  if (e.key === "ArrowUp") setActive((i) => (i - 1 + results.length) % results.length);
+  if (e.key === "Enter") results[active]?.run();
+}
+```
+
+## The global shortcut
+
+A single listener on `window` opens and closes the palette with ⌘K or Ctrl+K. Remember to call `preventDefault()` — the browser uses that shortcut too.
+
+<Callout type="tip">
+  Use `role="combobox"` on the input and `aria-activedescendant` pointing at the active item: screen readers announce the navigation without moving focus.
+</Callout>
+
+## What I left out (on purpose)
+
+- Fuzzy search: an `includes` is enough for a few dozen commands.
+- Recent command history.
+- Sub-menus. If you need those, then a library is worth it.

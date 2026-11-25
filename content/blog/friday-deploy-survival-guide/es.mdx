@@ -1,0 +1,32 @@
+export const meta = {
+  title: "Deploy de viernes: una guía de supervivencia",
+  excerpt:
+    "No está prohibido — solo sale caro cuando falla. Una checklist honesta para quien va a pulsar el botón a las 17:59.",
+};
+
+Todo equipo tiene la regla no escrita: **no se hace deploy los viernes**. Existe porque, cuando algo se rompe, nadie quiere pasar el fin de semana mirando logs. Pero a veces el deploy tiene que salir. Así que hagámoslo bien.
+
+## Antes de pulsar el botón
+
+1. El CI está en verde **en el commit que vas a subir**, no en el anterior.
+2. Hay un camino de rollback probado — idealmente un clic.
+3. Los cambios de base de datos son compatibles con la versión anterior del código.
+4. Alguien además de ti sabe que el deploy está ocurriendo.
+
+> El mejor deploy de viernes es uno tan pequeño que nadie lo nota.
+
+## Las feature flags son tus amigas
+
+Sube el código **apagado** y enciéndelo después, para un porcentaje pequeño de usuarios. Si algo sale mal, apagar la flag es más rápido que cualquier rollback.
+
+```bash
+# sube el código con la flag apagada
+git push origin main
+
+# enciéndela para el 5% de los usuarios y observa
+flags set new-checkout --rollout 5
+```
+
+## Después del deploy
+
+Vigila las métricas durante **30 minutos** — errores, latencia y conversión. Si todo está estable, ahora sí: buen fin de semana. ☕

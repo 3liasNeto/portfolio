@@ -1,0 +1,32 @@
+export const meta = {
+  title: "Deploy de sexta-feira: um guia de sobrevivência",
+  excerpt:
+    "Não é proibido — é só caro quando dá errado. Um checklist honesto para quem vai apertar o botão às 17h59.",
+};
+
+Todo time tem a regra não escrita: **não se faz deploy na sexta**. A regra existe porque, quando algo quebra, ninguém quer passar o fim de semana olhando logs. Mas às vezes o deploy precisa sair. Então vamos fazer direito.
+
+## Antes de apertar o botão
+
+1. O CI está verde **no commit que vai subir**, não no anterior.
+2. Existe um caminho de rollback testado — de preferência um clique.
+3. Mudanças de banco são compatíveis com a versão antiga do código.
+4. Alguém além de você sabe que o deploy está acontecendo.
+
+> O melhor deploy de sexta é aquele tão pequeno que ninguém percebe.
+
+## Feature flags são seus amigos
+
+Suba o código **desligado** e ligue depois, para uma porcentagem pequena de usuários. Se algo der errado, desligar a flag é mais rápido que qualquer rollback.
+
+```bash
+# sobe o código com a flag desligada
+git push origin main
+
+# liga para 5% dos usuários e observa
+flags set new-checkout --rollout 5
+```
+
+## Depois do deploy
+
+Fique de olho nas métricas por **30 minutos** — erros, latência e conversão. Se tudo estiver estável, aí sim: bom fim de semana. ☕

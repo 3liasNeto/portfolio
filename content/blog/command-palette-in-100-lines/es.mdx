@@ -1,0 +1,37 @@
+export const meta = {
+  title: "Una paleta de comandos en ~100 líneas de React",
+  excerpt:
+    "El ⌘K de este sitio no usa ninguna librería. Un dialog nativo, una lista filtrada y tres atajos de teclado resuelven casi todo.",
+};
+
+Las paletas de comandos se volvieron estándar en las herramientas de desarrollo. La buena noticia: el navegador ya entrega la parte difícil.
+
+## El secreto es `<dialog>`
+
+Un `<dialog>` abierto con `showModal()` ya se encarga del foco, del fondo oscurecido y de la tecla `Esc`. Solo nos queda la lista.
+
+```tsx
+const results = commands.filter((command) =>
+  command.label.toLowerCase().includes(query.toLowerCase()),
+);
+
+function onKeyDown(e: React.KeyboardEvent) {
+  if (e.key === "ArrowDown") setActive((i) => (i + 1) % results.length);
+  if (e.key === "ArrowUp") setActive((i) => (i - 1 + results.length) % results.length);
+  if (e.key === "Enter") results[active]?.run();
+}
+```
+
+## El atajo global
+
+Un único listener en `window` abre y cierra la paleta con ⌘K o Ctrl+K. Recuerda llamar a `preventDefault()` — el navegador también usa ese atajo.
+
+<Callout type="tip">
+  Usa `role="combobox"` en el input y `aria-activedescendant` apuntando al ítem activo: los lectores de pantalla anuncian la navegación sin mover el foco.
+</Callout>
+
+## Lo que dejé fuera (a propósito)
+
+- Búsqueda fuzzy: un `includes` alcanza para unas decenas de comandos.
+- Historial de comandos recientes.
+- Submenús. Si los necesitas, ahí sí vale una librería.

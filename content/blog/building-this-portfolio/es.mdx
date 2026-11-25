@@ -1,0 +1,63 @@
+export const meta = {
+  title: "Cómo construí este portafolio con Next.js 16",
+  excerpt:
+    "Idiomas detectados por el navegador, un tema que no parpadea, una bola que invierte colores y una carta holográfica — los bastidores, con código.",
+};
+
+Todo portafolio de dev corre el riesgo de convertirse en un currículum con fondo oscuro. Yo quería lo contrario: una página con **identidad**, que den ganas de tocar. Este post cuenta las decisiones técnicas detrás de ella.
+
+## Tres idiomas sin librería
+
+El sitio existe en portugués, inglés y español. En lugar de instalar una librería de i18n, usé lo que Next ya ofrece: rutas con el idioma al inicio (`/pt`, `/en`, `/es`) y un `proxy.ts` que decide a dónde enviar a quien llega a `/`.
+
+```ts
+function negotiate(header: string | null): Locale {
+  if (!header) return defaultLocale;
+  const ranked = header
+    .split(",")
+    .map((part) => {
+      const [tag, ...params] = part.trim().split(";");
+      const q = params.find((p) => p.trim().startsWith("q="));
+      return { lang: tag.toLowerCase().split("-")[0], q: q ? Number(q.split("=")[1]) : 1 };
+    })
+    .sort((a, b) => b.q - a.q);
+  const match = ranked.find((entry) => hasLocale(entry.lang));
+  return match ? (match.lang as Locale) : defaultLocale;
+}
+```
+
+Si alguien elige otro idioma en el menú, una cookie guarda la elección y pasa a valer más que el navegador.
+
+<Callout type="tip">
+  Los textos viven en un diccionario tipado: si falta una traducción, TypeScript se queja antes del deploy.
+</Callout>
+
+## Tema oscuro sin parpadeo
+
+El error clásico es leer el tema en un `useEffect`: la página aparece clara un instante y luego se oscurece. La solución es un script diminuto en el `<head>` que corre **antes del primer pintado** y marca `data-theme` en el `<html>`. El CSS solo reacciona al atributo.
+
+## La bola que invierte los colores
+
+El efecto de la portada es un círculo naranja con `mix-blend-mode: difference`. Sobre el fondo claro se vuelve azul; sobre el texto oscuro, naranja. Su posición viene del puntero en variables CSS, actualizadas en un `requestAnimationFrame` — React nunca vuelve a renderizar mientras se mueve.
+
+```css
+.hero-blob {
+  background: var(--signal);
+  mix-blend-mode: difference;
+  translate: var(--x) var(--y);
+}
+```
+
+## La carta holográfica
+
+La carta de la sección "Sobre mí" usa la misma idea: el puntero se convierte en `--mx`, `--my` y ángulos de rotación. Tres capas hacen la magia:
+
+1. un arcoíris con `color-dodge` que cambia con el ángulo;
+2. una purpurina en `radial-gradient`, revelada solo cerca del cursor;
+3. un reflejo de luz con `overlay`.
+
+## Lo que me llevaría al próximo proyecto
+
+- Las variables CSS son el puente perfecto entre JavaScript y animación.
+- Detecta preferencias (idioma, tema, movimiento reducido) y **respétalas** todas.
+- Un detalle divertido vale más que diez secciones genéricas.
