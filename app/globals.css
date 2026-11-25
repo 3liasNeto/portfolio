@@ -41,8 +41,28 @@
   --font-mono: var(--font-mono-display);
 }
 
-html {
-  scroll-behavior: smooth;
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Visible keyboard focus everywhere; light outline on dark panels */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+
+  .text-chalk :focus-visible,
+  .text-chalk:focus-visible {
+    outline-color: var(--chalk);
+  }
+}
+
+/* Looping animations stop when the visitor pauses them (MotionToggle) */
+html[data-motion="paused"] :is(.animate-marquee, .animate-blink, .animate-ping) {
+  animation-play-state: paused;
 }
 
 body {

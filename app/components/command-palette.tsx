@@ -38,7 +38,7 @@ export function CommandPalette({
 }) {
   const router = useRouter();
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const listRef = useRef<HTMLUListElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
   const mac = useSyncExternalStore(noop, isMac, () => true);
@@ -67,10 +67,10 @@ export function CommandPalette({
           },
         })),
       { id: "copy", group: t.groups.contact, label: contact.copy, icon: "⧉", keywords: profile.email, run: () => copyText(profile.email, contact) },
-      { id: "cv", group: t.groups.contact, label: contact.cv, icon: "↓", keywords: "pdf resume curriculo", run: () => window.open(profile.cv, "_blank") },
+      { id: "cv", group: t.groups.contact, label: contact.cv, icon: "↓", keywords: "pdf resume curriculo", run: () => window.open(profile.cv, "_blank", "noopener") },
       { id: "cal", group: t.groups.contact, label: contact.schedule, icon: "◷", keywords: "cal meeting", run: () => window.open(profile.calendar, "_blank", "noreferrer") },
-      ...profile.socials.map((social) => ({
-        id: social.label,
+      ...profile.socials.map((social, i) => ({
+        id: `social-${i}`,
         group: t.groups.social,
         label: social.label,
         icon: "↗",
@@ -84,6 +84,14 @@ export function CommandPalette({
     if (!q) return commands;
     return commands.filter((c) => `${c.label} ${c.group} ${c.keywords ?? ""}`.toLowerCase().includes(q));
   }, [commands, query]);
+
+  const groups = useMemo(() => {
+    const byName = new Map<string, { command: Command; index: number }[]>();
+    results.forEach((command, index) =>
+      byName.set(command.group, [...(byName.get(command.group) ?? []), { command, index }]),
+    );
+    return [...byName].map(([name, items]) => ({ name, items }));
+  }, [results]);
 
   function open() {
     setQuery("");
@@ -187,26 +195,32 @@ export function CommandPalette({
               onKeyDown={onInputKey}
               placeholder={t.placeholder}
               role="combobox"
-              aria-expanded="true"
+              aria-label={t.placeholder}
+              aria-expanded={results.length > 0}
               aria-controls="palette-list"
               aria-activedescendant={results[active] ? `cmd-${results[active].id}` : undefined}
               className="w-full bg-transparent text-base text-chalk outline-none placeholder:text-chalk/55"
             />
           </label>
 
-          <ul id="palette-list" ref={listRef} role="listbox" className="max-h-[50vh] overflow-y-auto p-2">
-            {results.length === 0 && <li className="px-3 py-6 text-center text-chalk/50">{t.empty}</li>}
-            {results.map((command, i) => {
-              const header =
-                i === 0 || results[i - 1].group !== command.group ? command.group : null;
-              return (
-                <li key={command.id} role="presentation">
-                  {header && (
-                    <p className="px-3 pt-3 pb-1.5 text-[10px] tracking-[0.2em] text-chalk/60 uppercase">
-                      {header}
-                    </p>
-                  )}
+          <div
+            id="palette-list"
+            ref={listRef}
+            role="listbox"
+            aria-label={t.title}
+            className="max-h-[50vh] overflow-y-auto p-2"
+          >
+            {groups.map(({ name, items }) => (
+              <div key={name} role="group" aria-labelledby={`group-${name}`}>
+                <p
+                  id={`group-${name}`}
+                  className="px-3 pt-3 pb-1.5 text-[10px] tracking-[0.2em] text-chalk/60 uppercase"
+                >
+                  {name}
+                </p>
+                {items.map(({ command, index: i }) => (
                   <button
+                    key={command.id}
                     id={`cmd-${command.id}`}
                     type="button"
                     role="option"
@@ -230,10 +244,14 @@ export function CommandPalette({
                     <span className="flex-1 font-sans text-[15px]">{command.label}</span>
                     {i === active && <span aria-hidden>↵</span>}
                   </button>
-                </li>
-              );
-            })}
-          </ul>
+                ))}
+              </div>
+            ))}
+          </div>
+          {/* Outside the listbox so it isn't announced as an option */}
+          <p aria-live="polite" className={results.length ? "sr-only" : "px-3 py-6 text-center text-chalk/60"}>
+            {results.length ? "" : t.empty}
+          </p>
 
           <div className="flex gap-5 border-t border-chalk/10 px-5 py-3 text-[11px] text-chalk/60">
             <span><kbd className="text-chalk/80">↑↓</kbd> {t.hints.move}</span>

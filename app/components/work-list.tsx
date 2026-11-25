@@ -5,6 +5,9 @@ import type { Project } from "../data";
 
 type LocalizedProject = Project & { description: string };
 
+// A project without a real URL yet ("#") is listed, but not as a dead link
+const hasLink = (href: string) => href !== "" && href !== "#";
+
 function Preview({ project }: { project: LocalizedProject }) {
   const [a, b] = project.palette;
   return (
@@ -25,18 +28,95 @@ function Preview({ project }: { project: LocalizedProject }) {
   );
 }
 
-export function WorkList({ projects }: { projects: LocalizedProject[] }) {
+function ProjectRow({
+  project,
+  index,
+  soon,
+  onActivate,
+  onDeactivate,
+}: {
+  project: LocalizedProject;
+  index: number;
+  soon: string;
+  onActivate: (row?: HTMLElement) => void;
+  onDeactivate: () => void;
+}) {
+  const linked = hasLink(project.href);
+  const className =
+    "group grid grid-cols-[3rem_1fr_auto] items-baseline gap-x-4 gap-y-3 py-7 transition-colors md:grid-cols-[4rem_1.2fr_1fr_auto] md:py-9";
+
+  const content = (
+    <>
+      <span className="font-mono text-xs text-muted">{String(index + 1).padStart(2, "0")}</span>
+      <span className="text-5xl font-extrabold tracking-[-0.04em] uppercase transition-[transform,color] duration-500 group-hover:translate-x-3 group-hover:text-signal-text md:text-7xl">
+        {project.title}
+      </span>
+      <span className="col-span-3 col-start-2 max-w-md text-sm text-muted md:col-span-1 md:col-start-3 md:text-base">
+        {project.description}
+        <span className="mt-3 flex flex-wrap gap-2">
+          {project.tags.map((tag) => (
+            <span
+              key={tag}
+              className="rounded-full border border-line px-2.5 py-0.5 font-mono text-[11px] text-ink"
+            >
+              {tag}
+            </span>
+          ))}
+        </span>
+      </span>
+      <span className="col-start-3 row-start-1 flex items-center gap-3 font-mono text-xs md:col-start-4">
+        {project.year}
+        {linked ? (
+          <span
+            aria-hidden
+            className="grid size-10 place-items-center rounded-full border border-ink transition-all duration-300 group-hover:rotate-45 group-hover:border-signal group-hover:bg-signal group-hover:text-on-signal"
+          >
+            ↗
+          </span>
+        ) : (
+          <span className="rounded-full border border-ink/30 px-3 py-1.5 text-[11px] tracking-wider text-muted uppercase">
+            {soon}
+          </span>
+        )}
+      </span>
+      {/* Inline preview where the floating one isn't used (touch or small screens) */}
+      <span className="col-span-3 col-start-1 mt-2 block aspect-[16/10] [@media(hover:hover)_and_(min-width:48rem)]:hidden">
+        <Preview project={project} />
+      </span>
+    </>
+  );
+
+  return linked ? (
+    <a
+      href={project.href}
+      onMouseEnter={() => onActivate()}
+      onFocus={(e) => onActivate(e.currentTarget)}
+      onBlur={onDeactivate}
+      className={className}
+    >
+      {content}
+    </a>
+  ) : (
+    <div onMouseEnter={() => onActivate()} className={className}>
+      {content}
+    </div>
+  );
+}
+
+export function WorkList({ projects, soon }: { projects: LocalizedProject[]; soon: string }) {
   const [active, setActive] = useState<number | null>(null);
   const previewRef = useRef<HTMLDivElement>(null);
 
-  function handleMove(e: React.MouseEvent) {
+  function moveTo(x: number, y: number) {
     const el = previewRef.current;
-    if (!el) return;
-    el.style.transform = `translate(${e.clientX + 24}px, ${e.clientY - 140}px)`;
+    if (el) el.style.transform = `translate(${x}px, ${y}px)`;
   }
 
   return (
-    <div onMouseMove={handleMove} onMouseLeave={() => setActive(null)}>
+    <div
+      onMouseMove={(e) => moveTo(e.clientX + 24, e.clientY - 140)}
+      onMouseLeave={() => setActive(null)}
+    >
       <ul className="border-t border-ink">
         {projects.map((project, i) => (
           <li
@@ -45,50 +125,29 @@ export function WorkList({ projects }: { projects: LocalizedProject[] }) {
             style={{ "--i": i } as React.CSSProperties}
             className="border-b border-ink"
           >
-            <a
-              href={project.href}
-              onMouseEnter={() => setActive(i)}
-              className="group grid grid-cols-[3rem_1fr_auto] items-baseline gap-x-4 gap-y-3 py-7 transition-colors md:grid-cols-[4rem_1.2fr_1fr_auto] md:py-9"
-            >
-              <span className="font-mono text-xs text-muted">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <span className="text-5xl font-extrabold tracking-[-0.04em] uppercase transition-[transform,color] duration-500 group-hover:translate-x-3 group-hover:text-signal-text md:text-7xl">
-                {project.title}
-              </span>
-              <span className="col-span-3 col-start-2 max-w-md text-sm text-muted md:col-span-1 md:col-start-3 md:text-base">
-                {project.description}
-                <span className="mt-3 flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full border border-line px-2.5 py-0.5 font-mono text-[11px] text-ink"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </span>
-              </span>
-              <span className="col-start-3 row-start-1 flex items-center gap-3 font-mono text-xs md:col-start-4">
-                {project.year}
-                <span className="grid size-10 place-items-center rounded-full border border-ink transition-all duration-300 group-hover:rotate-45 group-hover:border-signal group-hover:bg-signal group-hover:text-on-signal">
-                  ↗
-                </span>
-              </span>
-              {/* Inline preview on touch screens */}
-              <span className="col-span-3 col-start-1 mt-2 block aspect-[16/10] md:hidden">
-                <Preview project={project} />
-              </span>
-            </a>
+            <ProjectRow
+              project={project}
+              index={i}
+              soon={soon}
+              onActivate={(row) => {
+                // Keyboard focus has no pointer: park the preview at the row's right end
+                if (row) {
+                  const rect = row.getBoundingClientRect();
+                  moveTo(Math.max(rect.right - 420, 0), Math.max(rect.top - 40, 0));
+                }
+                setActive(i);
+              }}
+              onDeactivate={() => setActive(null)}
+            />
           </li>
         ))}
       </ul>
 
-      {/* Cursor-following preview on desktop */}
+      {/* Floating preview, only with a real hover and room for it */}
       <div
         ref={previewRef}
         aria-hidden
-        className="pointer-events-none fixed top-0 left-0 z-40 hidden md:block"
+        className="pointer-events-none fixed top-0 left-0 z-40 hidden [@media(hover:hover)_and_(min-width:48rem)]:block"
       >
         <div
           className={`h-[280px] w-[380px] transition-[opacity,scale,rotate] duration-300 ${

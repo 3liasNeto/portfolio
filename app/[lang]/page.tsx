@@ -6,6 +6,7 @@ import { CountUp } from "../components/count-up";
 import { HoloCard } from "../components/holo-card";
 import { InteractiveHero } from "../components/interactive-hero";
 import { LanguageSwitcher } from "../components/language-switcher";
+import { MotionToggle } from "../components/motion-toggle";
 import { RevealWords } from "../components/reveal";
 import { RevealObserver } from "../components/reveal-observer";
 import { SmoothScroll } from "../components/smooth-scroll";
@@ -123,7 +124,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         <div className="flex flex-wrap items-start justify-between gap-4 font-mono text-xs tracking-wider uppercase">
           <p className="flex items-center gap-2">
             <span className="relative flex size-2">
-              <span className="absolute inline-flex size-full animate-ping rounded-full bg-signal opacity-75" />
+              <span className="absolute inline-flex size-full rounded-full motion-safe:animate-ping bg-signal opacity-75" />
               <span className="relative inline-flex size-2 rounded-full bg-signal" />
             </span>
             {t.hero.availability}
@@ -190,7 +191,11 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       </InteractiveHero>
 
       {/* ---------- Marquee ---------- */}
-      <div className="-rotate-1 overflow-hidden border-y border-ink bg-night py-4 text-chalk">
+      <div className="relative -rotate-1 overflow-hidden border-y border-ink bg-night py-4 text-chalk">
+        <MotionToggle
+          labels={t.motion}
+          className="absolute top-1/2 right-3 z-10 -translate-y-1/2 md:right-6"
+        />
         <div className="animate-marquee flex w-max">
           {[0, 1].map((copy) => (
             <ul key={copy} aria-hidden={copy === 1} className="flex shrink-0">
@@ -225,23 +230,25 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             />
           </h2>
           <p data-reveal="fade" className="max-w-xs font-mono text-xs text-muted uppercase">
-            {t.work.hint}
+            <span className="[@media(hover:none)]:hidden">{t.work.hint} · </span>
+            {t.work.years}
           </p>
         </div>
-        <WorkList projects={localizedProjects} />
+        <WorkList projects={localizedProjects} soon={t.work.soon} />
       </section>
 
       {/* ---------- About ---------- */}
       <section id="sobre" className="bg-night text-chalk">
         <div className="mx-auto max-w-[1600px] px-4 py-32 md:px-8">
-          <div
+          {/* The section label doubles as its heading (this section has no big title) */}
+          <h2
             data-reveal="fade"
             className="mb-10 flex items-center gap-3 font-mono text-xs tracking-widest uppercase"
           >
-            <span className="text-signal">(02)</span>
+            <span aria-hidden className="text-signal">(02)</span>
             <span>{t.about.label}</span>
-            <span className="h-px flex-1 bg-chalk/20" />
-          </div>
+            <span aria-hidden className="h-px flex-1 bg-chalk/20" />
+          </h2>
           <div className="grid gap-16 md:grid-cols-[1.4fr_1fr]">
             <p data-reveal="up" className="text-3xl leading-[1.15] tracking-tight md:text-5xl">
               {t.about.statement.map((part, i) =>
@@ -260,12 +267,13 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
               </div>
               <dl className="grid grid-cols-3 gap-4 border-t border-chalk/20 pt-6">
                 {statValues.map((value, i) => (
-                  <div key={value}>
-                    <dt className="text-4xl font-extrabold tracking-tight tabular-nums md:text-5xl">
-                      <CountUp value={value} />
-                    </dt>
-                    <dd className="mt-1 font-mono text-[11px] text-chalk/60 uppercase">
+                  // Term (label) before value in the markup; flex-col-reverse shows the number on top
+                  <div key={value} className="flex flex-col-reverse">
+                    <dt className="mt-1 font-mono text-[11px] text-chalk/60 uppercase">
                       {t.about.stats[i]}
+                    </dt>
+                    <dd className="text-4xl font-extrabold tracking-tight tabular-nums md:text-5xl">
+                      <CountUp value={value} />
                     </dd>
                   </div>
                 ))}
@@ -372,7 +380,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             <span>{t.contact.label}</span>
             <span className="h-px flex-1 bg-on-signal/30" />
           </div>
-          <p
+          <h2
             data-reveal="words"
             className="text-4xl leading-[0.95] font-extrabold tracking-[-0.04em] md:text-7xl"
           >
@@ -381,7 +389,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             <RevealWords
               segments={[{ text: t.contact.titleEm, className: "font-serif font-normal italic" }]}
             />
-          </p>
+          </h2>
           <a
             data-reveal="up"
             href={`mailto:${profile.email}`}

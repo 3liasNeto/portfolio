@@ -81,7 +81,7 @@ export function PostExplorer({
             </button>
           ))}
         </div>
-        <label className="flex items-center gap-2 rounded-full border border-ink/20 px-4 py-2 font-mono text-sm focus-within:border-signal md:w-72">
+        <label className="flex items-center gap-2 rounded-full border border-ink/20 px-4 py-2 font-mono text-sm focus-within:border-signal has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-offset-2 has-[input:focus-visible]:outline-ink md:w-72">
           <span aria-hidden className="text-signal-text">⌕</span>
           <input
             type="search"

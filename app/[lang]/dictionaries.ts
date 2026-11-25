@@ -41,7 +41,10 @@ const pt = {
     titleA: "Coisas que eu",
     titleEm: "construí",
     titleB: "e gosto de mostrar.",
-    hint: "Passe o mouse para espiar · 2024 — 2026",
+    // Shown only on devices with a mouse
+    hint: "Passe o mouse para espiar",
+    years: "2024 — 2026",
+    soon: "Em breve",
   },
   projects: {
     orbita:
@@ -164,6 +167,10 @@ const pt = {
     light: "Claro",
     dark: "Escuro",
   },
+  motion: {
+    pause: "Pausar animações",
+    play: "Retomar animações",
+  },
 };
 
 export type Dictionary = typeof pt;
@@ -207,7 +214,9 @@ const en: Dictionary = {
     titleA: "Things I",
     titleEm: "built",
     titleB: "and love to show.",
-    hint: "Hover to peek · 2024 — 2026",
+    hint: "Hover to peek",
+    years: "2024 — 2026",
+    soon: "Coming soon",
   },
   projects: {
     orbita: "Financial management SaaS for small businesses, with real-time dashboards.",
@@ -325,6 +334,10 @@ const en: Dictionary = {
     light: "Light",
     dark: "Dark",
   },
+  motion: {
+    pause: "Pause animations",
+    play: "Resume animations",
+  },
 };
 
 const es: Dictionary = {
@@ -366,7 +379,9 @@ const es: Dictionary = {
     titleA: "Cosas que",
     titleEm: "construí",
     titleB: "y me gusta mostrar.",
-    hint: "Pasa el cursor para ver · 2024 — 2026",
+    hint: "Pasa el cursor para ver",
+    years: "2024 — 2026",
+    soon: "Próximamente",
   },
   projects: {
     orbita:
@@ -486,6 +501,10 @@ const es: Dictionary = {
     label: "Tema",
     light: "Claro",
     dark: "Oscuro",
+  },
+  motion: {
+    pause: "Pausar animaciones",
+    play: "Reanudar animaciones",
   },
 };
 

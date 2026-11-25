@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useMotionPaused } from "./motion-toggle";
 
 // Mini terminal that types a phrase, holds it, deletes it and moves to the next.
 // Starts with the first phrase fully typed, so it reads fine without JS or motion.
@@ -14,9 +15,10 @@ export function TypingTerminal({
   className?: string;
 }) {
   const [text, setText] = useState(phrases[0]);
+  const paused = useMotionPaused();
 
   useEffect(() => {
-    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (paused || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     let timer: ReturnType<typeof setTimeout>;
     let index = 0;
     let shown = phrases[0].length;
@@ -50,7 +52,7 @@ export function TypingTerminal({
 
     timer = setTimeout(step, 1800);
     return () => clearTimeout(timer);
-  }, [phrases]);
+  }, [phrases, paused]);
 
   return (
     <div
@@ -69,7 +71,7 @@ export function TypingTerminal({
         <p className="flex items-center text-[15px]">
           <span className="mr-2 text-[#b9d77a]">&gt;</span>
           <span className="sr-only">{phrases.join(", ")}</span>
-          <span aria-hidden className="whitespace-pre">{text}</span>
+          <span aria-hidden className="whitespace-pre">{paused ? phrases[0] : text}</span>
           <span aria-hidden className="animate-blink ml-0.5 inline-block h-4 w-2 bg-signal" />
         </p>
       </div>
