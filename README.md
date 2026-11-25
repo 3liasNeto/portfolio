@@ -15,9 +15,9 @@ Antes de enviar uma mudança, rode `typecheck`, `lint`, `test` e `build`.
 
 ---
 
-## ✅ Checklist: dados que precisam ser atualizados
+## ✅ Dados do site
 
-Quase todo o conteúdo do site ainda é **genérico** (provisório). Tudo o que precisa ser trocado está em **4 lugares**:
+O conteúdo vem dos currículos (Full Stack e Frontend) e do GitHub [`3liasNeto`](https://github.com/3liasNeto). Tudo o que pode mudar está em **4 lugares**:
 
 | # | Onde | O quê |
 |---|------|-------|
@@ -26,7 +26,7 @@ Quase todo o conteúdo do site ainda é **genérico** (provisório). Tudo o que 
 | 3 | [`app/[lang]/dictionaries.ts`](app/[lang]/dictionaries.ts) | Todos os textos, **em 3 idiomas** (pt, en, es) |
 | 4 | [`public/`](public) | Arquivos: CV em PDF e arte da carta |
 
-Legenda: ⚠️ = provisório, precisa trocar · ✔️ = já é real · ❔ = confirmar
+Legenda: ✔️ = real · ⚠️ = falta definir
 
 ---
 
@@ -34,7 +34,7 @@ Legenda: ⚠️ = provisório, precisa trocar · ✔️ = já é real · ❔ = c
 
 | Status | Item | Valor atual | Onde é usado |
 |---|---|---|---|
-| ⚠️ | Domínio do site | `https://eliasneto.dev` (padrão no código) | sitemap, robots, link canônico, imagem de compartilhamento, dados estruturados do Google |
+| ✔️ | Domínio do site | `https://eliasneto.dev` (padrão no código) | sitemap, robots, link canônico, imagem de compartilhamento, dados estruturados do Google |
 
 Defina na plataforma de deploy (ex.: Vercel → Settings → Environment Variables) ou em um `.env.local`:
 
@@ -48,72 +48,62 @@ NEXT_PUBLIC_SITE_URL=https://seu-dominio.com
 
 #### Perfil (`profile`)
 
-| Status | Campo | Valor atual | Observação |
+| Status | Campo | Valor | Observação |
 |---|---|---|---|
-| ✔️ | `name` | `Elias Neto` | Aparece no rodapé, carta, dados do Google |
-| ❔ | `city` / `country` | `São Paulo` / `BR` | Usado nos dados estruturados do Google |
-| ❔ | `location` | `São Paulo, BR` | Texto exibido no topo e no rodapé |
-| ❔ | `timeZone` | `America/Sao_Paulo` | Fuso do relógio ao vivo ([lista de fusos](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)) |
-| ❔ | `timeZoneLabel` | `BRT` | Sigla exibida ao lado do relógio |
-| ⚠️ | `email` | `ola@eliasneto.dev` | Contato, botão "Copiar e-mail", paleta ⌘K |
+| ✔️ | `name` | `Elias Neto` | Rodapé, carta, dados do Google |
+| ✔️ | `city` / `region` / `country` | `Uberlândia` / `MG` / `BR` | Dados estruturados do Google |
+| ✔️ | `location` | `Uberlândia, MG` | Topo, rodapé e blog |
+| ✔️ | `timeZone` / `timeZoneLabel` | `America/Sao_Paulo` / `BRT` | Relógio ao vivo |
+| ✔️ | `email` | `3lias.neto@gmail.com` | Contato, botão "Copiar e-mail", paleta ⌘K |
 | ✔️ | `cardArt` | `/elias-card.webp` | Arte full art da carta holográfica (proporção 63:88) |
-| ⚠️ | `cv` | `/cv-elias-neto.pdf` | Ver item 4 — o PDF atual é provisório |
-| ⚠️ | `calendar` | `https://cal.com/` | Link do botão "Agendar conversa" (Cal.com, Calendly…) |
-| ⚠️ | `socials` | GitHub, LinkedIn, X, Read.cv apontando para as home pages | Trocar pelos **seus perfis**; pode adicionar/remover itens |
+| ✔️ | `cv` | `/cv-elias-neto.pdf` | Currículo Full Stack (inclui telefone) |
+| ⚠️ | `calendar` | `null` | Link de agenda (Cal.com, Calendly…). Com `null`, o botão "Agendar conversa" e o comando da paleta ficam ocultos |
+| ✔️ | `socials` | GitHub `3liasNeto`, LinkedIn `eliasnet0` | Pode adicionar/remover itens |
 
 #### Stack (`stack`)
 
-| Status | Valor atual | Onde aparece |
+| Status | Valor | Onde aparece |
 |---|---|---|
-| ⚠️ | TypeScript, React, Next.js, Node.js, PostgreSQL, Tailwind CSS, GraphQL, Docker, AWS, Figma | Faixa rolando abaixo do topo e dados do Google |
+| ✔️ | TypeScript, React, Next.js, React Native, Expo, NestJS, Node.js, PostgreSQL, Prisma, Tailwind CSS, TanStack Query, Docker | Faixa rolando abaixo do topo e dados do Google |
 
 #### Projetos (`projects`)
 
-Os 4 projetos são **fictícios**: Orbita, Feira Livre, Pulso, Nômade.
-
-| Status | Campo | O que é |
+| Projeto | Origem | Link |
 |---|---|---|
-| ⚠️ | `id` | Identificador interno — liga o projeto à descrição traduzida em `dictionaries.ts` |
-| ⚠️ | `title` | Nome do projeto |
-| ⚠️ | `tags` | Tecnologias exibidas como etiquetas |
-| ⚠️ | `year` | Ano |
-| ⚠️ | `href` | Link do projeto. Enquanto for `#`, a linha aparece sem link e com o selo "Em breve" |
-| ⚠️ | `palette` | 2 cores do card de prévia que aparece ao passar o mouse |
-| ⚠️ | `glyph` | Símbolo grande do card de prévia |
+| Portal B2B, Banking VAN, Vendora, Niveela | Bornan | Privado (sem link, selo "Projeto privado") |
+| Desafio Pokémon | Pessoal | [github.com/3liasNeto/desafio-pokemon](https://github.com/3liasNeto/desafio-pokemon) |
+| Copa do Mundo (`Fifa_Game-JS`) | SENAC | Privado: o repositório é privado. Para linkar, deixe-o público e adicione `href` |
+| Portfolio | Pessoal | [github.com/3liasNeto/portfolio](https://github.com/3liasNeto/portfolio) |
+
+Campos: `id` (liga à descrição em `dictionaries.ts`), `title`, `tags`, `origin` (`bornan`, `senac` ou `personal`, mostrado ao lado do título), `href` (opcional: sem ele o projeto aparece como privado), `palette` e `glyph` (card de prévia).
 
 > **Para adicionar/remover um projeto, experiência ou número:** edite o array em `data.ts` (`projects`, `experience` ou `stats`), atualize o tipo do id logo acima dele (`ProjectId`, `ExperienceId`, `StatId`) e adicione/remova o texto correspondente nos **3 idiomas** do `dictionaries.ts`. O TypeScript avisa se faltar algum.
 
 #### Experiência e números
 
-| Status | Campo | Valor atual | Observação |
+| Status | Campo | Valor | Observação |
 |---|---|---|---|
-| ⚠️ | `experience` | 4 itens: `id` + `hash` (`a3f9c21`…) | Ordem da linha do tempo (mais recente primeiro) e o "hash" decorativo do `git log`. Os textos de cada item ficam em `experience.items[id]` no dicionário |
-| ⚠️ | `stats` | `years: 7+`, `projects: 40+`, `commits: 12k` | Números da seção Sobre (contam de 0 ao valor). Os rótulos ficam em `about.stats[id]` no dicionário |
+| ✔️ | `experience` | Bornan (2023 — hoje), UNIUBE (2023 — 2028), SENAC (2021 — 2023), primeiro commit (2021) | Ordem da linha do tempo; textos em `experience.items[id]` |
+| ✔️ | `stats` | `3+` anos de experiência, `3` frentes (mobile, web e API), `2021` escrevendo código desde | Rótulos em `about.stats[id]` |
 | ✔️ | `sections` | `trabalhos`, `sobre`, `experiencia`, `contato` | Âncoras das seções, usadas pela página e pela paleta ⌘K |
 
 ---
 
-### 3. `app/[lang]/dictionaries.ts` — textos (pt, en, es)
+### 3. `app/[lang]/dictionaries.ts`: textos (pt, en, es)
 
-O arquivo tem 3 blocos: `pt`, `en` e `es`. **Cada item abaixo precisa ser atualizado nos 3.** O TypeScript acusa erro se algum idioma ficar com campo faltando.
+O arquivo tem 3 blocos: `pt`, `en` e `es`. **Ao mudar um texto, mude nos 3.** O TypeScript acusa erro se algum idioma ficar com campo faltando.
 
-| Status | Chave | O que é | Conteúdo atual (pt) |
-|---|---|---|---|
-| ⚠️ | `meta.title` / `meta.description` | Título da aba e descrição para Google/compartilhamento | "Elias Neto — Desenvolvedor" / "Portfólio de Elias Neto, desenvolvedor full-stack…" |
-| ⚠️ | `hero.availability` | Status no topo | "Disponível para novos projetos" |
-| ⚠️ | `hero.role` | Cargo | "Desenvolvedor Full-Stack" |
-| ⚠️ | `hero.before` / `em` / `middle` / `highlight` / `after` | Frase de apresentação, em partes (`em` = itálico, `highlight` = marca laranja) | "…que transforma ideias em *produtos digitais* rápidos, acessíveis e com **personalidade**." |
-| ⚠️ | `hero.terminal.command` / `phrases` | Terminal que digita no topo (frases de até ~26 caracteres) | `elias --fazendo` → "construindo interfaces", "escrevendo APIs"… |
-| ⚠️ | `work.hint` | Texto ao lado do título de trabalhos (inclui o **intervalo de anos**) | "Passe o mouse para espiar · 2024 — 2026" |
-| ⚠️ | `projects.*` | Descrição de cada projeto (uma por `id`) | Textos fictícios |
-| ⚠️ | `about.statement` | Parágrafo "Sobre" — alterna texto normal e trechos em itálico (posições ímpares = itálico) | "Oi, eu sou o Elias. Escrevo código como quem escreve um *bom texto*…" |
-| ⚠️ | `about.stats` | Rótulos dos números de `stats`, por `id` | "anos escrevendo código", "projetos entregues", "commits no último ano" |
-| ✔️ | `about.card.alt` | Descrição da arte da carta (leitores de tela) | Já descreve a arte atual — atualizar só se trocar a imagem |
-| ⚠️ | `services` | 4 serviços oferecidos (título + texto) | Produtos web, Interfaces, APIs & dados, Consultoria |
-| ⚠️ | `experience.items` | Textos de cada experiência por `id` (o mesmo de `experience` em `data.ts`): `period`, `role`, `company`, `note`. A primeira da lista recebe o selo `HEAD -> main` | Empresa Alfa, Startup Beta, Agência Gama, "git init" 2018 |
-| ✔️ | `contact.*` | Títulos e botões de contato | Genéricos, servem como estão |
+| Chave | O que é | Conteúdo atual (pt) |
+|---|---|---|
+| `meta` | Título da aba e descrição para Google/compartilhamento | "Elias Neto — Desenvolvedor Full Stack" |
+| `hero` | Cargo, frase de apresentação (`em` = itálico, `highlight` = marca laranja) e frases do terminal (até ~26 caracteres) | "Desenvolvedor Full Stack que constrói *apps, painéis e APIs* de ponta a ponta…" |
+| `work` | Título dos trabalhos, intervalo de anos e rótulos "Projeto privado" / "Pessoal" | "2023 — hoje" |
+| `projects.*` | Descrição de cada projeto, por `id` | A partir dos currículos e dos READMEs |
+| `about.statement` | Parágrafo "Sobre" (posições ímpares = itálico) | "Oi, eu sou o Elias, desenvolvedor full stack em Uberlândia…" |
+| `services` | 4 serviços | Apps mobile, Web e Design Systems, APIs e back-end, Arquitetura e DevOps |
+| `experience.items` | Textos de cada experiência, por `id` | Bornan, UNIUBE, SENAC, primeiro commit |
 
-Os demais textos (`nav`, `palette`, `theme`, rótulos de seção) são da interface e já estão prontos nos 3 idiomas.
+Os demais textos (`nav`, `contact`, `palette`, `theme`, `motion`) são da interface e já estão prontos nos 3 idiomas.
 
 ---
 
@@ -121,7 +111,7 @@ Os demais textos (`nav`, `palette`, `theme`, rótulos de seção) são da interf
 
 | Status | Arquivo | O que fazer |
 |---|---|---|
-| ⚠️ | `public/cv-elias-neto.pdf` | **PDF provisório** ("CV provisório / Placeholder CV"). Substituir pelo currículo real, mantendo o nome (ou mudar `profile.cv`) |
+| ✔️ | `public/cv-elias-neto.pdf` | Currículo Full Stack. Para atualizar, substitua o arquivo mantendo o nome (ou mude `profile.cv`) |
 | ✔️ | `public/elias-card.webp` | Arte da carta full art. Para trocar, use uma imagem na proporção **63:88** (ex.: 1061×1482) |
 
 ---

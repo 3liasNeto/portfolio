@@ -13,7 +13,7 @@ export function ContactActions({
 }: {
   email: string;
   cv: string;
-  calendar: string;
+  calendar: string | null;
   labels: { copy: string; copied: string; copyFailed: string; cv: string; schedule: string };
 }) {
   return (
@@ -26,11 +26,13 @@ export function ContactActions({
         <span aria-hidden className="transition-transform group-hover:translate-y-0.5">↓</span>
         {labels.cv}
       </a>
-      <a href={calendar} target="_blank" rel="noreferrer" className={pill}>
-        <span aria-hidden>◷</span>
-        {labels.schedule}
-        <span aria-hidden>↗</span>
-      </a>
+      {calendar && (
+        <a href={calendar} target="_blank" rel="noreferrer" className={pill}>
+          <span aria-hidden>◷</span>
+          {labels.schedule}
+          <span aria-hidden>↗</span>
+        </a>
+      )}
     </div>
   );
 }

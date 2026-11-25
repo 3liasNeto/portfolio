@@ -3,9 +3,9 @@ import type { ExperienceId, ProjectId, StatId } from "../data";
 
 const pt = {
   meta: {
-    title: "Elias Neto — Desenvolvedor",
+    title: "Elias Neto — Desenvolvedor Full Stack",
     description:
-      "Portfólio de Elias Neto, desenvolvedor full-stack que constrói produtos digitais com código cuidadoso e interfaces com personalidade.",
+      "Portfólio de Elias Neto, desenvolvedor full stack em Uberlândia (MG) que constrói apps mobile, painéis web e APIs com TypeScript, React Native, Next.js e NestJS.",
   },
   nav: {
     home: "Início",
@@ -17,20 +17,20 @@ const pt = {
   },
   hero: {
     availability: "Disponível para novos projetos",
-    role: "Desenvolvedor Full-Stack",
+    role: "Desenvolvedor Full Stack",
     // Rendered as: role + before + <em> + middle + <mark> + after
-    before: "que transforma ideias em",
-    em: "produtos digitais",
-    middle: "rápidos, acessíveis e com",
+    before: "que constrói",
+    em: "apps, painéis e APIs",
+    middle: "de ponta a ponta — rápidos, acessíveis e com",
     highlight: "personalidade",
     after: ".",
     scroll: "Role para ver trabalhos",
     terminal: {
       command: "elias --fazendo",
       phrases: [
-        "construindo interfaces",
-        "escrevendo APIs",
-        "refatorando sem medo",
+        "construindo apps em Expo",
+        "escrevendo APIs em NestJS",
+        "desenhando design systems",
         "revisando um PR",
         "passando um café",
       ],
@@ -43,30 +43,35 @@ const pt = {
     titleB: "e gosto de mostrar.",
     // Shown only on devices with a mouse
     hint: "Passe o mouse para espiar",
-    years: "2024 — 2026",
-    soon: "Em breve",
+    years: "2023 — hoje",
+    private: "Projeto privado",
+    personal: "Pessoal",
   },
   projects: {
-    orbita:
-      "Plataforma SaaS de gestão financeira para pequenas empresas, com dashboards em tempo real.",
-    feira:
-      "Marketplace de produtores locais com checkout em um clique e logística integrada.",
-    pulso:
-      "Design system open-source com 60+ componentes acessíveis e tokens multi-marca.",
-    nomade:
-      "App de roteiros de viagem com sugestões geradas por IA e modo offline.",
+    b2b: "Portal B2B construído de ponta a ponta com Next.js, NestJS, TypeORM e PostgreSQL, integrado ao ERP Senior.",
+    banking:
+      "Plataforma de VAN bancária multi-tenant com microsserviços, RabbitMQ e MongoDB. Fiz as telas de autenticação: 2FA, passkeys, magic link e login social.",
+    vendora:
+      "App mobile em React Native com Expo e Expo Router, com API própria, autenticação e credenciais guardadas no SecureStore.",
+    niveela:
+      "Design System de uma plataforma de agendamento: tokens em CSS, tema responsivo e WCAG AA (contraste validado, alvos de 44px, foco visível, movimento reduzido).",
+    pokemon:
+      "Jogo de desafio Pokémon: sorteie o time, monte golpes, itens e EVs e vença uma sequência de treinadores. Batalhas no simulador do Showdown e IA que calcula o dano real com a calculadora do Smogon.",
+    fifa: "Monte a escalação do Brasil com os melhores jogadores de cada Copa do Mundo: arrastar e soltar, formações e filtros por posição. Projeto do curso técnico no SENAC.",
+    portfolio:
+      "Este site: Next.js 16 em três idiomas, tema sem piscar, carta holográfica e blog em MDX, com testes e auditoria de acessibilidade.",
   } satisfies Record<ProjectId, string>,
   about: {
     label: "Sobre",
     // Alternates plain text and <em> fragments
     statement: [
-      "Oi, eu sou o Elias. Escrevo código como quem escreve um ",
-      "bom texto",
-      ": com clareza, ritmo e sem palavras sobrando. Gosto do ponto onde ",
-      "design",
-      " e ",
-      "engenharia",
-      " se encontram — é ali que os produtos ganham alma.",
+      "Oi, eu sou o Elias, desenvolvedor full stack em Uberlândia. Desde 2023, na Bornan, levo produtos do ",
+      "app mobile",
+      " à ",
+      "API",
+      " em TypeScript — e gosto do ponto onde ",
+      "design e engenharia",
+      " se encontram: é ali que os produtos ganham alma.",
     ],
     card: {
       hint: "Passe o mouse ou arraste · clique para virar",
@@ -75,27 +80,27 @@ const pt = {
       back: "Carta de Dev",
     },
     stats: {
-      years: "anos escrevendo código",
-      projects: "projetos entregues",
-      commits: "commits no último ano",
+      years: "anos de experiência",
+      fronts: "frentes: mobile, web e API",
+      since: "escrevendo código desde",
     } satisfies Record<StatId, string>,
   },
   services: [
     {
-      title: "Produtos web",
-      body: "Do protótipo ao deploy: aplicações rápidas, escaláveis e fáceis de manter.",
+      title: "Apps mobile",
+      body: "React Native com Expo: navegação com Expo Router, autenticação, notificações e armazenamento seguro.",
     },
     {
-      title: "Interfaces",
-      body: "Front-ends com atenção a micro-interações, acessibilidade e performance.",
+      title: "Web e Design Systems",
+      body: "Next.js e React com componentes acessíveis, design tokens e interfaces responsivas.",
     },
     {
-      title: "APIs & dados",
-      body: "Back-ends limpos, modelagem de dados e integrações que não quebram às 3h.",
+      title: "APIs e back-end",
+      body: "NestJS e Node.js com PostgreSQL, Prisma ou TypeORM, JWT com refresh token, 2FA e RBAC.",
     },
     {
-      title: "Consultoria",
-      body: "Revisão de arquitetura, code review e mentoria para times de produto.",
+      title: "Arquitetura e DevOps",
+      body: "Monólito modular, multi-tenant e microsserviços, com Docker e CI/CD no GitHub Actions.",
     },
   ],
   experience: {
@@ -105,29 +110,29 @@ const pt = {
     titleB: "da minha carreira.",
     terminal: "elias@neto: ~/carreira — git log --graph",
     items: {
-      alpha: {
-        period: "2024 — hoje",
-        role: "Senior Software Engineer",
-        company: "Empresa Alfa",
-        note: "Liderando a reconstrução do front-end do produto principal.",
+      bornan: {
+        period: "2023 — hoje",
+        role: "Desenvolvedor Full Stack",
+        company: "Bornan",
+        note: "Apps integrados em TypeScript num monorepo Nx: React Native (Expo), Next.js e NestJS, auth com 2FA e passkeys, Docker e CI/CD.",
       },
-      beta: {
-        period: "2021 — 2024",
-        role: "Full-Stack Developer",
-        company: "Startup Beta",
-        note: "Do MVP à Série A: arquitetura, pagamentos e infraestrutura.",
+      uniube: {
+        period: "2023 — 2028",
+        role: "Engenharia da Computação",
+        company: "UNIUBE",
+        note: "Bacharelado em andamento.",
       },
-      gamma: {
-        period: "2019 — 2021",
-        role: "Front-End Developer",
-        company: "Agência Gama",
-        note: "Sites e campanhas para marcas nacionais.",
+      senac: {
+        period: "2021 — 2023",
+        role: "Técnico em Desenvolvimento de Sistemas",
+        company: "SENAC",
+        note: "A base: lógica, banco de dados e desenvolvimento web.",
       },
       start: {
-        period: "2018",
+        period: "2021",
         role: "git init",
         company: "Primeiro commit",
-        note: "Onde tudo começou: um HTML, um CSS e muita curiosidade.",
+        note: "Onde tudo começou: muita curiosidade e um terminal aberto.",
       },
     } satisfies Record<ExperienceId, { period: string; role: string; company: string; note: string }>,
   },
@@ -181,9 +186,9 @@ export type Dictionary = typeof pt;
 
 const en: Dictionary = {
   meta: {
-    title: "Elias Neto — Developer",
+    title: "Elias Neto — Full Stack Developer",
     description:
-      "Portfolio of Elias Neto, a full-stack developer building digital products with careful code and interfaces with personality.",
+      "Portfolio of Elias Neto, a full stack developer in Uberlândia, Brazil, building mobile apps, web dashboards and APIs with TypeScript, React Native, Next.js and NestJS.",
   },
   nav: {
     home: "Home",
@@ -195,19 +200,19 @@ const en: Dictionary = {
   },
   hero: {
     availability: "Available for new projects",
-    role: "Full-Stack Developer",
-    before: "turning ideas into",
-    em: "digital products",
-    middle: "that are fast, accessible and full of",
+    role: "Full Stack Developer",
+    before: "building",
+    em: "apps, dashboards and APIs",
+    middle: "end to end — fast, accessible and full of",
     highlight: "personality",
     after: ".",
     scroll: "Scroll to see work",
     terminal: {
       command: "elias --doing",
       phrases: [
-        "building interfaces",
-        "writing APIs",
-        "refactoring fearlessly",
+        "building apps with Expo",
+        "writing APIs in NestJS",
+        "crafting design systems",
         "reviewing a PR",
         "brewing coffee",
       ],
@@ -219,25 +224,34 @@ const en: Dictionary = {
     titleEm: "built",
     titleB: "and love to show.",
     hint: "Hover to peek",
-    years: "2024 — 2026",
-    soon: "Coming soon",
+    years: "2023 — now",
+    private: "Private project",
+    personal: "Personal",
   },
   projects: {
-    orbita: "Financial management SaaS for small businesses, with real-time dashboards.",
-    feira: "Marketplace for local producers with one-click checkout and built-in logistics.",
-    pulso: "Open-source design system with 60+ accessible components and multi-brand tokens.",
-    nomade: "Travel itinerary app with AI-generated suggestions and offline mode.",
+    b2b: "B2B portal built end to end with Next.js, NestJS, TypeORM and PostgreSQL, integrated with the Senior ERP.",
+    banking:
+      "Multi-tenant banking VAN platform with microservices, RabbitMQ and MongoDB. I built the sign-in screens: 2FA, passkeys, magic link and social login.",
+    vendora:
+      "React Native mobile app with Expo and Expo Router, its own API, authentication and credentials kept in SecureStore.",
+    niveela:
+      "Design System for a scheduling platform: CSS design tokens, responsive theme and WCAG AA (checked contrast, 44px targets, visible focus, reduced motion).",
+    pokemon:
+      "Pokémon challenge game: draft your team, build moves, items and EVs and beat a run of trainers. Battles run on the Showdown simulator, with an AI that computes real damage using the Smogon calculator.",
+    fifa: "Build Brazil's line-up with the best players from every World Cup: drag and drop, formations and position filters. A project from my technical course at SENAC.",
+    portfolio:
+      "This site: Next.js 16 in three languages, flash-free theming, a holographic card and an MDX blog, with tests and an accessibility audit.",
   },
   about: {
     label: "About",
     statement: [
-      "Hi, I'm Elias. I write code the way you'd write a ",
-      "good essay",
-      ": clear, with rhythm and no wasted words. I love the spot where ",
-      "design",
-      " and ",
-      "engineering",
-      " meet — that's where products get a soul.",
+      "Hi, I'm Elias, a full stack developer in Uberlândia, Brazil. Since 2023, at Bornan, I take products from the ",
+      "mobile app",
+      " to the ",
+      "API",
+      " in TypeScript — and I love the spot where ",
+      "design and engineering",
+      " meet: that's where products get a soul.",
     ],
     card: {
       hint: "Hover or drag · click to flip",
@@ -245,24 +259,28 @@ const en: Dictionary = {
       alt: "Full-art holographic card: Elias as a trainer in a futuristic city, with holograms and a tablet.",
       back: "Dev Card",
     },
-    stats: { years: "years writing code", projects: "projects shipped", commits: "commits last year" },
+    stats: {
+      years: "years of experience",
+      fronts: "fronts: mobile, web and API",
+      since: "writing code since",
+    },
   },
   services: [
     {
-      title: "Web products",
-      body: "From prototype to deploy: fast, scalable apps that are easy to maintain.",
+      title: "Mobile apps",
+      body: "React Native with Expo: Expo Router navigation, authentication, notifications and secure storage.",
     },
     {
-      title: "Interfaces",
-      body: "Front-ends with care for micro-interactions, accessibility and performance.",
+      title: "Web & Design Systems",
+      body: "Next.js and React with accessible components, design tokens and responsive interfaces.",
     },
     {
-      title: "APIs & data",
-      body: "Clean back-ends, data modeling and integrations that don't break at 3am.",
+      title: "APIs & back end",
+      body: "NestJS and Node.js with PostgreSQL, Prisma or TypeORM, JWT with refresh tokens, 2FA and RBAC.",
     },
     {
-      title: "Consulting",
-      body: "Architecture reviews, code review and mentoring for product teams.",
+      title: "Architecture & DevOps",
+      body: "Modular monoliths, multi-tenancy and microservices, with Docker and CI/CD on GitHub Actions.",
     },
   ],
   experience: {
@@ -272,29 +290,29 @@ const en: Dictionary = {
     titleB: "history of my career.",
     terminal: "elias@neto: ~/career — git log --graph",
     items: {
-      alpha: {
-        period: "2024 — now",
-        role: "Senior Software Engineer",
-        company: "Company Alpha",
-        note: "Leading the front-end rebuild of the flagship product.",
+      bornan: {
+        period: "2023 — now",
+        role: "Full Stack Developer",
+        company: "Bornan",
+        note: "Integrated TypeScript apps in an Nx monorepo: React Native (Expo), Next.js and NestJS, auth with 2FA and passkeys, Docker and CI/CD.",
       },
-      beta: {
-        period: "2021 — 2024",
-        role: "Full-Stack Developer",
-        company: "Startup Beta",
-        note: "From MVP to Series A: architecture, payments and infrastructure.",
+      uniube: {
+        period: "2023 — 2028",
+        role: "Computer Engineering",
+        company: "UNIUBE",
+        note: "Bachelor's degree in progress.",
       },
-      gamma: {
-        period: "2019 — 2021",
-        role: "Front-End Developer",
-        company: "Gamma Agency",
-        note: "Websites and campaigns for national brands.",
+      senac: {
+        period: "2021 — 2023",
+        role: "Systems Development Technician",
+        company: "SENAC",
+        note: "The foundation: logic, databases and web development.",
       },
       start: {
-        period: "2018",
+        period: "2021",
         role: "git init",
         company: "First commit",
-        note: "Where it all began: some HTML, some CSS and lots of curiosity.",
+        note: "Where it all began: lots of curiosity and an open terminal.",
       },
     },
   },
@@ -346,9 +364,9 @@ const en: Dictionary = {
 
 const es: Dictionary = {
   meta: {
-    title: "Elias Neto — Desarrollador",
+    title: "Elias Neto — Desarrollador Full Stack",
     description:
-      "Portafolio de Elias Neto, desarrollador full-stack que construye productos digitales con código cuidadoso e interfaces con personalidad.",
+      "Portafolio de Elias Neto, desarrollador full stack en Uberlândia (Brasil) que construye apps móviles, paneles web y APIs con TypeScript, React Native, Next.js y NestJS.",
   },
   nav: {
     home: "Inicio",
@@ -360,19 +378,19 @@ const es: Dictionary = {
   },
   hero: {
     availability: "Disponible para nuevos proyectos",
-    role: "Desarrollador Full-Stack",
-    before: "que convierte ideas en",
-    em: "productos digitales",
-    middle: "rápidos, accesibles y con",
+    role: "Desarrollador Full Stack",
+    before: "que construye",
+    em: "apps, paneles y APIs",
+    middle: "de punta a punta — rápidos, accesibles y con",
     highlight: "personalidad",
     after: ".",
     scroll: "Desliza para ver proyectos",
     terminal: {
       command: "elias --haciendo",
       phrases: [
-        "construyendo interfaces",
-        "escribiendo APIs",
-        "refactorizando sin miedo",
+        "construyendo apps en Expo",
+        "escribiendo APIs en NestJS",
+        "diseñando design systems",
         "revisando un PR",
         "preparando café",
       ],
@@ -384,28 +402,34 @@ const es: Dictionary = {
     titleEm: "construí",
     titleB: "y me gusta mostrar.",
     hint: "Pasa el cursor para ver",
-    years: "2024 — 2026",
-    soon: "Próximamente",
+    years: "2023 — hoy",
+    private: "Proyecto privado",
+    personal: "Personal",
   },
   projects: {
-    orbita:
-      "Plataforma SaaS de gestión financiera para pequeñas empresas, con dashboards en tiempo real.",
-    feira:
-      "Marketplace de productores locales con checkout en un clic y logística integrada.",
-    pulso:
-      "Design system open-source con 60+ componentes accesibles y tokens multimarca.",
-    nomade: "App de itinerarios de viaje con sugerencias generadas por IA y modo offline.",
+    b2b: "Portal B2B construido de punta a punta con Next.js, NestJS, TypeORM y PostgreSQL, integrado con el ERP Senior.",
+    banking:
+      "Plataforma de VAN bancaria multi-tenant con microservicios, RabbitMQ y MongoDB. Hice las pantallas de autenticación: 2FA, passkeys, magic link y login social.",
+    vendora:
+      "App móvil en React Native con Expo y Expo Router, con API propia, autenticación y credenciales guardadas en SecureStore.",
+    niveela:
+      "Design System de una plataforma de agendamiento: tokens en CSS, tema responsivo y WCAG AA (contraste validado, objetivos de 44px, foco visible, movimiento reducido).",
+    pokemon:
+      "Juego de desafío Pokémon: sortea tu equipo, arma movimientos, objetos y EVs y vence a una serie de entrenadores. Batallas en el simulador de Showdown e IA que calcula el daño real con la calculadora de Smogon.",
+    fifa: "Arma la alineación de Brasil con los mejores jugadores de cada Mundial: arrastrar y soltar, formaciones y filtros por posición. Proyecto del curso técnico en el SENAC.",
+    portfolio:
+      "Este sitio: Next.js 16 en tres idiomas, tema sin parpadeo, carta holográfica y blog en MDX, con tests y auditoría de accesibilidad.",
   },
   about: {
     label: "Sobre mí",
     statement: [
-      "Hola, soy Elias. Escribo código como quien escribe un ",
-      "buen texto",
-      ": con claridad, ritmo y sin palabras de sobra. Me gusta el punto donde ",
-      "diseño",
-      " e ",
-      "ingeniería",
-      " se encuentran — ahí es donde los productos cobran alma.",
+      "Hola, soy Elias, desarrollador full stack en Uberlândia (Brasil). Desde 2023, en Bornan, llevo productos de la ",
+      "app móvil",
+      " a la ",
+      "API",
+      " en TypeScript — y me gusta el punto donde ",
+      "diseño e ingeniería",
+      " se encuentran: ahí es donde los productos cobran alma.",
     ],
     card: {
       hint: "Pasa el cursor o arrastra · clic para girar",
@@ -413,24 +437,28 @@ const es: Dictionary = {
       alt: "Carta holográfica full art: Elias como entrenador en una ciudad futurista, con hologramas y una tableta.",
       back: "Carta de Dev",
     },
-    stats: { years: "años escribiendo código", projects: "proyectos entregados", commits: "commits el último año" },
+    stats: {
+      years: "años de experiencia",
+      fronts: "frentes: móvil, web y API",
+      since: "escribiendo código desde",
+    },
   },
   services: [
     {
-      title: "Productos web",
-      body: "Del prototipo al deploy: aplicaciones rápidas, escalables y fáciles de mantener.",
+      title: "Apps móviles",
+      body: "React Native con Expo: navegación con Expo Router, autenticación, notificaciones y almacenamiento seguro.",
     },
     {
-      title: "Interfaces",
-      body: "Front-ends con atención a micro-interacciones, accesibilidad y rendimiento.",
+      title: "Web y Design Systems",
+      body: "Next.js y React con componentes accesibles, design tokens e interfaces responsivas.",
     },
     {
-      title: "APIs y datos",
-      body: "Back-ends limpios, modelado de datos e integraciones que no fallan a las 3 a. m.",
+      title: "APIs y back-end",
+      body: "NestJS y Node.js con PostgreSQL, Prisma o TypeORM, JWT con refresh token, 2FA y RBAC.",
     },
     {
-      title: "Consultoría",
-      body: "Revisión de arquitectura, code review y mentoría para equipos de producto.",
+      title: "Arquitectura y DevOps",
+      body: "Monolito modular, multi-tenant y microservicios, con Docker y CI/CD en GitHub Actions.",
     },
   ],
   experience: {
@@ -440,29 +468,29 @@ const es: Dictionary = {
     titleB: "de mi carrera.",
     terminal: "elias@neto: ~/carrera — git log --graph",
     items: {
-      alpha: {
-        period: "2024 — hoy",
-        role: "Senior Software Engineer",
-        company: "Empresa Alfa",
-        note: "Liderando la reconstrucción del front-end del producto principal.",
+      bornan: {
+        period: "2023 — hoy",
+        role: "Desarrollador Full Stack",
+        company: "Bornan",
+        note: "Apps integradas en TypeScript en un monorepo Nx: React Native (Expo), Next.js y NestJS, auth con 2FA y passkeys, Docker y CI/CD.",
       },
-      beta: {
-        period: "2021 — 2024",
-        role: "Full-Stack Developer",
-        company: "Startup Beta",
-        note: "Del MVP a la Serie A: arquitectura, pagos e infraestructura.",
+      uniube: {
+        period: "2023 — 2028",
+        role: "Ingeniería de Computación",
+        company: "UNIUBE",
+        note: "Licenciatura en curso.",
       },
-      gamma: {
-        period: "2019 — 2021",
-        role: "Front-End Developer",
-        company: "Agencia Gama",
-        note: "Sitios y campañas para marcas nacionales.",
+      senac: {
+        period: "2021 — 2023",
+        role: "Técnico en Desarrollo de Sistemas",
+        company: "SENAC",
+        note: "La base: lógica, bases de datos y desarrollo web.",
       },
       start: {
-        period: "2018",
+        period: "2021",
         role: "git init",
         company: "Primer commit",
-        note: "Donde todo empezó: un HTML, un CSS y mucha curiosidad.",
+        note: "Donde todo empezó: mucha curiosidad y una terminal abierta.",
       },
     },
   },

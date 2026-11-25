@@ -57,6 +57,8 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
   const localizedProjects = projects.map((project) => ({
     ...project,
     description: t.projects[project.id],
+    originLabel:
+      project.origin === "bornan" ? "Bornan" : project.origin === "senac" ? "SENAC" : t.work.personal,
   }));
 
   const jsonLd = {
@@ -67,7 +69,17 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
     description: t.meta.description,
     url: `${siteUrl}/${lang}`,
     email: `mailto:${profile.email}`,
-    address: { "@type": "PostalAddress", addressLocality: profile.city, addressCountry: profile.country },
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: profile.city,
+      addressRegion: profile.region,
+      addressCountry: profile.country,
+    },
+    worksFor: { "@type": "Organization", name: "Bornan" },
+    alumniOf: [
+      { "@type": "CollegeOrUniversity", name: "UNIUBE" },
+      { "@type": "EducationalOrganization", name: "SENAC" },
+    ],
     knowsAbout: stack,
     sameAs: profile.socials.map((social) => social.href),
   };
@@ -234,7 +246,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             {t.work.years}
           </p>
         </div>
-        <WorkList projects={localizedProjects} soon={t.work.soon} />
+        <WorkList projects={localizedProjects} privateLabel={t.work.private} />
       </section>
 
       {/* ---------- About ---------- */}
@@ -268,7 +280,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
               <dl className="grid grid-cols-3 gap-4 border-t border-chalk/20 pt-6">
                 {stats.map(({ id, value }) => (
                   // Term (label) before value in the markup; flex-col-reverse shows the number on top
-                  <div key={id} className="flex flex-col-reverse">
+                  <div key={id} className="flex flex-col-reverse justify-end">
                     <dt className="mt-1 font-mono text-[11px] text-chalk/60 uppercase">
                       {t.about.stats[id]}
                     </dt>
