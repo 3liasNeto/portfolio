@@ -2,6 +2,34 @@
 
 Escopo: repositório inteiro (`app/`, `proxy.ts`, `mdx-components.tsx`, `next.config.ts`, `content/`, `public/`, configuração e histórico git), branch `claude/funny-lovelace-6g7duj` no commit `42329bb`. Auditoria somente leitura em cinco dimensões, feita por auditores em paralelo e consolidada aqui.
 
+## Status das correções (atualizado em 2026-11-25)
+
+Os itens P1 e P2 foram tratados na branch `claude/funny-lovelace-6g7duj`, um commit por grupo, cada um validado com `typecheck`, `lint`, `test`, `build`, um smoke test das rotas e testes no navegador (Playwright).
+
+| Achados | Status | Commit |
+|---|---|---|
+| P2-1 `next` vulnerável | ✅ Next 16.4.6 e `npm audit fix`: `npm audit --omit=dev` mostra **0 vulnerabilidades**. Novo script `typecheck` (o `tsc` falhava num clone limpo sem os tipos de rota gerados) | `c2c75cb` |
+| P1-1, P2-9, P2-10 contraste | ✅ `--muted` #635e55 (5,5:1), novo `--signal-text` #c2330a (4,7:1), `text-on-signal` sobre laranja, piso `chalk/60` nos terminais e comentários de código #958d80 | `33ec801` |
+| P2-8 testes e P2-4 índice dos posts | ✅ Vitest com 15 testes. O teste comparando com o `rehype-slug` reproduziu os bugs (CRLF, link, `##` final, cerca `~~~`) antes da correção | `457c82f` |
+| P2-2 Open Graph do blog | ✅ `openGraph` próprio (posts com `type: article`) e imagens de compartilhamento do índice e de cada post | `86144fb` |
+| P2-3 copiar | ✅ `copyText()` único, com aviso de erro | `ef88c4b` |
+| P2-12, P2-14, P2-15, P2-16, P2-17 acessibilidade, e P1-2 (parte de código) | ✅ Títulos, paleta, preview por tipo de ponteiro e teclado, botão de pausar animações, foco visível. Projetos com `#` deixam de ser links mortos ("Em breve") | `6a6087b` |
+| P2-11 404 e erro | ✅ `not-found` e `error` localizados. Rota curinga `[lang]/[...missing]`, porque o layout raiz em `[lang]` impede o `not-found` de pegar URLs sem rota | `3d03330` |
+| P2-13 reveal sem JS | ✅ Conteúdo só é escondido depois que o script das animações roda, e a impressão mostra tudo | `fa0b63a` |
+| P2-5, P2-6, P2-7 refatorações | ✅ Blog desacoplado do portfólio, `experience` e `stats` com ids, constante `sections` | `16f65d6` |
+| P2-18, P2-19, P2-20 performance | ✅ Medido com trace do Chrome (CPU 4x, 60 movimentos no hero). Rasterização de 1.091 para 200 ms, recálculo de estilo de 655 para 477 ms, layout de 433 para 337 ms. Preloads de fonte de 4 para 3. Lenis fora do blog | `5b060e8` |
+| P2-21 LCP do h1 | ➖ Medido, sem ação: o LCP é igual ao FCP (~1 s em perfil mobile) e o elemento de LCP é o parágrafo de apresentação | — |
+| P1-2 conteúdo real | ⏳ Depende do dono do projeto: links dos projetos, CV, agenda e redes (ver README) | — |
+
+**P3 corrigidos de carona:**
+- `#3`: `noopener` no CV;
+- `#9`: cast `as Locale` do proxy removido;
+- `#14`: `padStart` nos números dos serviços;
+- `#29`: rótulo do botão de tema do blog;
+- `#11`: em parte, o `.mdx` sem `meta` agora é pego pelo teste de integridade.
+
+Os demais P3 seguem como backlog.
+
 ---
 
 ## 1. Resumo

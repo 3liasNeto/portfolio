@@ -35,7 +35,7 @@ export function MotionToggle({
       aria-label={labels.pause}
       title={label}
       onClick={() => setMotionPaused(!paused)}
-      className={`grid size-10 place-items-center rounded-full border border-chalk/40 bg-night text-sm text-chalk transition-colors hover:border-signal hover:text-signal ${className}`}
+      className={`grid size-10 place-items-center rounded-full border border-chalk/40 bg-night text-sm text-chalk shadow-[0_0_0_10px_var(--night)] transition-colors hover:border-signal hover:text-signal ${className}`}
     >
       <span aria-hidden>{paused ? "▶" : "❚❚"}</span>
     </button>

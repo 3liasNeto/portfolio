@@ -4,10 +4,14 @@ Landing page / portfólio pessoal em **Next.js 16**, com 3 idiomas (pt / en / es
 
 ```bash
 npm install
-npm run dev      # http://localhost:3000
-npm run build    # build de produção
+npm run dev        # http://localhost:3000
+npm run build      # build de produção
 npm run lint
+npm run typecheck  # gera os tipos de rota do Next e roda o tsc
+npm test           # Vitest: idiomas, índice dos posts, integridade do blog
 ```
+
+Antes de enviar uma mudança, rode `typecheck`, `lint`, `test` e `build`.
 
 ---
 
@@ -73,7 +77,7 @@ Os 4 projetos são **fictícios**: Orbita, Feira Livre, Pulso, Nômade.
 | ⚠️ | `title` | Nome do projeto |
 | ⚠️ | `tags` | Tecnologias exibidas como etiquetas |
 | ⚠️ | `year` | Ano |
-| ⚠️ | `href` | Link do projeto (hoje todos são `#`) |
+| ⚠️ | `href` | Link do projeto. Enquanto for `#`, a linha aparece sem link e com o selo "Em breve" |
 | ⚠️ | `palette` | 2 cores do card de prévia que aparece ao passar o mouse |
 | ⚠️ | `glyph` | Símbolo grande do card de prévia |
 
