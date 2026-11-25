@@ -68,6 +68,8 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        {/* The site has its own light/dark themes: ask dark-mode extensions not to repaint it */}
+        <meta name="darkreader-lock" />
       </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

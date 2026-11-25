@@ -120,7 +120,7 @@ const pt = {
       },
       uniube: {
         period: "2023 — 2028",
-        role: "Engenharia da Computação",
+        role: "Ciência da Computação",
         company: "UNIUBE",
         note: "Bacharelado em andamento.",
       },
@@ -302,7 +302,7 @@ const en: Dictionary = {
       },
       uniube: {
         period: "2023 — 2028",
-        role: "Computer Engineering",
+        role: "Computer Science",
         company: "UNIUBE",
         note: "Bachelor's degree in progress.",
       },
@@ -482,7 +482,7 @@ const es: Dictionary = {
       },
       uniube: {
         period: "2023 — 2028",
-        role: "Ingeniería de Computación",
+        role: "Ciencias de la Computación",
         company: "UNIUBE",
         note: "Licenciatura en curso.",
       },
