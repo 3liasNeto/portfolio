@@ -54,7 +54,7 @@ NEXT_PUBLIC_SITE_URL=https://seu-dominio.com
 | ✔️ | `city` / `region` / `country` | `Uberlândia` / `MG` / `BR` | Dados estruturados do Google |
 | ✔️ | `location` | `Uberlândia, MG` | Topo, rodapé e blog |
 | ✔️ | `timeZone` / `timeZoneLabel` | `America/Sao_Paulo` / `BRT` | Relógio ao vivo |
-| ✔️ | `email` | `3lias.neto@gmail.com` | Contato, botão "Copiar e-mail", paleta ⌘K |
+| ✔️ | `email` | `contato@eliasneto.dev` | Contato, botão "Copiar e-mail", paleta ⌘K |
 | ✔️ | `cardArt` | `/elias-card.webp` | Arte full art da carta holográfica (proporção 63:88) |
 | ✔️ | `cv` | `/cv-elias-neto.pdf` | Currículo Full Stack (inclui telefone) |
 | ⚠️ | `calendar` | `null` | Link de agenda (Cal.com, Calendly…). Com `null`, o botão "Agendar conversa" e o comando da paleta ficam ocultos |
