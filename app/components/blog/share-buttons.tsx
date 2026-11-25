@@ -1,13 +1,13 @@
 "use client";
 
-import { showToast } from "../toast";
+import { copyText } from "../toast";
 
 export function ShareButtons({
   title,
   labels,
 }: {
   title: string;
-  labels: { share: string; copyLink: string; linkCopied: string };
+  labels: { share: string; copyLink: string; linkCopied: string; copyFailed: string };
 }) {
   const open = (build: (url: string) => string) => () =>
     window.open(build(encodeURIComponent(location.href)), "_blank", "noopener,noreferrer");
@@ -25,12 +25,7 @@ export function ShareButtons({
         aria-label={labels.copyLink}
         title={labels.copyLink}
         className={button}
-        onClick={async () => {
-          try {
-            await navigator.clipboard.writeText(location.href);
-            showToast(labels.linkCopied);
-          } catch {}
-        }}
+        onClick={() => copyText(location.href, { copied: labels.linkCopied, copyFailed: labels.copyFailed })}
       >
         ⧉
       </button>

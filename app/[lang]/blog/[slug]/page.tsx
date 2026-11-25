@@ -72,7 +72,12 @@ export default async function BlogPost({ params }: PageProps<"/[lang]/blog/[slug
   if (!data) notFound();
   const { post, Content, headings, newer, older, related } = data;
   const t = getBlogDictionary(lang);
-  const shareLabels = { share: t.share, copyLink: t.copyLink, linkCopied: t.linkCopied };
+  const shareLabels = {
+    share: t.share,
+    copyLink: t.copyLink,
+    linkCopied: t.linkCopied,
+    copyFailed: t.copyFailed,
+  };
 
   return (
     <main>
@@ -122,7 +127,7 @@ export default async function BlogPost({ params }: PageProps<"/[lang]/blog/[slug
         <article id="article" className="prose mx-auto w-full min-w-0 max-w-[44rem] lg:mx-0 lg:ml-auto">
           <Content
             components={{
-              pre: (props) => <CodeBlock {...props} labels={{ copy: t.copyCode, copied: t.codeCopied }} />,
+              pre: (props) => <CodeBlock {...props} labels={{ copy: t.copyCode, copied: t.codeCopied, copyFailed: t.copyFailed }} />,
               Callout: ({ type = "tip", children }: { type?: "tip" | "warning"; children?: React.ReactNode }) => (
                 <Callout type={type} label={t.callout[type]}>
                   {children}

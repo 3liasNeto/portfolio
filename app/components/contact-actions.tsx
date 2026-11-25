@@ -1,15 +1,6 @@
 "use client";
 
-import { showToast } from "./toast";
-
-export async function copyEmail(email: string, message: string) {
-  try {
-    await navigator.clipboard.writeText(email);
-    showToast(message);
-  } catch {
-    window.location.href = `mailto:${email}`;
-  }
-}
+import { copyText } from "./toast";
 
 const pill =
   "group inline-flex items-center gap-2 rounded-full border-2 border-on-signal px-5 py-3 font-mono text-xs tracking-wider uppercase transition-colors hover:bg-on-signal hover:text-signal";
@@ -23,11 +14,11 @@ export function ContactActions({
   email: string;
   cv: string;
   calendar: string;
-  labels: { copy: string; copied: string; cv: string; schedule: string };
+  labels: { copy: string; copied: string; copyFailed: string; cv: string; schedule: string };
 }) {
   return (
     <div className="mt-10 flex flex-wrap gap-3">
-      <button type="button" onClick={() => copyEmail(email, labels.copied)} className={pill}>
+      <button type="button" onClick={() => copyText(email, labels)} className={pill}>
         <span aria-hidden>⧉</span>
         {labels.copy}
       </button>

@@ -10,7 +10,7 @@ export function CodeBlock({
   labels,
 }: {
   children?: React.ReactNode;
-  labels: { copy: string; copied: string };
+  labels: { copy: string; copied: string; copyFailed: string };
 }) {
   const code = (children as CodeElement)?.props;
   const source = String(code?.children ?? "").replace(/\n$/, "");

@@ -41,6 +41,7 @@ const pt = {
   related: "Leia também",
   copyCode: "Copiar",
   codeCopied: "Código copiado!",
+  copyFailed: "Não foi possível copiar",
   callout: { tip: "Dica", warning: "Atenção" },
   backToTop: "Voltar ao topo ↑",
   tags: {
@@ -93,6 +94,7 @@ const en: BlogDictionary = {
   related: "Read next",
   copyCode: "Copy",
   codeCopied: "Code copied!",
+  copyFailed: "Couldn't copy",
   callout: { tip: "Tip", warning: "Heads up" },
   backToTop: "Back to top ↑",
   tags: {
@@ -144,6 +146,7 @@ const es: BlogDictionary = {
   related: "Lee también",
   copyCode: "Copiar",
   codeCopied: "¡Código copiado!",
+  copyFailed: "No se pudo copiar",
   callout: { tip: "Consejo", warning: "Atención" },
   backToTop: "Volver arriba ↑",
   tags: {

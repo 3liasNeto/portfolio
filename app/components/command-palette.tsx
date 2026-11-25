@@ -5,8 +5,8 @@ import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "reac
 import type { Dictionary } from "../[lang]/dictionaries";
 import { localeNames, locales, rememberLocale, type Locale } from "../i18n";
 import { applyTheme } from "../theme";
-import { copyEmail } from "./contact-actions";
 import { scrollToTarget, setScrollLocked } from "./smooth-scroll";
+import { copyText } from "./toast";
 
 type Command = {
   id: string;
@@ -66,7 +66,7 @@ export function CommandPalette({
             router.push(`/${locale}`);
           },
         })),
-      { id: "copy", group: t.groups.contact, label: contact.copy, icon: "⧉", keywords: profile.email, run: () => copyEmail(profile.email, contact.copied) },
+      { id: "copy", group: t.groups.contact, label: contact.copy, icon: "⧉", keywords: profile.email, run: () => copyText(profile.email, contact) },
       { id: "cv", group: t.groups.contact, label: contact.cv, icon: "↓", keywords: "pdf resume curriculo", run: () => window.open(profile.cv, "_blank") },
       { id: "cal", group: t.groups.contact, label: contact.schedule, icon: "◷", keywords: "cal meeting", run: () => window.open(profile.calendar, "_blank", "noreferrer") },
       ...profile.socials.map((social) => ({
