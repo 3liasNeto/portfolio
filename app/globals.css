@@ -230,9 +230,9 @@ body::after {
 }
 
 /* ---------- Scroll reveals ---------- */
-/* Only hide content when JS is running (html.js is set by the theme script) */
+/* Only hide content once RevealObserver is running (it sets html[data-reveal-ready]) */
 
-.js [data-reveal] {
+html[data-reveal-ready] [data-reveal] {
   transition:
     opacity 0.9s cubic-bezier(0.2, 0.8, 0.2, 1),
     translate 0.9s cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -242,20 +242,20 @@ body::after {
   transition-delay: calc(var(--i, 0) * 90ms), calc(var(--i, 0) * 90ms), 0s, 0s, 0s;
 }
 
-.js [data-reveal="up"]:not([data-inview]) {
+html[data-reveal-ready] [data-reveal="up"]:not([data-inview]) {
   opacity: 0;
   translate: 0 48px;
 }
 
-.js [data-reveal="fade"]:not([data-inview]) {
+html[data-reveal-ready] [data-reveal="fade"]:not([data-inview]) {
   opacity: 0;
 }
 
-.js [data-reveal="clip"]:not([data-inview]) {
+html[data-reveal-ready] [data-reveal="clip"]:not([data-inview]) {
   clip-path: inset(100% 0 0 0 round 1rem);
 }
 
-.js [data-reveal="clip"][data-inview] {
+html[data-reveal-ready] [data-reveal="clip"][data-inview] {
   clip-path: inset(0 0 0 0 round 1rem);
 }
 
@@ -274,7 +274,7 @@ body::after {
   transition-delay: calc(var(--i, 0) * 45ms);
 }
 
-.js [data-reveal="words"]:not([data-inview]) .reveal-word {
+html[data-reveal-ready] [data-reveal="words"]:not([data-inview]) .reveal-word {
   translate: 0 110%;
 }
 
@@ -305,13 +305,13 @@ body::after {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .js [data-reveal]:not([data-inview]) {
+  html[data-reveal-ready] [data-reveal]:not([data-inview]) {
     opacity: 1;
     translate: none;
     clip-path: none;
   }
 
-  .js [data-reveal="words"]:not([data-inview]) .reveal-word {
+  html[data-reveal-ready] [data-reveal="words"]:not([data-inview]) .reveal-word {
     translate: none;
   }
 
@@ -613,4 +613,15 @@ body::after {
   margin-right: 1.5em;
   text-align: right;
   color: #4a453f;
+}
+
+/* Printing shows everything, including sections that were never scrolled to */
+@media print {
+  [data-reveal],
+  .reveal-word {
+    opacity: 1 !important;
+    translate: none !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
 }
