@@ -16,7 +16,8 @@ const serif = Instrument_Serif({
   variable: "--font-serif-display",
   subsets: ["latin"],
   weight: "400",
-  style: ["normal", "italic"],
+  // Only the italic is used (em, drop cap, quotes); one less font file to preload
+  style: ["italic"],
 });
 
 const mono = JetBrains_Mono({

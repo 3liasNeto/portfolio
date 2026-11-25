@@ -73,7 +73,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
   };
 
   return (
-    <main className="flex-1">
+    <main className="flex-1 overflow-x-clip">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}

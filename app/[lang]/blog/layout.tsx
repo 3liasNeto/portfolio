@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { LanguageSwitcher } from "../../components/language-switcher";
-import { SmoothScroll } from "../../components/smooth-scroll";
 import { ThemeSwitch } from "../../components/blog/theme-switch";
 import { Toaster } from "../../components/toast";
 import { hasLocale } from "../../i18n";
@@ -15,7 +14,6 @@ export default async function BlogLayout({ children, params }: LayoutProps<"/[la
 
   return (
     <div id="top" className="flex min-h-svh flex-1 flex-col">
-      <SmoothScroll />
       <Toaster />
       <header className="sticky top-0 z-50 border-b border-ink/10 bg-paper/85 backdrop-blur-md">
         <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-4 py-3 md:px-8">
