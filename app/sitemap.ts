@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
 import { posts } from "@/content/blog/posts";
-import { profile } from "./data";
-import { locales, type Locale } from "./i18n";
-import { absoluteUrl, blogIndexed, languageAlternates, siteUpdatedAt } from "./seo";
+import { locales, type Locale } from "@/dictionaries/config";
+import { profile } from "@/lib/data";
+import { absoluteUrl, blogIndexed, languageAlternates, siteUpdatedAt } from "@/lib/seo";
 
 type EntryOptions = Omit<MetadataRoute.Sitemap[number], "url" | "alternates" | "images"> & {
   images?: (locale: Locale) => string[];

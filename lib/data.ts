@@ -1,5 +1,3 @@
-// Language-independent data; translated copy lives in app/[lang]/dictionaries.ts.
-// Source: Elias's résumés (Full Stack and Frontend) and public GitHub (3liasNeto).
 
 export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://eliasneto.dev";
 

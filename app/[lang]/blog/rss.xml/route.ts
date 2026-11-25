@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
-import { siteUrl } from "../../../data";
-import { hasLocale, htmlLang, locales } from "../../../i18n";
-import { getBlogDictionary } from "../dictionary";
-import { escapeXml as escape } from "../parse";
-import { getAllPosts } from "../posts";
+import { siteUrl } from "@/lib/data";
+import { hasLocale, htmlLang, locales } from "@/dictionaries/config";
+import { getDictionary } from "@/dictionaries/get-dictionary";
+import { escapeXml as escape } from "@/lib/blog/parse";
+import { getAllPosts } from "@/lib/blog/posts";
 
 export const dynamic = "force-static";
 
@@ -15,7 +15,7 @@ export function generateStaticParams() {
 export async function GET(_: Request, { params }: RouteContext<"/[lang]/blog/rss.xml">) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
-  const t = getBlogDictionary(lang);
+  const t = (await getDictionary(lang)).blog;
   const posts = await getAllPosts(lang);
   const home = `${siteUrl}/${lang}/blog`;
 

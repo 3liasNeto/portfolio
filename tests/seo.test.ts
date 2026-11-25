@@ -1,9 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
-import { siteUrl } from "@/app/data";
-import { locales } from "@/app/i18n";
+import { siteUrl } from "@/lib/data";
+import { locales } from "@/dictionaries/config";
 import manifest from "@/app/manifest";
 import robots from "@/app/robots";
-import { blogIndexed, languageAlternates } from "@/app/seo";
+import { blogIndexed, languageAlternates } from "@/lib/seo";
 import sitemap from "@/app/sitemap";
 
 describe("languageAlternates", () => {
@@ -61,8 +61,8 @@ describe("robots and manifest", () => {
 describe("sitemap with the blog indexed", () => {
   it("adds the blog index and every post in every language", async () => {
     vi.resetModules();
-    vi.doMock("@/app/seo", async (original) => ({
-      ...(await original<typeof import("@/app/seo")>()),
+    vi.doMock("@/lib/seo", async (original) => ({
+      ...(await original<typeof import("@/lib/seo")>()),
       blogIndexed: true,
     }));
     const { default: indexedSitemap } = await import("@/app/sitemap");
@@ -71,6 +71,6 @@ describe("sitemap with the blog indexed", () => {
     expect(urls).toContain(`${siteUrl}/es/blog`);
     for (const post of posts) expect(urls).toContain(`${siteUrl}/pt/blog/${post.slug}`);
     expect(urls).toHaveLength(locales.length * (1 + 1 + posts.length));
-    vi.doUnmock("@/app/seo");
+    vi.doUnmock("@/lib/seo");
   });
 });

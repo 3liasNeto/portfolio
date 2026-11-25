@@ -1,5 +1,5 @@
-import { siteUrl } from "./data";
-import { htmlLang, locales } from "./i18n";
+import { htmlLang, locales } from "@/dictionaries/config";
+import { siteUrl } from "@/lib/data";
 
 // The blog is still a test: it stays out of search engines and the sitemap until
 // this is true (flipping it updates the blog's robots meta and the sitemap together).

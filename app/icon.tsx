@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { loadBrandFonts, MonogramTile } from "./brand";
+import { loadBrandFonts, MonogramTile } from "@/lib/brand";
 
 export const size = { width: 64, height: 64 };
 export const contentType = "image/png";

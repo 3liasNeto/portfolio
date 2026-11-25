@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import type { Project } from "../data";
+import type { Project } from "@/lib/data";
 
 // Description and origin label ("Bornan", "Pessoal"…) come translated from the page
 type LocalizedProject = Project & { description: string; originLabel: string };

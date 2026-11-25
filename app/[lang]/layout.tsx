@@ -1,11 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { Inter_Tight, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
-import { themeScript } from "../theme";
-import { profile, siteUrl, stack } from "../data";
-import { indexable, languageAlternates } from "../seo";
-import { hasLocale, htmlLang, locales } from "../i18n";
-import { getDictionary } from "./dictionaries";
+import { DictionaryProvider } from "@/hooks/use-dict";
+import { ThemeProvider } from "@/hooks/use-theme";
+import { motionScript } from "@/lib/motion";
+import { profile, siteUrl, stack } from "@/lib/data";
+import { indexable, languageAlternates } from "@/lib/seo";
+import { hasLocale, htmlLang, locales } from "@/dictionaries/config";
+import { getDictionary } from "@/dictionaries/get-dictionary";
 import "../globals.css";
 
 const sans = Inter_Tight({
@@ -35,7 +37,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
-  const dict = getDictionary(lang);
+  const dict = await getDictionary(lang);
   return {
     metadataBase: new URL(siteUrl),
     title: dict.meta.title,
@@ -89,20 +91,27 @@ export const viewport: Viewport = {
 export default async function RootLayout({ children, params }: LayoutProps<"/[lang]">) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
+  const dictionary = await getDictionary(lang);
 
   return (
     <html
       lang={htmlLang[lang]}
-      // The theme script sets data-theme before React hydrates
+      // next-themes sets data-theme before React hydrates
       suppressHydrationWarning
       className={`${sans.variable} ${serif.variable} ${mono.variable} h-full antialiased`}
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script dangerouslySetInnerHTML={{ __html: motionScript }} />
         {/* The site has its own light/dark themes: ask dark-mode extensions not to repaint it */}
         <meta name="darkreader-lock" />
       </head>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <ThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
+          <DictionaryProvider dictionary={dictionary} language={lang}>
+            {children}
+          </DictionaryProvider>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

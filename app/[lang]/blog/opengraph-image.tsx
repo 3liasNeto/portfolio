@@ -1,8 +1,9 @@
-import { profile } from "../../data";
-import { defaultLocale, hasLocale, locales } from "../../i18n";
-import { countPosts, getBlogDictionary } from "./dictionary";
-import { blogOgImage, ogSize } from "./og-card";
-import { postSlugs } from "./posts";
+import { profile } from "@/lib/data";
+import { defaultLocale, hasLocale, locales } from "@/dictionaries/config";
+import { getDictionary } from "@/dictionaries/get-dictionary";
+import { countPosts } from "@/lib/blog/format";
+import { blogOgImage, ogSize } from "@/lib/blog/og-card";
+import { postSlugs } from "@/lib/blog/posts";
 
 export const alt = "Blog";
 export const size = ogSize;
@@ -14,7 +15,7 @@ export function generateStaticParams() {
 
 export default async function BlogOpenGraphImage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
-  const t = getBlogDictionary(hasLocale(lang) ? lang : defaultLocale);
+  const t = (await getDictionary(hasLocale(lang) ? lang : defaultLocale)).blog;
   return blogOgImage({
     kicker: countPosts(t, postSlugs().length),
     title: t.masthead.titleA.toUpperCase(),

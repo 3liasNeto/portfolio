@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
-import { brand } from "./brand";
-import { profile } from "./data";
+import { brand } from "@/lib/brand";
+import { profile } from "@/lib/data";
 
 // Web app manifest: name, colors and icons used when the site is installed or pinned
 export default function manifest(): MetadataRoute.Manifest {

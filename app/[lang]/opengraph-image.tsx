@@ -1,8 +1,8 @@
 import { ImageResponse } from "next/og";
-import { brand, loadBrandFonts } from "../brand";
-import { siteUrl } from "../data";
-import { hasLocale, locales } from "../i18n";
-import { getDictionary } from "./dictionaries";
+import { brand, loadBrandFonts } from "@/lib/brand";
+import { siteUrl } from "@/lib/data";
+import { hasLocale, locales } from "@/dictionaries/config";
+import { getDictionary } from "@/dictionaries/get-dictionary";
 
 export const alt = "Elias Neto";
 export const size = { width: 1200, height: 630 };
@@ -14,7 +14,7 @@ export function generateStaticParams() {
 
 export default async function OpenGraphImage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
-  const t = getDictionary(hasLocale(lang) ? lang : "en");
+  const t = await getDictionary(hasLocale(lang) ? lang : "en");
 
   return new ImageResponse(
     (

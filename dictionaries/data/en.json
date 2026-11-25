@@ -1,0 +1,245 @@
+{
+  "meta": {
+    "title": "Elias Neto — Full Stack Developer",
+    "description": "Portfolio of Elias Neto, a full stack developer in Uberlândia, Brazil, building mobile apps, web dashboards and APIs with TypeScript, React Native, Next.js and NestJS."
+  },
+  "nav": {
+    "home": "Home",
+    "work": "Work",
+    "about": "About",
+    "experience": "Experience",
+    "cta": "Let's talk",
+    "language": "Language"
+  },
+  "hero": {
+    "availability": "Available for new projects",
+    "role": "Full Stack Developer",
+    "before": "building",
+    "em": "apps, dashboards and APIs",
+    "middle": "end to end — fast, accessible and full of",
+    "highlight": "personality",
+    "after": ".",
+    "scroll": "Scroll to see work",
+    "terminal": {
+      "command": "elias --doing",
+      "phrases": [
+        "building apps with Expo",
+        "writing APIs in NestJS",
+        "crafting design systems",
+        "reviewing a PR",
+        "brewing coffee"
+      ]
+    }
+  },
+  "work": {
+    "label": "Selected work",
+    "titleA": "Things I",
+    "titleEm": "built",
+    "titleB": "and love to show.",
+    "hint": "Hover to peek",
+    "years": "2023 — now",
+    "private": "Private project",
+    "personal": "Personal"
+  },
+  "projects": {
+    "cartanoel": "Live product: you share a child's name and a few details and get a letter from Santa written by AI, with a PDF kit and a certificate to share. React 19 and Vite on the front; Bun, Elysia and PostgreSQL on the back; better-auth, Stripe (card and Pix) and an LLM via OpenRouter.",
+    "b2b": "B2B portal built end to end with Next.js, NestJS, TypeORM and PostgreSQL, integrated with the Senior ERP.",
+    "banking": "Multi-tenant banking VAN platform with microservices, RabbitMQ and MongoDB. I built the sign-in screens: 2FA, passkeys, magic link and social login.",
+    "vendora": "React Native mobile app with Expo and Expo Router, its own API, authentication and credentials kept in SecureStore.",
+    "niveela": "Design System for a scheduling platform: CSS design tokens, responsive theme and WCAG AA (checked contrast, 44px targets, visible focus, reduced motion).",
+    "pokemon": "Pokémon challenge game: draft your team, build moves, items and EVs and beat a run of trainers. Battles run on the Showdown simulator, with an AI that computes real damage using the Smogon calculator.",
+    "fifa": "Build Brazil's line-up with the best players from every World Cup: drag and drop, formations and position filters. A project from my technical course at SENAC.",
+    "portfolio": "This site: Next.js 16 in three languages, flash-free theming, a holographic card and an MDX blog, with tests and an accessibility audit."
+  },
+  "about": {
+    "label": "About",
+    "statement": [
+      "Hi, I'm Elias, a full stack developer in Uberlândia, Brazil. Since 2023, at Bornan, I take products from the ",
+      "mobile app",
+      " to the ",
+      "API",
+      " in TypeScript — and I love the spot where ",
+      "design and engineering",
+      " meet: that's where products get a soul."
+    ],
+    "card": {
+      "hint": "Hover or drag · click to flip",
+      "flip": "Flip card",
+      "alt": "Full-art holographic card: Elias as a trainer in a futuristic city, with holograms and a tablet.",
+      "back": "Dev Card"
+    },
+    "stats": {
+      "years": "years of experience",
+      "fronts": "fronts: mobile, web and API",
+      "since": "writing code since"
+    }
+  },
+  "services": [
+    {
+      "title": "Mobile apps",
+      "body": "React Native with Expo: Expo Router navigation, authentication, notifications and secure storage."
+    },
+    {
+      "title": "Web & Design Systems",
+      "body": "Next.js and React with accessible components, design tokens and responsive interfaces."
+    },
+    {
+      "title": "APIs & back end",
+      "body": "NestJS and Node.js with PostgreSQL, Prisma or TypeORM, JWT with refresh tokens, 2FA and RBAC."
+    },
+    {
+      "title": "Architecture & DevOps",
+      "body": "Modular monoliths, multi-tenancy and microservices, with Docker and CI/CD on GitHub Actions."
+    }
+  ],
+  "experience": {
+    "label": "Experience",
+    "titleA": "The",
+    "titleEm": "commit",
+    "titleB": "history of my career.",
+    "terminal": "elias@neto: ~/career — git log --graph",
+    "items": {
+      "bornan": {
+        "period": "2023 — now",
+        "role": "Full Stack Developer",
+        "company": "Bornan",
+        "note": "Integrated TypeScript apps in an Nx monorepo: React Native (Expo), Next.js and NestJS, auth with 2FA and passkeys, Docker and CI/CD."
+      },
+      "uniube": {
+        "period": "2023 — 2028",
+        "role": "Computer Science",
+        "company": "UNIUBE",
+        "note": "Bachelor's degree in progress."
+      },
+      "senac": {
+        "period": "2021 — 2023",
+        "role": "Systems Development Technician",
+        "company": "SENAC",
+        "note": "The foundation: logic, databases and web development."
+      },
+      "start": {
+        "period": "2021",
+        "role": "git init",
+        "company": "First commit",
+        "note": "Where it all began: lots of curiosity and an open terminal."
+      }
+    }
+  },
+  "contact": {
+    "label": "Contact",
+    "title": "Got an idea?",
+    "titleEm": "Let's build it together.",
+    "back": "Back to top ↑",
+    "madeWith": "Made with Next.js & coffee",
+    "copy": "Copy email",
+    "copied": "Email copied!",
+    "copyFailed": "Couldn't copy",
+    "cv": "Download CV",
+    "schedule": "Book a call"
+  },
+  "palette": {
+    "open": "Open commands",
+    "title": "commands",
+    "placeholder": "Type a command or search…",
+    "empty": "No commands found.",
+    "hints": {
+      "move": "navigate",
+      "run": "run",
+      "close": "close"
+    },
+    "groups": {
+      "navigate": "Navigate",
+      "preferences": "Preferences",
+      "contact": "Contact",
+      "social": "Social"
+    },
+    "commands": {
+      "top": "Go to top",
+      "work": "See work",
+      "about": "About Elias",
+      "experience": "See experience",
+      "contact": "Go to contact",
+      "light": "Use light theme",
+      "dark": "Use dark theme",
+      "language": "Switch language to"
+    }
+  },
+  "theme": {
+    "label": "Theme",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "motion": {
+    "pause": "Pause animations",
+    "play": "Resume animations"
+  },
+  "status": {
+    "notFoundTitle": "Page not found",
+    "notFoundBody": "This address doesn't exist or has moved. Head back to a known path:",
+    "errorTitle": "Something went wrong",
+    "errorBody": "An unexpected error happened while loading this page.",
+    "retry": "Try again",
+    "home": "Go to the home page",
+    "blog": "Go to the blog"
+  },
+  "blog": {
+    "meta": {
+      "title": "Notes on code — Elias Neto's blog",
+      "description": "Front-end, tooling and the behind the scenes of building digital products, by Elias Neto."
+    },
+    "testBadge": "beta",
+    "language": "Language",
+    "theme": {
+      "light": "Use light theme",
+      "dark": "Use dark theme"
+    },
+    "masthead": {
+      "edition": "Issue",
+      "titleA": "Notes",
+      "titleB": "on code.",
+      "intro": "I write about front-end, tooling and the behind the scenes of building products — with real code and a few Friday deploys."
+    },
+    "featured": "Featured",
+    "readPost": "Read post",
+    "allPosts": "All posts",
+    "postsCount": {
+      "one": "{n} post",
+      "other": "{n} posts"
+    },
+    "readingTime": "{n} min read",
+    "search": "Search posts…",
+    "allTags": "All",
+    "empty": "No posts found.",
+    "topics": "Topics",
+    "about": {
+      "title": "About the author",
+      "body": "Elias Neto is a full stack developer in Uberlândia, Brazil. This is where he writes down what he learns along the way."
+    },
+    "rss": "Subscribe via RSS",
+    "back": "All posts",
+    "published": "Published on",
+    "toc": "In this post",
+    "share": "Share",
+    "copyLink": "Copy link",
+    "linkCopied": "Link copied!",
+    "newer": "Newer",
+    "older": "Older",
+    "related": "Read next",
+    "copyCode": "Copy",
+    "codeCopied": "Code copied!",
+    "copyFailed": "Couldn't copy",
+    "callout": {
+      "tip": "Tip",
+      "warning": "Heads up"
+    },
+    "backToTop": "Back to top ↑",
+    "tags": {
+      "nextjs": "Next.js",
+      "react": "React",
+      "css": "CSS",
+      "i18n": "i18n",
+      "career": "Career",
+      "tooling": "Tooling"
+    }
+  }
+}

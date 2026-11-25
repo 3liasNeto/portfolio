@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { locales, rememberLocale, type Locale } from "../i18n";
+import { locales, rememberLocale, type Locale } from "@/dictionaries/config";
 
 export function LanguageSwitcher({ current, label }: { current: Locale; label: string }) {
   // Keep the visitor on the same page, just in another language

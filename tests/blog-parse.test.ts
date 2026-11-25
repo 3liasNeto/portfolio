@@ -4,8 +4,8 @@ import { compile } from "@mdx-js/mdx";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import { describe, expect, it } from "vitest";
-import { escapeXml, extractHeadings, readingMinutes } from "@/app/[lang]/blog/parse";
-import { locales } from "@/app/i18n";
+import { escapeXml, extractHeadings, readingMinutes } from "@/lib/blog/parse";
+import { locales } from "@/dictionaries/config";
 import { posts } from "@/content/blog/posts";
 
 // The ids the site really renders: same plugins as next.config.ts
