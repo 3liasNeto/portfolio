@@ -19,9 +19,41 @@ function Preview({ project }: { project: LocalizedProject }) {
       >
         {project.glyph}
       </span>
-      <span className="absolute top-4 left-4 rounded-full bg-paper/90 px-3 py-1 font-mono text-[11px] tracking-wider text-ink uppercase">
+      <span className="absolute top-4 left-4 z-20 rounded-full bg-paper/90 px-3 py-1 font-mono text-[11px] tracking-wider text-ink uppercase">
         {project.title} · {project.originLabel}
       </span>
+    </div>
+  );
+}
+
+// The floating preview is 380×280; the site renders as a 1280px-wide desktop, scaled down
+const frameWidth = 1280;
+const frameScale = 380 / frameWidth;
+
+// Live site inside the floating preview. Purely visual: no pointer, no focus, no tab stop.
+function SiteFrame({ url, title, visible }: { url: string; title: string; visible: boolean }) {
+  const [ready, setReady] = useState(false);
+  return (
+    <div
+      className={`absolute inset-0 z-10 overflow-hidden rounded-2xl bg-paper transition-opacity duration-500 ${
+        visible && ready ? "opacity-100" : "opacity-0"
+      }`}
+    >
+      <iframe
+        src={url}
+        title={title}
+        tabIndex={-1}
+        loading="lazy"
+        referrerPolicy="no-referrer"
+        sandbox="allow-scripts allow-same-origin"
+        onLoad={() => setReady(true)}
+        className="pointer-events-none origin-top-left border-0"
+        style={{
+          width: frameWidth,
+          height: 280 / frameScale,
+          transform: `scale(${frameScale})`,
+        }}
+      />
     </div>
   );
 }
@@ -113,7 +145,18 @@ export function WorkList({
   privateLabel: string;
 }) {
   const [active, setActive] = useState<number | null>(null);
+  // Projects whose live site was already requested: their iframe stays mounted so a
+  // second hover doesn't reload the whole site
+  const [framed, setFramed] = useState<string[]>([]);
   const previewRef = useRef<HTMLDivElement>(null);
+
+  function activate(i: number) {
+    setActive(i);
+    const { id, site } = projects[i];
+    // Only where the floating preview exists (real hover, wide screen): no iframes on touch
+    const floating = matchMedia("(hover: hover) and (min-width: 48rem)").matches;
+    if (site && floating && !framed.includes(id)) setFramed((list) => [...list, id]);
+  }
 
   function moveTo(x: number, y: number) {
     const el = previewRef.current;
@@ -143,7 +186,7 @@ export function WorkList({
                   const rect = row.getBoundingClientRect();
                   moveTo(Math.max(rect.right - 420, 0), Math.max(rect.top - 40, 0));
                 }
-                setActive(i);
+                activate(i);
               }}
               onDeactivate={() => setActive(null)}
             />
@@ -158,11 +201,24 @@ export function WorkList({
         className="pointer-events-none fixed top-0 left-0 z-40 hidden [@media(hover:hover)_and_(min-width:48rem)]:block"
       >
         <div
-          className={`h-[280px] w-[380px] transition-[opacity,scale,rotate] duration-300 ${
+          className={`relative h-[280px] w-[380px] transition-[opacity,scale,rotate] duration-300 ${
             active === null ? "scale-75 -rotate-6 opacity-0" : "scale-100 rotate-3 opacity-100"
           }`}
         >
+          {/* Generative card first; a live site fades in over it once loaded */}
           {active !== null && <Preview project={projects[active]} />}
+          {projects.map(
+            ({ id, site, title }) =>
+              site &&
+              framed.includes(id) && (
+                <SiteFrame
+                  key={id}
+                  url={site}
+                  title={title}
+                  visible={active !== null && projects[active].id === id}
+                />
+              ),
+          )}
         </div>
       </div>
     </div>
