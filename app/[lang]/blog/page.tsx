@@ -19,6 +19,15 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/blog">): P
     description: t.meta.description,
     // Test area for now: keep it out of search engines
     robots: { index: false, follow: false },
+    // Replaces the portfolio's openGraph inherited from the root layout
+    openGraph: {
+      type: "website",
+      url: `/${lang}/blog`,
+      siteName: profile.name,
+      title: t.meta.title,
+      description: t.meta.description,
+      locale: htmlLang[lang].replace("-", "_"),
+    },
     alternates: {
       canonical: `/${lang}/blog`,
       languages: Object.fromEntries(locales.map((l) => [htmlLang[l], `/${l}/blog`])),

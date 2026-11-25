@@ -25,10 +25,23 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/blog/[slug
   if (!hasLocale(lang)) return {};
   const data = await getPost(slug, lang);
   if (!data) return {};
+  const { post } = data;
   return {
-    title: `${data.post.title} — Elias Neto`,
-    description: data.post.excerpt,
+    title: `${post.title} — ${profile.name}`,
+    description: post.excerpt,
     robots: { index: false, follow: false },
+    // Replaces the portfolio's openGraph inherited from the root layout
+    openGraph: {
+      type: "article",
+      url: `/${lang}/blog/${slug}`,
+      siteName: profile.name,
+      title: post.title,
+      description: post.excerpt,
+      locale: htmlLang[lang].replace("-", "_"),
+      publishedTime: post.date,
+      authors: [profile.name],
+      tags: post.tags.map((tag) => getBlogDictionary(lang).tags[tag]),
+    },
     alternates: {
       canonical: `/${lang}/blog/${slug}`,
       languages: Object.fromEntries(locales.map((l) => [htmlLang[l], `/${l}/blog/${slug}`])),
