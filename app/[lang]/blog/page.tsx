@@ -5,7 +5,8 @@ import { AuthorAvatar } from "../../components/blog/author-avatar";
 import { PostCover } from "../../components/blog/post-cover";
 import { PostExplorer } from "../../components/blog/post-explorer";
 import { profile } from "../../data";
-import { hasLocale, htmlLang, locales } from "../../i18n";
+import { hasLocale, htmlLang } from "../../i18n";
+import { blogIndexed, indexable, languageAlternates, notIndexable } from "../../seo";
 import { countPosts, fill, getBlogDictionary } from "./dictionary";
 import { formatDate, formatMonth } from "./format";
 import { getAllPosts } from "./posts";
@@ -18,7 +19,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/blog">): P
     title: t.meta.title,
     description: t.meta.description,
     // Test area for now: keep it out of search engines
-    robots: { index: false, follow: false },
+    robots: blogIndexed ? indexable : notIndexable,
     // Replaces the portfolio's openGraph inherited from the root layout
     openGraph: {
       type: "website",
@@ -30,7 +31,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/blog">): P
     },
     alternates: {
       canonical: `/${lang}/blog`,
-      languages: Object.fromEntries(locales.map((l) => [htmlLang[l], `/${l}/blog`])),
+      languages: languageAlternates("/blog"),
       types: { "application/rss+xml": `/${lang}/blog/rss.xml` },
     },
   };

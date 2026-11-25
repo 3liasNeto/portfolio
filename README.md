@@ -130,6 +130,31 @@ Os demais textos (`nav`, `contact`, `palette`, `theme`, `motion`) são da interf
 
 ---
 
+## SEO
+
+Tudo é gerado pelo Next a partir dos dados do site. Não há arquivos manuais em `public/`.
+
+| Arquivo / recurso | O que faz |
+|---|---|
+| `/sitemap.xml` ([`app/sitemap.ts`](app/sitemap.ts)) | Página inicial nos 3 idiomas, cada uma com `hreflang` para as outras e `x-default` (a raiz `/`, que redireciona pelo idioma do navegador), imagem de compartilhamento e data de atualização |
+| `/robots.txt` ([`app/robots.ts`](app/robots.ts)) | Libera tudo e aponta o sitemap |
+| `/manifest.webmanifest` ([`app/manifest.ts`](app/manifest.ts)) | Nome, cores e ícones do site |
+| Metadados ([`app/[lang]/layout.tsx`](app/[lang]/layout.tsx)) | Título, descrição, autor, palavras-chave, canonical, `hreflang`, Open Graph (`profile`), Twitter card, `max-image-preview:large`, cor do navegador clara/escura |
+| Dados estruturados | Portfólio: `ProfilePage` + `WebSite` + `Person` (empresa, formação, redes). Posts: `BlogPosting` |
+| Headers ([`next.config.ts`](next.config.ts)) | `nosniff`, `Referrer-Policy`, `frame-ancestors 'self'`, `Permissions-Policy`, sem `X-Powered-By` |
+
+**Para manter:**
+- **`siteUpdatedAt`** em [`app/seo.ts`](app/seo.ts): data da última mudança de conteúdo, que vai como `<lastmod>` no sitemap. Atualize quando mudar o conteúdo do portfólio.
+- **`blogIndexed`** em [`app/seo.ts`](app/seo.ts): `false` enquanto o blog for teste. Com `true`, o blog e os posts entram no sitemap e deixam de ter `noindex`.
+
+**Depois do deploy:**
+1. **Verificação:** cadastre o site no [Google Search Console](https://search.google.com/search-console) e, se quiser, no [Bing Webmaster Tools](https://www.bing.com/webmasters). Para verificar pela meta tag, defina no deploy `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` e/ou `NEXT_PUBLIC_BING_SITE_VERIFICATION` com o código que eles fornecem.
+2. **Sitemap:** envie `https://eliasneto.dev/sitemap.xml` em "Sitemaps".
+3. **Dados estruturados:** valide em [Rich Results Test](https://search.google.com/test/rich-results).
+4. **Compartilhamento:** valide no [Post Inspector do LinkedIn](https://www.linkedin.com/post-inspector/).
+
+---
+
 ## Blog (em teste)
 
 Fica em **`/pt/blog`**, **`/en/blog`** e **`/es/blog`** (acessar `/blog` redireciona pelo idioma do navegador). Por enquanto é independente: o portfólio não tem link para ele, o blog não tem link para o portfólio, ele não entra no `sitemap.xml` e as páginas pedem para não ser indexadas (`noindex`).

@@ -15,7 +15,8 @@ import { Toaster } from "../components/toast";
 import { TypingTerminal } from "../components/typing-terminal";
 import { WorkList } from "../components/work-list";
 import { experience, profile, projects, sections, siteUrl, stack, stats } from "../data";
-import { hasLocale, htmlLang } from "../i18n";
+import { hasLocale, htmlLang, locales } from "../i18n";
+import { siteUpdatedAt } from "../seo";
 import { getDictionary } from "./dictionaries";
 
 function Monogram({ className = "" }: { className?: string }) {
@@ -61,27 +62,55 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       project.origin === "bornan" ? "Bornan" : project.origin === "senac" ? "SENAC" : t.work.personal,
   }));
 
+  // ProfilePage + WebSite + Person graph (schema.org), as Google recommends for profiles
+  const pageUrl = `${siteUrl}/${lang}`;
+  const personId = `${siteUrl}/#person`;
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Person",
-    name: profile.name,
-    jobTitle: t.hero.role,
-    description: t.meta.description,
-    url: `${siteUrl}/${lang}`,
-    email: `mailto:${profile.email}`,
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: profile.city,
-      addressRegion: profile.region,
-      addressCountry: profile.country,
-    },
-    worksFor: { "@type": "Organization", name: "Bornan" },
-    alumniOf: [
-      { "@type": "CollegeOrUniversity", name: "UNIUBE" },
-      { "@type": "EducationalOrganization", name: "SENAC" },
+    "@graph": [
+      {
+        "@type": "ProfilePage",
+        "@id": `${pageUrl}#page`,
+        url: pageUrl,
+        name: t.meta.title,
+        description: t.meta.description,
+        inLanguage: htmlLang[lang],
+        dateModified: siteUpdatedAt,
+        isPartOf: { "@id": `${siteUrl}/#website` },
+        mainEntity: { "@id": personId },
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${siteUrl}/#website`,
+        url: siteUrl,
+        name: profile.name,
+        inLanguage: locales.map((l) => htmlLang[l]),
+        publisher: { "@id": personId },
+      },
+      {
+        "@type": "Person",
+        "@id": personId,
+        name: profile.name,
+        jobTitle: t.hero.role,
+        description: t.meta.description,
+        url: pageUrl,
+        image: `${siteUrl}${profile.cardArt}`,
+        email: `mailto:${profile.email}`,
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: profile.city,
+          addressRegion: profile.region,
+          addressCountry: profile.country,
+        },
+        worksFor: { "@type": "Organization", name: "Bornan" },
+        alumniOf: [
+          { "@type": "CollegeOrUniversity", name: "UNIUBE" },
+          { "@type": "EducationalOrganization", name: "SENAC" },
+        ],
+        knowsAbout: stack,
+        sameAs: profile.socials.map((social) => social.href),
+      },
     ],
-    knowsAbout: stack,
-    sameAs: profile.socials.map((social) => social.href),
   };
 
   return (
