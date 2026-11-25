@@ -33,7 +33,7 @@ export function CommandPalette({
   profile: {
     email: string;
     cv: string;
-    calendar: string;
+    calendar: string | null;
     socials: { label: string; href: string }[];
   };
 }) {
@@ -46,6 +46,7 @@ export function CommandPalette({
 
   const commands = useMemo<Command[]>(() => {
     const go = (selector: string) => () => scrollToTarget(selector);
+    const { calendar } = profile;
     return [
       { id: "top", group: t.groups.navigate, label: t.commands.top, icon: "↑", run: go("#top") },
       { id: "work", group: t.groups.navigate, label: t.commands.work, icon: "◆", run: go(`#${sections.work}`) },
@@ -69,7 +70,10 @@ export function CommandPalette({
         })),
       { id: "copy", group: t.groups.contact, label: contact.copy, icon: "⧉", keywords: profile.email, run: () => copyText(profile.email, contact) },
       { id: "cv", group: t.groups.contact, label: contact.cv, icon: "↓", keywords: "pdf resume curriculo", run: () => window.open(profile.cv, "_blank", "noopener") },
-      { id: "cal", group: t.groups.contact, label: contact.schedule, icon: "◷", keywords: "cal meeting", run: () => window.open(profile.calendar, "_blank", "noreferrer") },
+      // Only when a booking link is configured
+      ...(calendar
+        ? [{ id: "cal", group: t.groups.contact, label: contact.schedule, icon: "◷", keywords: "cal meeting", run: () => window.open(calendar, "_blank", "noreferrer") }]
+        : []),
       ...profile.socials.map((social, i) => ({
         id: `social-${i}`,
         group: t.groups.social,

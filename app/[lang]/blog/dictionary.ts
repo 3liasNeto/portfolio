@@ -29,7 +29,7 @@ const pt = {
   topics: "Tópicos",
   about: {
     title: "Sobre o autor",
-    body: "Elias Neto é desenvolvedor full-stack em São Paulo. Aqui ele anota o que aprende pelo caminho.",
+    body: "Elias Neto é desenvolvedor full stack em Uberlândia (MG). Aqui ele anota o que aprende pelo caminho.",
   },
   rss: "Assinar via RSS",
   back: "Todos os posts",
@@ -84,7 +84,7 @@ const en: BlogDictionary = {
   topics: "Topics",
   about: {
     title: "About the author",
-    body: "Elias Neto is a full-stack developer in São Paulo. This is where he writes down what he learns along the way.",
+    body: "Elias Neto is a full stack developer in Uberlândia, Brazil. This is where he writes down what he learns along the way.",
   },
   rss: "Subscribe via RSS",
   back: "All posts",
@@ -138,7 +138,7 @@ const es: BlogDictionary = {
   topics: "Temas",
   about: {
     title: "Sobre el autor",
-    body: "Elias Neto es desarrollador full-stack en São Paulo. Aquí anota lo que aprende por el camino.",
+    body: "Elias Neto es desarrollador full stack en Uberlândia (Brasil). Aquí anota lo que aprende por el camino.",
   },
   rss: "Suscribirse vía RSS",
   back: "Todos los posts",
